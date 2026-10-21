@@ -1,0 +1,4395 @@
+[
+{
+"id": "ga-2100-casioak-black-ga-2100-1a1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-2100 \"CasiOak\" Black",
+"reference": "GA-2100-1A1",
+"caseMm": 45.4,
+"lugMm": 48.5,
+"thicknessMm": 11.8,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 99
+},
+{
+"id": "ga-2100-casioak-black-red-ga-2100-4a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-2100 \"CasiOak\" Black/Red",
+"reference": "GA-2100-4A",
+"caseMm": 45.4,
+"lugMm": 48.5,
+"thicknessMm": 11.8,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 99
+},
+{
+"id": "ga-2100-casioak-white-ga-2100-7a7",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-2100 \"CasiOak\" White",
+"reference": "GA-2100-7A7",
+"caseMm": 45.4,
+"lugMm": 48.5,
+"thicknessMm": 11.8,
+"caseHex": "#f2f2f2",
+"dialHex": "#f2f2f2",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 99
+},
+{
+"id": "ga-2100-casioak-green-ga-2110et-2a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-2100 \"CasiOak\" Green",
+"reference": "GA-2110ET-2A",
+"caseMm": 45.4,
+"lugMm": 48.5,
+"thicknessMm": 11.8,
+"caseHex": "#3d5a45",
+"dialHex": "#3d5a45",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 110
+},
+{
+"id": "ga-b2100-solar-bluetooth-ga-b2100-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-B2100 Solar Bluetooth",
+"reference": "GA-B2100-1A",
+"caseMm": 45.4,
+"lugMm": 48.5,
+"thicknessMm": 11.9,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 149
+},
+{
+"id": "gm-2100-metal-casioak-gm-2100-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GM-2100 Metal CasiOak",
+"reference": "GM-2100-1A",
+"caseMm": 44.4,
+"lugMm": 49.3,
+"thicknessMm": 11.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 219
+},
+{
+"id": "gm-b2100-full-metal-octagon-gm-b2100d-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GM-B2100 Full Metal Octagon",
+"reference": "GM-B2100D-1A",
+"caseMm": 44.4,
+"lugMm": 49.3,
+"thicknessMm": 12.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 549
+},
+{
+"id": "ga-2200-carbon-core-ga-2200bb-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-2200 Carbon Core",
+"reference": "GA-2200BB-1A",
+"caseMm": 47.1,
+"lugMm": 51.2,
+"thicknessMm": 12.8,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 120
+},
+{
+"id": "dw-5600-square-black-dw-5600e-1v",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "DW-5600 Square Black",
+"reference": "DW-5600E-1V",
+"caseMm": 42.8,
+"lugMm": 48.9,
+"thicknessMm": 13.4,
+"caseHex": "#1c1c1c",
+"dialHex": "#6f7a6a",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 59
+},
+{
+"id": "dw-5600-square-all-black-dw-5600bb-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "DW-5600 Square All Black",
+"reference": "DW-5600BB-1",
+"caseMm": 42.8,
+"lugMm": 48.9,
+"thicknessMm": 13.4,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 69
+},
+{
+"id": "gw-m5610-solar-atomic-square-gw-m5610u-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GW-M5610 Solar Atomic Square",
+"reference": "GW-M5610U-1",
+"caseMm": 43.2,
+"lugMm": 46.7,
+"thicknessMm": 12.7,
+"caseHex": "#1c1c1c",
+"dialHex": "#6f7a6a",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 139
+},
+{
+"id": "gmw-b5000-full-metal-silver-gmw-b5000d-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GMW-B5000 Full Metal Silver",
+"reference": "GMW-B5000D-1",
+"caseMm": 43.2,
+"lugMm": 49.3,
+"thicknessMm": 13.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 550
+},
+{
+"id": "gmw-b5000-full-metal-gold-gmw-b5000gd-9",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GMW-B5000 Full Metal Gold",
+"reference": "GMW-B5000GD-9",
+"caseMm": 43.2,
+"lugMm": 49.3,
+"thicknessMm": 13.0,
+"caseHex": "#d4af37",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 600
+},
+{
+"id": "gmw-b5000-full-metal-black-gmw-b5000gd-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GMW-B5000 Full Metal Black",
+"reference": "GMW-B5000GD-1",
+"caseMm": 43.2,
+"lugMm": 49.3,
+"thicknessMm": 13.0,
+"caseHex": "#2a2a2a",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 600
+},
+{
+"id": "dw-6900-classic-dw-6900-1v",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "DW-6900 Classic",
+"reference": "DW-6900-1V",
+"caseMm": 50.0,
+"lugMm": 53.2,
+"thicknessMm": 16.1,
+"caseHex": "#1c1c1c",
+"dialHex": "#6f7a6a",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 79
+},
+{
+"id": "ga-100-big-combi-black-ga-100-1a1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-100 Big Combi Black",
+"reference": "GA-100-1A1",
+"caseMm": 51.2,
+"lugMm": 55.0,
+"thicknessMm": 16.9,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 99
+},
+{
+"id": "ga-110-big-combi-ga-110-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-110 Big Combi",
+"reference": "GA-110-1A",
+"caseMm": 51.2,
+"lugMm": 55.0,
+"thicknessMm": 16.9,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 110
+},
+{
+"id": "ga-700-big-case-ga-700-1b",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-700 Big Case",
+"reference": "GA-700-1B",
+"caseMm": 53.4,
+"lugMm": 57.5,
+"thicknessMm": 18.4,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 99
+},
+{
+"id": "gbd-200-g-squad-gbd-200-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GBD-200 G-Squad",
+"reference": "GBD-200-1",
+"caseMm": 49.3,
+"lugMm": 45.9,
+"thicknessMm": 16.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 129
+},
+{
+"id": "gbd-h2000-g-squad-gps-gbd-h2000-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GBD-H2000 G-Squad GPS",
+"reference": "GBD-H2000-1A",
+"caseMm": 52.6,
+"lugMm": 55.1,
+"thicknessMm": 16.4,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 449
+},
+{
+"id": "gw-9400-rangeman-gw-9400-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GW-9400 Rangeman",
+"reference": "GW-9400-1",
+"caseMm": 53.5,
+"lugMm": 55.2,
+"thicknessMm": 18.6,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"field"
+],
+"priceUsd": 299
+},
+{
+"id": "gpr-h1000-rangeman-gps-gpr-h1000-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GPR-H1000 Rangeman GPS",
+"reference": "GPR-H1000-1",
+"caseMm": 57.7,
+"lugMm": 60.2,
+"thicknessMm": 20.2,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"field"
+],
+"priceUsd": 799
+},
+{
+"id": "gwg-2000-mudmaster-gwg-2000-1a3",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GWG-2000 Mudmaster",
+"reference": "GWG-2000-1A3",
+"caseMm": 54.1,
+"lugMm": 61.7,
+"thicknessMm": 16.7,
+"caseHex": "#4a5a3e",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"sport",
+"field"
+],
+"priceUsd": 450
+},
+{
+"id": "gg-b100-mudmaster-gg-b100-1a3",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GG-B100 Mudmaster",
+"reference": "GG-B100-1A3",
+"caseMm": 53.1,
+"lugMm": 55.3,
+"thicknessMm": 19.3,
+"caseHex": "#3d4a35",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"sport",
+"field"
+],
+"priceUsd": 350
+},
+{
+"id": "gwf-a1000-frogman-gwf-a1000-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GWF-A1000 Frogman",
+"reference": "GWF-A1000-1A",
+"caseMm": 53.3,
+"lugMm": 56.4,
+"thicknessMm": 15.7,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 700
+},
+{
+"id": "gwf-d1000-frogman-digital-gwf-d1000-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GWF-D1000 Frogman Digital",
+"reference": "GWF-D1000-1",
+"caseMm": 56.2,
+"lugMm": 53.3,
+"thicknessMm": 19.7,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"dive",
+"sport",
+"digital"
+],
+"priceUsd": 900
+},
+{
+"id": "gst-b500-g-steel-gst-b500d-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GST-B500 G-Steel",
+"reference": "GST-B500D-1A",
+"caseMm": 49.6,
+"lugMm": 52.3,
+"thicknessMm": 9.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport"
+],
+"priceUsd": 350
+},
+{
+"id": "ga-b001-lunar-bluetooth-ga-b001-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GA-B001 Lunar Bluetooth",
+"reference": "GA-B001-1A",
+"caseMm": 46.0,
+"lugMm": 48.8,
+"thicknessMm": 14.8,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 149
+},
+{
+"id": "gma-s2100-mini-casioak-gma-s2100-7a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GMA-S2100 Mini CasiOak",
+"reference": "GMA-S2100-7A",
+"caseMm": 42.9,
+"lugMm": 46.2,
+"thicknessMm": 11.2,
+"caseHex": "#f2f2f2",
+"dialHex": "#f2f2f2",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 99
+},
+{
+"id": "gmd-s5600-mini-square-gmd-s5600-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "GMD-S5600 Mini Square",
+"reference": "GMD-S5600-1",
+"caseMm": 40.5,
+"lugMm": 44.5,
+"thicknessMm": 12.9,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport",
+"casual"
+],
+"priceUsd": 79
+},
+{
+"id": "mrg-b5000-titanium-square-mrg-b5000d-1",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "MRG-B5000 Titanium Square",
+"reference": "MRG-B5000D-1",
+"caseMm": 43.2,
+"lugMm": 49.4,
+"thicknessMm": 12.9,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "titanium bracelet",
+"styles": [
+"digital",
+"luxury",
+"sport"
+],
+"priceUsd": 3700
+},
+{
+"id": "mtg-b3000-metal-twisted-mtg-b3000d-1a",
+"brand": "Casio",
+"family": "G-Shock",
+"model": "MTG-B3000 Metal Twisted",
+"reference": "MTG-B3000D-1A",
+"caseMm": 51.9,
+"lugMm": 50.9,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport"
+],
+"priceUsd": 1100
+},
+{
+"id": "f-91w-classic-f-91w-1",
+"brand": "Casio",
+"family": "Casio",
+"model": "F-91W Classic",
+"reference": "F-91W-1",
+"caseMm": 35.2,
+"lugMm": 38.2,
+"thicknessMm": 8.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#9aa38f",
+"strap": "resin",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 20
+},
+{
+"id": "a168-vintage-silver-a168wa-1",
+"brand": "Casio",
+"family": "Casio",
+"model": "A168 Vintage Silver",
+"reference": "A168WA-1",
+"caseMm": 36.3,
+"lugMm": 38.6,
+"thicknessMm": 9.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#9aa38f",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 35
+},
+{
+"id": "a158-vintage-a158wa-1",
+"brand": "Casio",
+"family": "Casio",
+"model": "A158 Vintage",
+"reference": "A158WA-1",
+"caseMm": 33.2,
+"lugMm": 36.8,
+"thicknessMm": 8.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#9aa38f",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 30
+},
+{
+"id": "a700-slim-vintage-a700w-1a",
+"brand": "Casio",
+"family": "Casio",
+"model": "A700 Slim Vintage",
+"reference": "A700W-1A",
+"caseMm": 36.3,
+"lugMm": 35.5,
+"thicknessMm": 5.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#9aa38f",
+"strap": "steel bracelet",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 40
+},
+{
+"id": "ca-53w-calculator-ca-53w-1",
+"brand": "Casio",
+"family": "Casio",
+"model": "CA-53W Calculator",
+"reference": "CA-53W-1",
+"caseMm": 34.4,
+"lugMm": 43.2,
+"thicknessMm": 8.2,
+"caseHex": "#1c1c1c",
+"dialHex": "#9aa38f",
+"strap": "resin",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 30
+},
+{
+"id": "ae-1200-casio-royale-ae-1200wh-1a",
+"brand": "Casio",
+"family": "Casio",
+"model": "AE-1200 \"Casio Royale\"",
+"reference": "AE-1200WH-1A",
+"caseMm": 42.1,
+"lugMm": 45.0,
+"thicknessMm": 12.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#9aa38f",
+"strap": "resin",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 25
+},
+{
+"id": "mdv-106-duro-diver-mdv-106-1a",
+"brand": "Casio",
+"family": "Casio",
+"model": "MDV-106 Duro Diver",
+"reference": "MDV-106-1A",
+"caseMm": 44.2,
+"lugMm": 50.0,
+"thicknessMm": 11.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 60
+},
+{
+"id": "mtp-vd01-classic-dress-mtp-vd01d-1b",
+"brand": "Casio",
+"family": "Casio",
+"model": "MTP-VD01 Classic Dress",
+"reference": "MTP-VD01D-1B",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 8.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 50
+},
+{
+"id": "mq-24-basic-analog-mq-24-1e",
+"brand": "Casio",
+"family": "Casio",
+"model": "MQ-24 Basic Analog",
+"reference": "MQ-24-1E",
+"caseMm": 38.8,
+"lugMm": 43.0,
+"thicknessMm": 7.8,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"casual"
+],
+"priceUsd": 20
+},
+{
+"id": "edifice-efr-526-chronograph-efr-526d-1av",
+"brand": "Casio",
+"family": "Edifice",
+"model": "Edifice EFR-526 Chronograph",
+"reference": "EFR-526D-1AV",
+"caseMm": 43.8,
+"lugMm": 48.6,
+"thicknessMm": 11.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport"
+],
+"priceUsd": 130
+},
+{
+"id": "edifice-ecb-2000-sospensione-ecb-2000d-1a",
+"brand": "Casio",
+"family": "Edifice",
+"model": "Edifice ECB-2000 Sospensione",
+"reference": "ECB-2000D-1A",
+"caseMm": 45.1,
+"lugMm": 48.6,
+"thicknessMm": 10.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport"
+],
+"priceUsd": 250
+},
+{
+"id": "pro-trek-prw-3500-prw-3500-1",
+"brand": "Casio",
+"family": "Pro Trek",
+"model": "Pro Trek PRW-3500",
+"reference": "PRW-3500-1",
+"caseMm": 56.2,
+"lugMm": 56.3,
+"thicknessMm": 13.6,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"field",
+"sport"
+],
+"priceUsd": 300
+},
+{
+"id": "weekender-38mm-tw2r42500",
+"brand": "Timex",
+"family": "Weekender",
+"model": "Weekender 38mm",
+"reference": "TW2R42500",
+"caseMm": 38.0,
+"lugMm": 43.0,
+"thicknessMm": 8.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "nylon",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 50
+},
+{
+"id": "expedition-scout-40-tw4b04700",
+"brand": "Timex",
+"family": "Expedition",
+"model": "Expedition Scout 40",
+"reference": "TW4B04700",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 10.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 60
+},
+{
+"id": "marlin-hand-wound-34-tw2r47900",
+"brand": "Timex",
+"family": "Marlin",
+"model": "Marlin Hand-Wound 34",
+"reference": "TW2R47900",
+"caseMm": 34.0,
+"lugMm": 40.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 199
+},
+{
+"id": "q-timex-reissue-38-tw2t80700",
+"brand": "Timex",
+"family": "Q Timex",
+"model": "Q Timex Reissue 38",
+"reference": "TW2T80700",
+"caseMm": 38.0,
+"lugMm": 45.0,
+"thicknessMm": 13.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 179
+},
+{
+"id": "ironman-classic-30-t5k825",
+"brand": "Timex",
+"family": "Ironman",
+"model": "Ironman Classic 30",
+"reference": "T5K825",
+"caseMm": 38.0,
+"lugMm": 44.0,
+"thicknessMm": 12.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "resin",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 60
+},
+{
+"id": "seiko-5-sports-srpd-black-srpd55",
+"brand": "Seiko",
+"family": "Seiko 5 Sports",
+"model": "Seiko 5 Sports SRPD Black",
+"reference": "SRPD55",
+"caseMm": 42.5,
+"lugMm": 46.0,
+"thicknessMm": 13.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"dive",
+"casual"
+],
+"priceUsd": 295
+},
+{
+"id": "seiko-5-sports-srpd-blue-srpd51",
+"brand": "Seiko",
+"family": "Seiko 5 Sports",
+"model": "Seiko 5 Sports SRPD Blue",
+"reference": "SRPD51",
+"caseMm": 42.5,
+"lugMm": 46.0,
+"thicknessMm": 13.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"dive",
+"casual"
+],
+"priceUsd": 295
+},
+{
+"id": "seiko-5-sports-field-srpg-srpg35",
+"brand": "Seiko",
+"family": "Seiko 5 Sports",
+"model": "Seiko 5 Sports Field SRPG",
+"reference": "SRPG35",
+"caseMm": 39.4,
+"lugMm": 45.0,
+"thicknessMm": 13.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#2f3b2c",
+"strap": "nylon",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 275
+},
+{
+"id": "seiko-5-sports-gmt-ssk001",
+"brand": "Seiko",
+"family": "Seiko 5 Sports",
+"model": "Seiko 5 Sports GMT",
+"reference": "SSK001",
+"caseMm": 42.5,
+"lugMm": 46.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 475
+},
+{
+"id": "prospex-turtle-srpe93",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex \"Turtle\"",
+"reference": "SRPE93",
+"caseMm": 45.0,
+"lugMm": 47.5,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 495
+},
+{
+"id": "prospex-samurai-srpb51",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex \"Samurai\"",
+"reference": "SRPB51",
+"caseMm": 43.8,
+"lugMm": 48.6,
+"thicknessMm": 13.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 495
+},
+{
+"id": "prospex-alpinist-spb121",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex \"Alpinist\"",
+"reference": "SPB121",
+"caseMm": 39.5,
+"lugMm": 46.4,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#244a36",
+"strap": "leather",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 750
+},
+{
+"id": "prospex-62mas-reissue-spb143",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex 62MAS Reissue",
+"reference": "SPB143",
+"caseMm": 40.5,
+"lugMm": 47.6,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#3a3a3a",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 1200
+},
+{
+"id": "prospex-sumo-spb101",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex \"Sumo\"",
+"reference": "SPB101",
+"caseMm": 45.0,
+"lugMm": 52.6,
+"thicknessMm": 12.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 1100
+},
+{
+"id": "prospex-solar-diver-tuna-sne499",
+"brand": "Seiko",
+"family": "Prospex",
+"model": "Prospex Solar Diver \"Tuna\"",
+"reference": "SNE499",
+"caseMm": 47.8,
+"lugMm": 48.8,
+"thicknessMm": 12.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 425
+},
+{
+"id": "presage-cocktail-time-srpb43",
+"brand": "Seiko",
+"family": "Presage",
+"model": "Presage \"Cocktail Time\"",
+"reference": "SRPB43",
+"caseMm": 40.5,
+"lugMm": 47.5,
+"thicknessMm": 11.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#3a6ea5",
+"strap": "leather",
+"styles": [
+"dress"
+],
+"priceUsd": 425
+},
+{
+"id": "presage-style60-s-srpg03",
+"brand": "Seiko",
+"family": "Presage",
+"model": "Presage Style60's",
+"reference": "SRPG03",
+"caseMm": 40.8,
+"lugMm": 47.0,
+"thicknessMm": 13.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 475
+},
+{
+"id": "seiko-essentials-quartz-sur309",
+"brand": "Seiko",
+"family": "Essentials",
+"model": "Seiko Essentials Quartz",
+"reference": "SUR309",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 9.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 195
+},
+{
+"id": "king-seiko-spb279",
+"brand": "Seiko",
+"family": "King Seiko",
+"model": "King Seiko",
+"reference": "SPB279",
+"caseMm": 37.0,
+"lugMm": 43.5,
+"thicknessMm": 11.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#d9d4c7",
+"strap": "steel bracelet",
+"styles": [
+"dress"
+],
+"priceUsd": 1700
+},
+{
+"id": "grand-seiko-snowflake-sbga211",
+"brand": "Grand Seiko",
+"family": "Heritage",
+"model": "Grand Seiko \"Snowflake\"",
+"reference": "SBGA211",
+"caseMm": 41.0,
+"lugMm": 49.0,
+"thicknessMm": 12.5,
+"caseHex": "#d0d3d6",
+"dialHex": "#f4f4f2",
+"strap": "titanium bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 6200
+},
+{
+"id": "grand-seiko-white-birch-slgh005",
+"brand": "Grand Seiko",
+"family": "Heritage",
+"model": "Grand Seiko White Birch",
+"reference": "SLGH005",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.7,
+"caseHex": "#d0d3d6",
+"dialHex": "#f4f4f2",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 9100
+},
+{
+"id": "orient-bambino-38-ra-ac0m01b",
+"brand": "Orient",
+"family": "Bambino",
+"model": "Orient Bambino 38",
+"reference": "RA-AC0M01B",
+"caseMm": 38.4,
+"lugMm": 46.0,
+"thicknessMm": 12.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 150
+},
+{
+"id": "orient-kamasu-ra-aa0003r",
+"brand": "Orient",
+"family": "Kamasu",
+"model": "Orient Kamasu",
+"reference": "RA-AA0003R",
+"caseMm": 41.8,
+"lugMm": 46.0,
+"thicknessMm": 12.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#7a1f2a",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 300
+},
+{
+"id": "citizen-promaster-diver-bn0150-28e",
+"brand": "Citizen",
+"family": "Promaster",
+"model": "Citizen Promaster Diver",
+"reference": "BN0150-28E",
+"caseMm": 44.0,
+"lugMm": 48.0,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 295
+},
+{
+"id": "citizen-tsuyosa-nj0150-56w",
+"brand": "Citizen",
+"family": "Tsuyosa",
+"model": "Citizen Tsuyosa",
+"reference": "NJ0150-56W",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 11.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#5fb7a0",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 450
+},
+{
+"id": "citizen-chandler-field-bm8180-03e",
+"brand": "Citizen",
+"family": "Chandler",
+"model": "Citizen Chandler Field",
+"reference": "BM8180-03E",
+"caseMm": 42.0,
+"lugMm": 48.0,
+"thicknessMm": 10.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "canvas",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 175
+},
+{
+"id": "citizen-corso-bm7100-59e",
+"brand": "Citizen",
+"family": "Corso",
+"model": "Citizen Corso",
+"reference": "BM7100-59E",
+"caseMm": 41.0,
+"lugMm": 47.0,
+"thicknessMm": 10.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 250
+},
+{
+"id": "khaki-field-mechanical-38-h69439931",
+"brand": "Hamilton",
+"family": "Khaki Field",
+"model": "Khaki Field Mechanical 38",
+"reference": "H69439931",
+"caseMm": 38.0,
+"lugMm": 47.0,
+"thicknessMm": 9.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "nylon",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 575
+},
+{
+"id": "khaki-field-mechanical-42-h69529933",
+"brand": "Hamilton",
+"family": "Khaki Field",
+"model": "Khaki Field Mechanical 42",
+"reference": "H69529933",
+"caseMm": 42.0,
+"lugMm": 51.0,
+"thicknessMm": 9.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "nylon",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 575
+},
+{
+"id": "khaki-field-murph-38-h70405730",
+"brand": "Hamilton",
+"family": "Khaki Field",
+"model": "Khaki Field Murph 38",
+"reference": "H70405730",
+"caseMm": 38.0,
+"lugMm": 46.0,
+"thicknessMm": 11.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 1045
+},
+{
+"id": "khaki-field-auto-40-h70455133",
+"brand": "Hamilton",
+"family": "Khaki Field",
+"model": "Khaki Field Auto 40",
+"reference": "H70455133",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 745
+},
+{
+"id": "khaki-navy-scuba-40-h82505130",
+"brand": "Hamilton",
+"family": "Khaki Navy",
+"model": "Khaki Navy Scuba 40",
+"reference": "H82505130",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 695
+},
+{
+"id": "jazzmaster-open-heart-40-h32675150",
+"brand": "Hamilton",
+"family": "Jazzmaster",
+"model": "Jazzmaster Open Heart 40",
+"reference": "H32675150",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dress"
+],
+"priceUsd": 995
+},
+{
+"id": "ventura-quartz-h24411732",
+"brand": "Hamilton",
+"family": "Ventura",
+"model": "Ventura Quartz",
+"reference": "H24411732",
+"caseMm": 32.3,
+"lugMm": 50.3,
+"thicknessMm": 10.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dress"
+],
+"priceUsd": 895
+},
+{
+"id": "american-classic-intra-matic-chronograph-h38416711",
+"brand": "Hamilton",
+"family": "Intra-Matic",
+"model": "American Classic Intra-Matic Chronograph",
+"reference": "H38416711",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 14.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"chrono",
+"dress"
+],
+"priceUsd": 2195
+},
+{
+"id": "prx-40-quartz-blue-t137-410-11-041-00",
+"brand": "Tissot",
+"family": "PRX",
+"model": "PRX 40 Quartz Blue",
+"reference": "T137.410.11.041.00",
+"caseMm": 40.0,
+"lugMm": 44.5,
+"thicknessMm": 10.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 375
+},
+{
+"id": "prx-powermatic-80-40mm-ice-blue-t137-407-11-351-00",
+"brand": "Tissot",
+"family": "PRX",
+"model": "PRX Powermatic 80 40mm Ice Blue",
+"reference": "T137.407.11.351.00",
+"caseMm": 40.0,
+"lugMm": 44.5,
+"thicknessMm": 10.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#b9d7e6",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 725
+},
+{
+"id": "prx-powermatic-80-35mm-t137-207-11-351-00",
+"brand": "Tissot",
+"family": "PRX",
+"model": "PRX Powermatic 80 35mm",
+"reference": "T137.207.11.351.00",
+"caseMm": 35.0,
+"lugMm": 39.5,
+"thicknessMm": 10.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#b9d7e6",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 725
+},
+{
+"id": "prx-powermatic-80-green-t137-407-11-091-00",
+"brand": "Tissot",
+"family": "PRX",
+"model": "PRX Powermatic 80 Green",
+"reference": "T137.407.11.091.00",
+"caseMm": 40.0,
+"lugMm": 44.5,
+"thicknessMm": 10.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#2f5b45",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"casual"
+],
+"priceUsd": 725
+},
+{
+"id": "prx-chronograph-t137-427-11-041-00",
+"brand": "Tissot",
+"family": "PRX",
+"model": "PRX Chronograph",
+"reference": "T137.427.11.041.00",
+"caseMm": 42.0,
+"lugMm": 46.0,
+"thicknessMm": 14.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport"
+],
+"priceUsd": 1795
+},
+{
+"id": "seastar-2000-professional-t120-607-11-041-00",
+"brand": "Tissot",
+"family": "Seastar",
+"model": "Seastar 2000 Professional",
+"reference": "T120.607.11.041.00",
+"caseMm": 46.0,
+"lugMm": 50.0,
+"thicknessMm": 16.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 1150
+},
+{
+"id": "seastar-1000-40mm-t120-410-11-051-00",
+"brand": "Tissot",
+"family": "Seastar",
+"model": "Seastar 1000 40mm",
+"reference": "T120.410.11.051.00",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 475
+},
+{
+"id": "gentleman-powermatic-80-t127-407-11-041-00",
+"brand": "Tissot",
+"family": "Gentleman",
+"model": "Gentleman Powermatic 80",
+"reference": "T127.407.11.041.00",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 10.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 825
+},
+{
+"id": "le-locle-powermatic-80-t006-407-16-033-00",
+"brand": "Tissot",
+"family": "Le Locle",
+"model": "Le Locle Powermatic 80",
+"reference": "T006.407.16.033.00",
+"caseMm": 39.3,
+"lugMm": 45.0,
+"thicknessMm": 9.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress"
+],
+"priceUsd": 675
+},
+{
+"id": "everytime-40-t143-410-11-011-00",
+"brand": "Tissot",
+"family": "Everytime",
+"model": "Everytime 40",
+"reference": "T143.410.11.011.00",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 8.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 275
+},
+{
+"id": "omega-x-swatch-moonswatch-mission-to-the-moon-so33m100",
+"brand": "Swatch",
+"family": "MoonSwatch",
+"model": "Omega x Swatch MoonSwatch Mission to the Moon",
+"reference": "SO33M100",
+"caseMm": 42.0,
+"lugMm": 47.3,
+"thicknessMm": 13.25,
+"caseHex": "#8a8f96",
+"dialHex": "#1c1c1c",
+"strap": "velcro",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 270
+},
+{
+"id": "omega-x-swatch-moonswatch-mission-to-mars-so33r100",
+"brand": "Swatch",
+"family": "MoonSwatch",
+"model": "Omega x Swatch MoonSwatch Mission to Mars",
+"reference": "SO33R100",
+"caseMm": 42.0,
+"lugMm": 47.3,
+"thicknessMm": 13.25,
+"caseHex": "#c9553f",
+"dialHex": "#c9553f",
+"strap": "velcro",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 270
+},
+{
+"id": "omega-x-swatch-moonswatch-mission-to-neptune-so33n100",
+"brand": "Swatch",
+"family": "MoonSwatch",
+"model": "Omega x Swatch MoonSwatch Mission to Neptune",
+"reference": "SO33N100",
+"caseMm": 42.0,
+"lugMm": 47.3,
+"thicknessMm": 13.25,
+"caseHex": "#22356b",
+"dialHex": "#22356b",
+"strap": "velcro",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 270
+},
+{
+"id": "blancpain-x-swatch-scuba-fifty-fathoms-so35b400",
+"brand": "Swatch",
+"family": "Scuba Fifty Fathoms",
+"model": "Blancpain x Swatch Scuba Fifty Fathoms",
+"reference": "SO35B400",
+"caseMm": 42.3,
+"lugMm": 46.5,
+"thicknessMm": 14.4,
+"caseHex": "#2b3a6e",
+"dialHex": "#1c1c1c",
+"strap": "nylon",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 400
+},
+{
+"id": "swatch-sistem51-sy23s400",
+"brand": "Swatch",
+"family": "Sistem51",
+"model": "Swatch Sistem51",
+"reference": "SY23S400",
+"caseMm": 42.0,
+"lugMm": 47.0,
+"thicknessMm": 12.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"casual"
+],
+"priceUsd": 225
+},
+{
+"id": "longines-spirit-40-l3-810-4-53-6",
+"brand": "Longines",
+"family": "Spirit",
+"model": "Longines Spirit 40",
+"reference": "L3.810.4.53.6",
+"caseMm": 40.0,
+"lugMm": 48.5,
+"thicknessMm": 12.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"pilot",
+"sport"
+],
+"priceUsd": 2450
+},
+{
+"id": "longines-hydroconquest-41-l3-781-4-56-6",
+"brand": "Longines",
+"family": "HydroConquest",
+"model": "Longines HydroConquest 41",
+"reference": "L3.781.4.56.6",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 1850
+},
+{
+"id": "longines-legend-diver-39-l3-764-4-50-6",
+"brand": "Longines",
+"family": "Legend Diver",
+"model": "Longines Legend Diver 39",
+"reference": "L3.764.4.50.6",
+"caseMm": 39.0,
+"lugMm": 46.5,
+"thicknessMm": 12.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 2900
+},
+{
+"id": "longines-master-collection-40-l2-793-4-78-3",
+"brand": "Longines",
+"family": "Master Collection",
+"model": "Longines Master Collection 40",
+"reference": "L2.793.4.78.3",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 9.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#d9d4c7",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 2250
+},
+{
+"id": "longines-conquest-38-l3-720-4-92-6",
+"brand": "Longines",
+"family": "Conquest",
+"model": "Longines Conquest 38",
+"reference": "L3.720.4.92.6",
+"caseMm": 38.0,
+"lugMm": 44.0,
+"thicknessMm": 10.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 2400
+},
+{
+"id": "tudor-black-bay-41-m7941a1a0ru-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay 41",
+"reference": "M7941A1A0RU-0001",
+"caseMm": 41.0,
+"lugMm": 50.0,
+"thicknessMm": 14.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 4400
+},
+{
+"id": "tudor-black-bay-58-m79030n-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay 58",
+"reference": "M79030N-0001",
+"caseMm": 39.0,
+"lugMm": 47.8,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 4100
+},
+{
+"id": "tudor-black-bay-58-blue-m79030b-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay 58 Blue",
+"reference": "M79030B-0001",
+"caseMm": 39.0,
+"lugMm": 47.8,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 4100
+},
+{
+"id": "tudor-black-bay-54-m79000n-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay 54",
+"reference": "M79000N-0001",
+"caseMm": 37.0,
+"lugMm": 46.0,
+"thicknessMm": 11.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 4100
+},
+{
+"id": "tudor-black-bay-gmt-pepsi-m79830rb-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay GMT \"Pepsi\"",
+"reference": "M79830RB-0001",
+"caseMm": 41.0,
+"lugMm": 50.0,
+"thicknessMm": 14.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 4600
+},
+{
+"id": "tudor-black-bay-chrono-m79360n-0001",
+"brand": "Tudor",
+"family": "Black Bay",
+"model": "Tudor Black Bay Chrono",
+"reference": "M79360N-0001",
+"caseMm": 41.0,
+"lugMm": 50.0,
+"thicknessMm": 14.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 5900
+},
+{
+"id": "tudor-pelagos-39-m25407n-0001",
+"brand": "Tudor",
+"family": "Pelagos",
+"model": "Tudor Pelagos 39",
+"reference": "M25407N-0001",
+"caseMm": 39.0,
+"lugMm": 47.0,
+"thicknessMm": 11.8,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "titanium bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 5100
+},
+{
+"id": "tudor-ranger-39-m79950-0001",
+"brand": "Tudor",
+"family": "Ranger",
+"model": "Tudor Ranger 39",
+"reference": "M79950-0001",
+"caseMm": 39.0,
+"lugMm": 47.6,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"sport",
+"luxury"
+],
+"priceUsd": 3500
+},
+{
+"id": "tudor-royal-38-m28500-0005",
+"brand": "Tudor",
+"family": "Royal",
+"model": "Tudor Royal 38",
+"reference": "M28500-0005",
+"caseMm": 38.0,
+"lugMm": 45.0,
+"thicknessMm": 10.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"sport"
+],
+"priceUsd": 2800
+},
+{
+"id": "rolex-submariner-date-black-126610ln",
+"brand": "Rolex",
+"family": "Submariner",
+"model": "Rolex Submariner Date Black",
+"reference": "126610LN",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 10650
+},
+{
+"id": "rolex-submariner-no-date-124060",
+"brand": "Rolex",
+"family": "Submariner",
+"model": "Rolex Submariner No-Date",
+"reference": "124060",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 9650
+},
+{
+"id": "rolex-submariner-starbucks-126610lv",
+"brand": "Rolex",
+"family": "Submariner",
+"model": "Rolex Submariner \"Starbucks\"",
+"reference": "126610LV",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 11050
+},
+{
+"id": "rolex-submariner-two-tone-blue-126613lb",
+"brand": "Rolex",
+"family": "Submariner",
+"model": "Rolex Submariner Two-Tone Blue",
+"reference": "126613LB",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 12.5,
+"caseHex": "#d4af37",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 16050
+},
+{
+"id": "rolex-submariner-yellow-gold-green-126618ln",
+"brand": "Rolex",
+"family": "Submariner",
+"model": "Rolex Submariner Yellow Gold Green",
+"reference": "126618LN",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 12.5,
+"caseHex": "#d4af37",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"luxury"
+],
+"priceUsd": 43250
+},
+{
+"id": "rolex-gmt-master-ii-pepsi-126710blro",
+"brand": "Rolex",
+"family": "GMT-Master II",
+"model": "Rolex GMT-Master II \"Pepsi\"",
+"reference": "126710BLRO",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 11250
+},
+{
+"id": "rolex-gmt-master-ii-batman-126710blnr",
+"brand": "Rolex",
+"family": "GMT-Master II",
+"model": "Rolex GMT-Master II \"Batman\"",
+"reference": "126710BLNR",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 11250
+},
+{
+"id": "rolex-gmt-master-ii-sprite-126720vtnr",
+"brand": "Rolex",
+"family": "GMT-Master II",
+"model": "Rolex GMT-Master II \"Sprite\"",
+"reference": "126720VTNR",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 11400
+},
+{
+"id": "rolex-gmt-master-ii-root-beer-126711chnr",
+"brand": "Rolex",
+"family": "GMT-Master II",
+"model": "Rolex GMT-Master II \"Root Beer\"",
+"reference": "126711CHNR",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.0,
+"caseHex": "#d9a08b",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 17450
+},
+{
+"id": "rolex-cosmograph-daytona-white-panda-126500ln",
+"brand": "Rolex",
+"family": "Daytona",
+"model": "Rolex Cosmograph Daytona White \"Panda\"",
+"reference": "126500LN",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 15100
+},
+{
+"id": "rolex-cosmograph-daytona-black-126500ln",
+"brand": "Rolex",
+"family": "Daytona",
+"model": "Rolex Cosmograph Daytona Black",
+"reference": "126500LN",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 15100
+},
+{
+"id": "rolex-daytona-yellow-gold-126508",
+"brand": "Rolex",
+"family": "Daytona",
+"model": "Rolex Daytona Yellow Gold",
+"reference": "126508",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.9,
+"caseHex": "#d4af37",
+"dialHex": "#2e5a3a",
+"strap": "gold bracelet",
+"styles": [
+"chrono",
+"luxury"
+],
+"priceUsd": 50000
+},
+{
+"id": "rolex-datejust-41-blue-jubilee-126334",
+"brand": "Rolex",
+"family": "Datejust",
+"model": "Rolex Datejust 41 Blue Jubilee",
+"reference": "126334",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 10100
+},
+{
+"id": "rolex-datejust-41-wimbledon-126333",
+"brand": "Rolex",
+"family": "Datejust",
+"model": "Rolex Datejust 41 \"Wimbledon\"",
+"reference": "126333",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.7,
+"caseHex": "#d4af37",
+"dialHex": "#5a5f66",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 15600
+},
+{
+"id": "rolex-datejust-36-mint-green-126234",
+"brand": "Rolex",
+"family": "Datejust",
+"model": "Rolex Datejust 36 Mint Green",
+"reference": "126234",
+"caseMm": 36.0,
+"lugMm": 43.0,
+"thicknessMm": 11.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#a8d5c2",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 9350
+},
+{
+"id": "rolex-datejust-31-278274",
+"brand": "Rolex",
+"family": "Datejust",
+"model": "Rolex Datejust 31",
+"reference": "278274",
+"caseMm": 31.0,
+"lugMm": 37.0,
+"thicknessMm": 10.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#d9d4c7",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 9850
+},
+{
+"id": "rolex-day-date-40-yellow-gold-228238",
+"brand": "Rolex",
+"family": "Day-Date",
+"model": "Rolex Day-Date 40 Yellow Gold",
+"reference": "228238",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.4,
+"caseHex": "#d4af37",
+"dialHex": "#d4af37",
+"strap": "gold bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 40000
+},
+{
+"id": "rolex-day-date-40-platinum-ice-blue-228206",
+"brand": "Rolex",
+"family": "Day-Date",
+"model": "Rolex Day-Date 40 Platinum Ice Blue",
+"reference": "228206",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 12.4,
+"caseHex": "#e5e4e2",
+"dialHex": "#b9d7e6",
+"strap": "platinum bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 61000
+},
+{
+"id": "rolex-day-date-36-everose-128235",
+"brand": "Rolex",
+"family": "Day-Date",
+"model": "Rolex Day-Date 36 Everose",
+"reference": "128235",
+"caseMm": 36.0,
+"lugMm": 43.0,
+"thicknessMm": 11.4,
+"caseHex": "#d9a08b",
+"dialHex": "#d9a08b",
+"strap": "gold bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 38000
+},
+{
+"id": "rolex-explorer-36-124270",
+"brand": "Rolex",
+"family": "Explorer",
+"model": "Rolex Explorer 36",
+"reference": "124270",
+"caseMm": 36.0,
+"lugMm": 43.6,
+"thicknessMm": 11.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"sport",
+"luxury"
+],
+"priceUsd": 7700
+},
+{
+"id": "rolex-explorer-40-224270",
+"brand": "Rolex",
+"family": "Explorer",
+"model": "Rolex Explorer 40",
+"reference": "224270",
+"caseMm": 40.0,
+"lugMm": 47.5,
+"thicknessMm": 11.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"sport",
+"luxury"
+],
+"priceUsd": 8000
+},
+{
+"id": "rolex-explorer-ii-white-226570",
+"brand": "Rolex",
+"family": "Explorer II",
+"model": "Rolex Explorer II White",
+"reference": "226570",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"sport",
+"luxury"
+],
+"priceUsd": 10250
+},
+{
+"id": "rolex-oyster-perpetual-41-green-124300",
+"brand": "Rolex",
+"family": "Oyster Perpetual",
+"model": "Rolex Oyster Perpetual 41 Green",
+"reference": "124300",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#7fa65a",
+"strap": "steel bracelet",
+"styles": [
+"casual",
+"luxury"
+],
+"priceUsd": 6900
+},
+{
+"id": "rolex-oyster-perpetual-36-tiffany-blue-126000",
+"brand": "Rolex",
+"family": "Oyster Perpetual",
+"model": "Rolex Oyster Perpetual 36 Tiffany Blue",
+"reference": "126000",
+"caseMm": 36.0,
+"lugMm": 43.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#7ed3c9",
+"strap": "steel bracelet",
+"styles": [
+"casual",
+"luxury"
+],
+"priceUsd": 6600
+},
+{
+"id": "rolex-oyster-perpetual-36-coral-red-126000",
+"brand": "Rolex",
+"family": "Oyster Perpetual",
+"model": "Rolex Oyster Perpetual 36 Coral Red",
+"reference": "126000",
+"caseMm": 36.0,
+"lugMm": 43.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#e06a5a",
+"strap": "steel bracelet",
+"styles": [
+"casual",
+"luxury"
+],
+"priceUsd": 6600
+},
+{
+"id": "rolex-oyster-perpetual-34-124200",
+"brand": "Rolex",
+"family": "Oyster Perpetual",
+"model": "Rolex Oyster Perpetual 34",
+"reference": "124200",
+"caseMm": 34.0,
+"lugMm": 40.0,
+"thicknessMm": 11.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"casual",
+"luxury"
+],
+"priceUsd": 6200
+},
+{
+"id": "rolex-sea-dweller-43-126600",
+"brand": "Rolex",
+"family": "Sea-Dweller",
+"model": "Rolex Sea-Dweller 43",
+"reference": "126600",
+"caseMm": 43.0,
+"lugMm": 50.5,
+"thicknessMm": 15.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 14100
+},
+{
+"id": "rolex-deepsea-136660",
+"brand": "Rolex",
+"family": "Deepsea",
+"model": "Rolex Deepsea",
+"reference": "136660",
+"caseMm": 44.0,
+"lugMm": 51.0,
+"thicknessMm": 17.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 15400
+},
+{
+"id": "rolex-yacht-master-40-everose-oysterflex-126655",
+"brand": "Rolex",
+"family": "Yacht-Master",
+"model": "Rolex Yacht-Master 40 Everose Oysterflex",
+"reference": "126655",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.9,
+"caseHex": "#d9a08b",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 31500
+},
+{
+"id": "rolex-yacht-master-42-titanium-226627",
+"brand": "Rolex",
+"family": "Yacht-Master",
+"model": "Rolex Yacht-Master 42 Titanium",
+"reference": "226627",
+"caseMm": 42.0,
+"lugMm": 49.0,
+"thicknessMm": 11.8,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "titanium bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 15100
+},
+{
+"id": "rolex-air-king-126900",
+"brand": "Rolex",
+"family": "Air-King",
+"model": "Rolex Air-King",
+"reference": "126900",
+"caseMm": 40.0,
+"lugMm": 48.0,
+"thicknessMm": 11.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"pilot",
+"sport",
+"luxury"
+],
+"priceUsd": 7700
+},
+{
+"id": "rolex-milgauss-z-blue-116400gv",
+"brand": "Rolex",
+"family": "Milgauss",
+"model": "Rolex Milgauss Z-Blue",
+"reference": "116400GV",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 13.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 9000
+},
+{
+"id": "rolex-sky-dweller-blue-336934",
+"brand": "Rolex",
+"family": "Sky-Dweller",
+"model": "Rolex Sky-Dweller Blue",
+"reference": "336934",
+"caseMm": 42.0,
+"lugMm": 49.5,
+"thicknessMm": 14.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 16250
+},
+{
+"id": "rolex-perpetual-1908-52508",
+"brand": "Rolex",
+"family": "1908",
+"model": "Rolex Perpetual 1908",
+"reference": "52508",
+"caseMm": 39.0,
+"lugMm": 46.5,
+"thicknessMm": 9.5,
+"caseHex": "#d4af37",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 23200
+},
+{
+"id": "ap-royal-oak-41-blue-15510st-oo-1320st-03",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak 41 Blue",
+"reference": "15510ST.OO.1320ST.03",
+"caseMm": 41.0,
+"lugMm": 51.0,
+"thicknessMm": 10.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 30000
+},
+{
+"id": "ap-royal-oak-37-15450st-oo-1256st-03",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak 37",
+"reference": "15450ST.OO.1256ST.03",
+"caseMm": 37.0,
+"lugMm": 46.0,
+"thicknessMm": 9.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 26000
+},
+{
+"id": "ap-royal-oak-jumbo-extra-thin-39-16202st-oo-1240st-01",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak \"Jumbo\" Extra-Thin 39",
+"reference": "16202ST.OO.1240ST.01",
+"caseMm": 39.0,
+"lugMm": 47.0,
+"thicknessMm": 8.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 36000
+},
+{
+"id": "ap-royal-oak-chronograph-41-26240st-oo-1320st-02",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak Chronograph 41",
+"reference": "26240ST.OO.1320ST.02",
+"caseMm": 41.0,
+"lugMm": 51.0,
+"thicknessMm": 12.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 38000
+},
+{
+"id": "ap-royal-oak-34-rose-gold-77350or-oo-1261or-01",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak 34 Rose Gold",
+"reference": "77350OR.OO.1261OR.01",
+"caseMm": 34.0,
+"lugMm": 42.0,
+"thicknessMm": 8.8,
+"caseHex": "#d9a08b",
+"dialHex": "#d9a08b",
+"strap": "gold bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 52000
+},
+{
+"id": "ap-royal-oak-offshore-chronograph-43-26420ti-oo-a027ca-01",
+"brand": "Audemars Piguet",
+"family": "Royal Oak Offshore",
+"model": "AP Royal Oak Offshore Chronograph 43",
+"reference": "26420TI.OO.A027CA.01",
+"caseMm": 43.0,
+"lugMm": 52.0,
+"thicknessMm": 14.4,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 35000
+},
+{
+"id": "ap-royal-oak-offshore-diver-15720st-oo-a027ca-01",
+"brand": "Audemars Piguet",
+"family": "Royal Oak Offshore",
+"model": "AP Royal Oak Offshore Diver",
+"reference": "15720ST.OO.A027CA.01",
+"caseMm": 42.0,
+"lugMm": 51.0,
+"thicknessMm": 14.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 28000
+},
+{
+"id": "ap-code-11-59-selfwinding-15210or-oo-a099cr-01",
+"brand": "Audemars Piguet",
+"family": "Code 11.59",
+"model": "AP Code 11.59 Selfwinding",
+"reference": "15210OR.OO.A099CR.01",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 10.7,
+"caseHex": "#d9a08b",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 31000
+},
+{
+"id": "patek-philippe-nautilus-5711-blue-5711-1a-010",
+"brand": "Patek Philippe",
+"family": "Nautilus",
+"model": "Patek Philippe Nautilus 5711 Blue",
+"reference": "5711/1A-010",
+"caseMm": 40.0,
+"lugMm": 44.0,
+"thicknessMm": 8.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 35000
+},
+{
+"id": "patek-philippe-nautilus-5811-white-gold-5811-1g-001",
+"brand": "Patek Philippe",
+"family": "Nautilus",
+"model": "Patek Philippe Nautilus 5811 White Gold",
+"reference": "5811/1G-001",
+"caseMm": 41.0,
+"lugMm": 46.0,
+"thicknessMm": 8.2,
+"caseHex": "#e0e0e0",
+"dialHex": "#1a3a6b",
+"strap": "gold bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 70000
+},
+{
+"id": "patek-philippe-aquanaut-5167-5167a-001",
+"brand": "Patek Philippe",
+"family": "Aquanaut",
+"model": "Patek Philippe Aquanaut 5167",
+"reference": "5167A-001",
+"caseMm": 40.8,
+"lugMm": 46.0,
+"thicknessMm": 8.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 25000
+},
+{
+"id": "patek-philippe-calatrava-5227-5227g-010",
+"brand": "Patek Philippe",
+"family": "Calatrava",
+"model": "Patek Philippe Calatrava 5227",
+"reference": "5227G-010",
+"caseMm": 39.0,
+"lugMm": 45.0,
+"thicknessMm": 9.2,
+"caseHex": "#e0e0e0",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 38000
+},
+{
+"id": "patek-philippe-calatrava-6119-6119r-001",
+"brand": "Patek Philippe",
+"family": "Calatrava",
+"model": "Patek Philippe Calatrava 6119",
+"reference": "6119R-001",
+"caseMm": 39.0,
+"lugMm": 45.0,
+"thicknessMm": 8.1,
+"caseHex": "#d9a08b",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 32000
+},
+{
+"id": "vacheron-constantin-overseas-blue-4500v-110a-b128",
+"brand": "Vacheron Constantin",
+"family": "Overseas",
+"model": "Vacheron Constantin Overseas Blue",
+"reference": "4500V/110A-B128",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 29900
+},
+{
+"id": "vacheron-constantin-patrimony-81180-000r-9159",
+"brand": "Vacheron Constantin",
+"family": "Patrimony",
+"model": "Vacheron Constantin Patrimony",
+"reference": "81180/000R-9159",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 6.8,
+"caseHex": "#d9a08b",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 23000
+},
+{
+"id": "omega-speedmaster-moonwatch-professional-310-30-42-50-01-002",
+"brand": "Omega",
+"family": "Speedmaster",
+"model": "Omega Speedmaster Moonwatch Professional",
+"reference": "310.30.42.50.01.002",
+"caseMm": 42.0,
+"lugMm": 47.5,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 7600
+},
+{
+"id": "omega-speedmaster-moonwatch-sapphire-310-30-42-50-01-001",
+"brand": "Omega",
+"family": "Speedmaster",
+"model": "Omega Speedmaster Moonwatch Sapphire",
+"reference": "310.30.42.50.01.001",
+"caseMm": 42.0,
+"lugMm": 47.5,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 8200
+},
+{
+"id": "omega-speedmaster-57-332-10-41-51-01-001",
+"brand": "Omega",
+"family": "Speedmaster",
+"model": "Omega Speedmaster '57",
+"reference": "332.10.41.51.01.001",
+"caseMm": 40.5,
+"lugMm": 48.5,
+"thicknessMm": 13.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"luxury"
+],
+"priceUsd": 9300
+},
+{
+"id": "omega-speedmaster-dark-side-of-the-moon-311-92-44-51-01-007",
+"brand": "Omega",
+"family": "Speedmaster",
+"model": "Omega Speedmaster Dark Side of the Moon",
+"reference": "311.92.44.51.01.007",
+"caseMm": 44.25,
+"lugMm": 50.5,
+"thicknessMm": 13.8,
+"caseHex": "#2a2a2a",
+"dialHex": "#1c1c1c",
+"strap": "nylon",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 12600
+},
+{
+"id": "omega-seamaster-diver-300m-blue-210-30-42-20-03-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Diver 300M Blue",
+"reference": "210.30.42.20.03.001",
+"caseMm": 42.0,
+"lugMm": 48.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 5900
+},
+{
+"id": "omega-seamaster-diver-300m-black-210-30-42-20-01-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Diver 300M Black",
+"reference": "210.30.42.20.01.001",
+"caseMm": 42.0,
+"lugMm": 48.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 5900
+},
+{
+"id": "omega-seamaster-diver-300m-white-210-30-42-20-04-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Diver 300M White",
+"reference": "210.30.42.20.04.001",
+"caseMm": 42.0,
+"lugMm": 48.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 5900
+},
+{
+"id": "omega-seamaster-aqua-terra-41-blue-220-10-41-21-03-004",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Aqua Terra 41 Blue",
+"reference": "220.10.41.21.03.004",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 13.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"dress",
+"luxury"
+],
+"priceUsd": 6600
+},
+{
+"id": "omega-seamaster-aqua-terra-38-220-10-38-20-03-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Aqua Terra 38",
+"reference": "220.10.38.20.03.001",
+"caseMm": 38.0,
+"lugMm": 45.0,
+"thicknessMm": 12.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"dress",
+"luxury"
+],
+"priceUsd": 6300
+},
+{
+"id": "omega-seamaster-planet-ocean-43-5-215-30-44-21-01-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster Planet Ocean 43.5",
+"reference": "215.30.44.21.01.001",
+"caseMm": 43.5,
+"lugMm": 50.5,
+"thicknessMm": 16.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 7400
+},
+{
+"id": "omega-seamaster-300-heritage-234-30-41-21-01-001",
+"brand": "Omega",
+"family": "Seamaster",
+"model": "Omega Seamaster 300 Heritage",
+"reference": "234.30.41.21.01.001",
+"caseMm": 41.0,
+"lugMm": 49.5,
+"thicknessMm": 14.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"luxury"
+],
+"priceUsd": 7900
+},
+{
+"id": "omega-constellation-41-131-10-41-21-03-001",
+"brand": "Omega",
+"family": "Constellation",
+"model": "Omega Constellation 41",
+"reference": "131.10.41.21.03.001",
+"caseMm": 41.0,
+"lugMm": 47.0,
+"thicknessMm": 11.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 7000
+},
+{
+"id": "omega-de-ville-prestige-424-10-40-20-02-001",
+"brand": "Omega",
+"family": "De Ville",
+"model": "Omega De Ville Prestige",
+"reference": "424.10.40.20.02.001",
+"caseMm": 39.5,
+"lugMm": 47.0,
+"thicknessMm": 9.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 3700
+},
+{
+"id": "omega-seamaster-railmaster-220-10-40-20-01-001",
+"brand": "Omega",
+"family": "Railmaster",
+"model": "Omega Seamaster Railmaster",
+"reference": "220.10.40.20.01.001",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 12.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"field",
+"luxury"
+],
+"priceUsd": 5400
+},
+{
+"id": "cartier-santos-de-cartier-large-wssa0018",
+"brand": "Cartier",
+"family": "Santos",
+"model": "Cartier Santos de Cartier Large",
+"reference": "WSSA0018",
+"caseMm": 39.8,
+"lugMm": 47.5,
+"thicknessMm": 9.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"sport",
+"luxury"
+],
+"priceUsd": 7900
+},
+{
+"id": "cartier-santos-de-cartier-medium-wssa0029",
+"brand": "Cartier",
+"family": "Santos",
+"model": "Cartier Santos de Cartier Medium",
+"reference": "WSSA0029",
+"caseMm": 35.1,
+"lugMm": 41.9,
+"thicknessMm": 8.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"sport",
+"luxury"
+],
+"priceUsd": 7400
+},
+{
+"id": "cartier-santos-dumont-large-wssa0022",
+"brand": "Cartier",
+"family": "Santos",
+"model": "Cartier Santos-Dumont Large",
+"reference": "WSSA0022",
+"caseMm": 31.4,
+"lugMm": 43.5,
+"thicknessMm": 7.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 4500
+},
+{
+"id": "cartier-tank-must-large-wsta0041",
+"brand": "Cartier",
+"family": "Tank",
+"model": "Cartier Tank Must Large",
+"reference": "WSTA0041",
+"caseMm": 25.5,
+"lugMm": 33.7,
+"thicknessMm": 6.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 3100
+},
+{
+"id": "cartier-tank-louis-cartier-large-wgta0067",
+"brand": "Cartier",
+"family": "Tank",
+"model": "Cartier Tank Louis Cartier Large",
+"reference": "WGTA0067",
+"caseMm": 25.5,
+"lugMm": 33.7,
+"thicknessMm": 6.6,
+"caseHex": "#d4af37",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 11500
+},
+{
+"id": "cartier-tank-fran-aise-medium-wsta0074",
+"brand": "Cartier",
+"family": "Tank",
+"model": "Cartier Tank Française Medium",
+"reference": "WSTA0074",
+"caseMm": 25.0,
+"lugMm": 32.0,
+"thicknessMm": 6.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 4950
+},
+{
+"id": "cartier-tank-am-ricaine-large-wsta0083",
+"brand": "Cartier",
+"family": "Tank",
+"model": "Cartier Tank Américaine Large",
+"reference": "WSTA0083",
+"caseMm": 26.6,
+"lugMm": 45.1,
+"thicknessMm": 8.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 5450
+},
+{
+"id": "cartier-ballon-bleu-40mm-wsbb0040",
+"brand": "Cartier",
+"family": "Ballon Bleu",
+"model": "Cartier Ballon Bleu 40mm",
+"reference": "WSBB0040",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 7450
+},
+{
+"id": "cartier-ballon-bleu-33mm-wsbb0043",
+"brand": "Cartier",
+"family": "Ballon Bleu",
+"model": "Cartier Ballon Bleu 33mm",
+"reference": "WSBB0043",
+"caseMm": 33.0,
+"lugMm": 39.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 6100
+},
+{
+"id": "cartier-pasha-de-cartier-41-wspa0009",
+"brand": "Cartier",
+"family": "Pasha",
+"model": "Cartier Pasha de Cartier 41",
+"reference": "WSPA0009",
+"caseMm": 41.0,
+"lugMm": 47.0,
+"thicknessMm": 9.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 7550
+},
+{
+"id": "cartier-panth-re-small-wspn0006",
+"brand": "Cartier",
+"family": "Panthère",
+"model": "Cartier Panthère Small",
+"reference": "WSPN0006",
+"caseMm": 22.0,
+"lugMm": 30.0,
+"thicknessMm": 6.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 4800
+},
+{
+"id": "cartier-panth-re-medium-gold-wgpn0009",
+"brand": "Cartier",
+"family": "Panthère",
+"model": "Cartier Panthère Medium Gold",
+"reference": "WGPN0009",
+"caseMm": 27.0,
+"lugMm": 37.0,
+"thicknessMm": 6.0,
+"caseHex": "#d4af37",
+"dialHex": "#f5f5f0",
+"strap": "gold bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 23400
+},
+{
+"id": "cartier-baignoire-small-wgba0026",
+"brand": "Cartier",
+"family": "Baignoire",
+"model": "Cartier Baignoire Small",
+"reference": "WGBA0026",
+"caseMm": 31.6,
+"lugMm": 23.1,
+"thicknessMm": 5.9,
+"caseHex": "#d4af37",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 8000
+},
+{
+"id": "cartier-cl-de-cartier-40-wscl0018",
+"brand": "Cartier",
+"family": "Clé",
+"model": "Cartier Clé de Cartier 40",
+"reference": "WSCL0018",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 11.4,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 7500
+},
+{
+"id": "tag-heuer-carrera-chronograph-42-cbn2a1b-ba0643",
+"brand": "TAG Heuer",
+"family": "Carrera",
+"model": "TAG Heuer Carrera Chronograph 42",
+"reference": "CBN2A1B.BA0643",
+"caseMm": 42.0,
+"lugMm": 49.0,
+"thicknessMm": 14.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 6200
+},
+{
+"id": "tag-heuer-carrera-glassbox-39-cbs2210-fc6534",
+"brand": "TAG Heuer",
+"family": "Carrera",
+"model": "TAG Heuer Carrera Glassbox 39",
+"reference": "CBS2210.FC6534",
+"caseMm": 39.0,
+"lugMm": 47.0,
+"thicknessMm": 13.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 6650
+},
+{
+"id": "tag-heuer-carrera-date-39-wbn2111-ba0639",
+"brand": "TAG Heuer",
+"family": "Carrera",
+"model": "TAG Heuer Carrera Date 39",
+"reference": "WBN2111.BA0639",
+"caseMm": 39.0,
+"lugMm": 46.5,
+"thicknessMm": 11.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dress",
+"sport",
+"luxury"
+],
+"priceUsd": 3300
+},
+{
+"id": "tag-heuer-aquaracer-professional-300-wbp201a-ba0632",
+"brand": "TAG Heuer",
+"family": "Aquaracer",
+"model": "TAG Heuer Aquaracer Professional 300",
+"reference": "WBP201A.BA0632",
+"caseMm": 43.0,
+"lugMm": 50.0,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 3400
+},
+{
+"id": "tag-heuer-monaco-cbl2111-fc6453",
+"brand": "TAG Heuer",
+"family": "Monaco",
+"model": "TAG Heuer Monaco",
+"reference": "CBL2111.FC6453",
+"caseMm": 39.0,
+"lugMm": 47.0,
+"thicknessMm": 14.3,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 6950
+},
+{
+"id": "tag-heuer-formula-1-quartz-waz1110-ba0875",
+"brand": "TAG Heuer",
+"family": "Formula 1",
+"model": "TAG Heuer Formula 1 Quartz",
+"reference": "WAZ1110.BA0875",
+"caseMm": 41.0,
+"lugMm": 47.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport"
+],
+"priceUsd": 1650
+},
+{
+"id": "breitling-navitimer-b01-43-ab0138211b1p1",
+"brand": "Breitling",
+"family": "Navitimer",
+"model": "Breitling Navitimer B01 43",
+"reference": "AB0138211B1P1",
+"caseMm": 43.0,
+"lugMm": 50.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"chrono",
+"pilot",
+"luxury"
+],
+"priceUsd": 9850
+},
+{
+"id": "breitling-navitimer-41-automatic-a17326211c1p1",
+"brand": "Breitling",
+"family": "Navitimer",
+"model": "Breitling Navitimer 41 Automatic",
+"reference": "A17326211C1P1",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"pilot",
+"luxury"
+],
+"priceUsd": 5450
+},
+{
+"id": "breitling-superocean-42-a17375211b1s1",
+"brand": "Breitling",
+"family": "Superocean",
+"model": "Breitling Superocean 42",
+"reference": "A17375211B1S1",
+"caseMm": 42.0,
+"lugMm": 49.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 4900
+},
+{
+"id": "breitling-superocean-heritage-42-ab2010121b1a1",
+"brand": "Breitling",
+"family": "Superocean Heritage",
+"model": "Breitling Superocean Heritage 42",
+"reference": "AB2010121B1A1",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 13.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"luxury"
+],
+"priceUsd": 5600
+},
+{
+"id": "breitling-chronomat-b01-42-ab0134101c1a1",
+"brand": "Breitling",
+"family": "Chronomat",
+"model": "Breitling Chronomat B01 42",
+"reference": "AB0134101C1A1",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 15.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 8800
+},
+{
+"id": "breitling-premier-b01-42-ab0118221g1p1",
+"brand": "Breitling",
+"family": "Premier",
+"model": "Breitling Premier B01 42",
+"reference": "AB0118221G1P1",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#2f5b45",
+"strap": "leather",
+"styles": [
+"chrono",
+"dress",
+"luxury"
+],
+"priceUsd": 9250
+},
+{
+"id": "iwc-big-pilot-s-watch-43-iw329301",
+"brand": "IWC",
+"family": "Pilot's Watch",
+"model": "IWC Big Pilot's Watch 43",
+"reference": "IW329301",
+"caseMm": 43.0,
+"lugMm": 53.0,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"pilot",
+"luxury"
+],
+"priceUsd": 10900
+},
+{
+"id": "iwc-pilot-s-watch-mark-xx-iw328201",
+"brand": "IWC",
+"family": "Pilot's Watch",
+"model": "IWC Pilot's Watch Mark XX",
+"reference": "IW328201",
+"caseMm": 40.0,
+"lugMm": 49.5,
+"thicknessMm": 11.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"pilot",
+"luxury"
+],
+"priceUsd": 5400
+},
+{
+"id": "iwc-pilot-s-watch-chronograph-41-iw388101",
+"brand": "IWC",
+"family": "Pilot's Watch",
+"model": "IWC Pilot's Watch Chronograph 41",
+"reference": "IW388101",
+"caseMm": 41.0,
+"lugMm": 50.0,
+"thicknessMm": 14.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"chrono",
+"pilot",
+"luxury"
+],
+"priceUsd": 8000
+},
+{
+"id": "iwc-portugieser-chronograph-iw371605",
+"brand": "IWC",
+"family": "Portugieser",
+"model": "IWC Portugieser Chronograph",
+"reference": "IW371605",
+"caseMm": 41.0,
+"lugMm": 49.0,
+"thicknessMm": 13.1,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"chrono",
+"dress",
+"luxury"
+],
+"priceUsd": 8900
+},
+{
+"id": "iwc-portofino-automatic-40-iw356502",
+"brand": "IWC",
+"family": "Portofino",
+"model": "IWC Portofino Automatic 40",
+"reference": "IW356502",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 9.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 5500
+},
+{
+"id": "jlc-reverso-classic-medium-small-seconds-q3858520",
+"brand": "Jaeger-LeCoultre",
+"family": "Reverso",
+"model": "JLC Reverso Classic Medium Small Seconds",
+"reference": "Q3858520",
+"caseMm": 40.1,
+"lugMm": 24.4,
+"thicknessMm": 8.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 9150
+},
+{
+"id": "jlc-master-ultra-thin-moon-q1368430",
+"brand": "Jaeger-LeCoultre",
+"family": "Master",
+"model": "JLC Master Ultra Thin Moon",
+"reference": "Q1368430",
+"caseMm": 39.0,
+"lugMm": 46.0,
+"thicknessMm": 9.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 12900
+},
+{
+"id": "panerai-luminor-base-logo-44-pam01086-pam01086",
+"brand": "Panerai",
+"family": "Luminor",
+"model": "Panerai Luminor Base Logo 44 PAM01086",
+"reference": "PAM01086",
+"caseMm": 44.0,
+"lugMm": 52.0,
+"thicknessMm": 15.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 5700
+},
+{
+"id": "panerai-luminor-due-38-pam01247",
+"brand": "Panerai",
+"family": "Luminor",
+"model": "Panerai Luminor Due 38",
+"reference": "PAM01247",
+"caseMm": 38.0,
+"lugMm": 46.0,
+"thicknessMm": 10.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 7100
+},
+{
+"id": "panerai-submersible-42-pam00973",
+"brand": "Panerai",
+"family": "Submersible",
+"model": "Panerai Submersible 42",
+"reference": "PAM00973",
+"caseMm": 42.0,
+"lugMm": 51.0,
+"thicknessMm": 15.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "rubber",
+"styles": [
+"dive",
+"sport",
+"luxury"
+],
+"priceUsd": 10900
+},
+{
+"id": "zenith-chronomaster-sport-03-3100-3600-69-m3100",
+"brand": "Zenith",
+"family": "Chronomaster",
+"model": "Zenith Chronomaster Sport",
+"reference": "03.3100.3600/69.M3100",
+"caseMm": 41.0,
+"lugMm": 47.5,
+"thicknessMm": 13.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 11700
+},
+{
+"id": "zenith-defy-skyline-03-9300-3620-51-i001",
+"brand": "Zenith",
+"family": "Defy",
+"model": "Zenith Defy Skyline",
+"reference": "03.9300.3620/51.I001",
+"caseMm": 41.0,
+"lugMm": 48.0,
+"thicknessMm": 11.6,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 9000
+},
+{
+"id": "hublot-big-bang-unico-42-titanium-441-nx-1171-rx",
+"brand": "Hublot",
+"family": "Big Bang",
+"model": "Hublot Big Bang Unico 42 Titanium",
+"reference": "441.NX.1171.RX",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 14.5,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"chrono",
+"sport",
+"luxury"
+],
+"priceUsd": 21300
+},
+{
+"id": "hublot-classic-fusion-42-titanium-542-nx-1171-rx",
+"brand": "Hublot",
+"family": "Classic Fusion",
+"model": "Hublot Classic Fusion 42 Titanium",
+"reference": "542.NX.1171.RX",
+"caseMm": 42.0,
+"lugMm": 50.0,
+"thicknessMm": 10.95,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dress",
+"luxury"
+],
+"priceUsd": 8500
+},
+{
+"id": "richard-mille-rm-35-02-rm35-02",
+"brand": "Richard Mille",
+"family": "RM 035",
+"model": "Richard Mille RM 35-02",
+"reference": "RM35-02",
+"caseMm": 44.5,
+"lugMm": 49.9,
+"thicknessMm": 13.1,
+"caseHex": "#2a2a2a",
+"dialHex": "#2a2a2a",
+"strap": "rubber",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 190000
+},
+{
+"id": "bulova-lunar-pilot-chronograph-96b258",
+"brand": "Bulova",
+"family": "Lunar Pilot",
+"model": "Bulova Lunar Pilot Chronograph",
+"reference": "96B258",
+"caseMm": 45.0,
+"lugMm": 51.0,
+"thicknessMm": 14.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"chrono",
+"pilot"
+],
+"priceUsd": 695
+},
+{
+"id": "bulova-precisionist-98b227",
+"brand": "Bulova",
+"family": "Precisionist",
+"model": "Bulova Precisionist",
+"reference": "98B227",
+"caseMm": 46.5,
+"lugMm": 52.0,
+"thicknessMm": 14.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"sport"
+],
+"priceUsd": 550
+},
+{
+"id": "fossil-grant-chronograph-fs4735",
+"brand": "Fossil",
+"family": "Grant",
+"model": "Fossil Grant Chronograph",
+"reference": "FS4735",
+"caseMm": 44.0,
+"lugMm": 52.0,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 149
+},
+{
+"id": "fossil-neutra-chronograph-fs5380",
+"brand": "Fossil",
+"family": "Neutra",
+"model": "Fossil Neutra Chronograph",
+"reference": "FS5380",
+"caseMm": 44.0,
+"lugMm": 51.0,
+"thicknessMm": 12.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "leather",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 149
+},
+{
+"id": "fossil-townsman-automatic-me3099",
+"brand": "Fossil",
+"family": "Townsman",
+"model": "Fossil Townsman Automatic",
+"reference": "ME3099",
+"caseMm": 44.0,
+"lugMm": 51.0,
+"thicknessMm": 13.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"casual"
+],
+"priceUsd": 199
+},
+{
+"id": "daniel-wellington-classic-40-dw00100006",
+"brand": "Daniel Wellington",
+"family": "Classic",
+"model": "Daniel Wellington Classic 40",
+"reference": "DW00100006",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 6.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 179
+},
+{
+"id": "daniel-wellington-petite-32-dw00100161",
+"brand": "Daniel Wellington",
+"family": "Petite",
+"model": "Daniel Wellington Petite 32",
+"reference": "DW00100161",
+"caseMm": 32.0,
+"lugMm": 37.0,
+"thicknessMm": 6.0,
+"caseHex": "#d9a08b",
+"dialHex": "#f5f5f0",
+"strap": "mesh",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 169
+},
+{
+"id": "mvmt-classic-45-d-mt01-bl",
+"brand": "MVMT",
+"family": "Classic",
+"model": "MVMT Classic 45",
+"reference": "D-MT01-BL",
+"caseMm": 45.0,
+"lugMm": 51.0,
+"thicknessMm": 8.0,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dress",
+"casual"
+],
+"priceUsd": 128
+},
+{
+"id": "apple-watch-series-11-46mm-aw-s11-46",
+"brand": "Apple",
+"family": "Apple Watch",
+"model": "Apple Watch Series 11 46mm",
+"reference": "AW-S11-46",
+"caseMm": 46.0,
+"lugMm": 46.0,
+"thicknessMm": 9.7,
+"caseHex": "#2a2a2a",
+"dialHex": "#1c1c1c",
+"strap": "sport band",
+"styles": [
+"digital",
+"casual",
+"sport"
+],
+"priceUsd": 429
+},
+{
+"id": "apple-watch-series-11-42mm-aw-s11-42",
+"brand": "Apple",
+"family": "Apple Watch",
+"model": "Apple Watch Series 11 42mm",
+"reference": "AW-S11-42",
+"caseMm": 42.0,
+"lugMm": 42.0,
+"thicknessMm": 9.7,
+"caseHex": "#e8e3de",
+"dialHex": "#1c1c1c",
+"strap": "sport band",
+"styles": [
+"digital",
+"casual",
+"sport"
+],
+"priceUsd": 399
+},
+{
+"id": "apple-watch-ultra-3-aw-u3",
+"brand": "Apple",
+"family": "Apple Watch",
+"model": "Apple Watch Ultra 3",
+"reference": "AW-U3",
+"caseMm": 49.0,
+"lugMm": 49.0,
+"thicknessMm": 12.0,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "sport band",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 799
+},
+{
+"id": "apple-watch-se-44mm-aw-se-44",
+"brand": "Apple",
+"family": "Apple Watch",
+"model": "Apple Watch SE 44mm",
+"reference": "AW-SE-44",
+"caseMm": 44.0,
+"lugMm": 44.0,
+"thicknessMm": 10.7,
+"caseHex": "#2a2a2a",
+"dialHex": "#1c1c1c",
+"strap": "sport band",
+"styles": [
+"digital",
+"casual"
+],
+"priceUsd": 279
+},
+{
+"id": "samsung-galaxy-watch-ultra-sm-l705",
+"brand": "Samsung",
+"family": "Galaxy Watch",
+"model": "Samsung Galaxy Watch Ultra",
+"reference": "SM-L705",
+"caseMm": 47.0,
+"lugMm": 52.0,
+"thicknessMm": 12.1,
+"caseHex": "#b8b8b8",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 649
+},
+{
+"id": "garmin-fenix-8-47mm-010-02904",
+"brand": "Garmin",
+"family": "Fenix",
+"model": "Garmin Fenix 8 47mm",
+"reference": "010-02904",
+"caseMm": 47.0,
+"lugMm": 47.0,
+"thicknessMm": 15.5,
+"caseHex": "#2a2a2a",
+"dialHex": "#1c1c1c",
+"strap": "silicone",
+"styles": [
+"digital",
+"sport",
+"field"
+],
+"priceUsd": 999
+},
+{
+"id": "garmin-forerunner-265-010-02810",
+"brand": "Garmin",
+"family": "Forerunner",
+"model": "Garmin Forerunner 265",
+"reference": "010-02810",
+"caseMm": 46.1,
+"lugMm": 46.1,
+"thicknessMm": 12.9,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "silicone",
+"styles": [
+"digital",
+"sport"
+],
+"priceUsd": 449
+},
+{
+"id": "garmin-instinct-2-010-02626",
+"brand": "Garmin",
+"family": "Instinct",
+"model": "Garmin Instinct 2",
+"reference": "010-02626",
+"caseMm": 45.0,
+"lugMm": 45.0,
+"thicknessMm": 14.5,
+"caseHex": "#1c1c1c",
+"dialHex": "#1c1c1c",
+"strap": "silicone",
+"styles": [
+"digital",
+"sport",
+"field"
+],
+"priceUsd": 299
+},
+{
+"id": "nomos-tangente-38-164",
+"brand": "Nomos",
+"family": "Tangente",
+"model": "Nomos Tangente 38",
+"reference": "164",
+"caseMm": 37.5,
+"lugMm": 47.5,
+"thicknessMm": 6.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"dress"
+],
+"priceUsd": 2160
+},
+{
+"id": "nomos-club-campus-38-708",
+"brand": "Nomos",
+"family": "Club",
+"model": "Nomos Club Campus 38",
+"reference": "708",
+"caseMm": 38.5,
+"lugMm": 47.0,
+"thicknessMm": 8.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "leather",
+"styles": [
+"casual",
+"dress"
+],
+"priceUsd": 1650
+},
+{
+"id": "sinn-556-i-556-010",
+"brand": "Sinn",
+"family": "556",
+"model": "Sinn 556 I",
+"reference": "556.010",
+"caseMm": 38.5,
+"lugMm": 46.0,
+"thicknessMm": 11.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"field"
+],
+"priceUsd": 1650
+},
+{
+"id": "oris-aquis-date-41-5-01-733-7766-4135-07-8-22-05peb",
+"brand": "Oris",
+"family": "Aquis",
+"model": "Oris Aquis Date 41.5",
+"reference": "01 733 7766 4135-07 8 22 05PEB",
+"caseMm": 41.5,
+"lugMm": 47.6,
+"thicknessMm": 12.7,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 2400
+},
+{
+"id": "oris-divers-sixty-five-40-01-733-7707-4064-07-8-20-18",
+"brand": "Oris",
+"family": "Divers Sixty-Five",
+"model": "Oris Divers Sixty-Five 40",
+"reference": "01 733 7707 4064-07 8 20 18",
+"caseMm": 40.0,
+"lugMm": 48.0,
+"thicknessMm": 12.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 2300
+},
+{
+"id": "oris-big-crown-pointer-date-40-01-754-7741-4065-07-5-20-63",
+"brand": "Oris",
+"family": "Big Crown",
+"model": "Oris Big Crown Pointer Date 40",
+"reference": "01 754 7741 4065-07 5 20 63",
+"caseMm": 40.0,
+"lugMm": 48.0,
+"thicknessMm": 12.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"pilot",
+"field",
+"casual"
+],
+"priceUsd": 2200
+},
+{
+"id": "christopher-ward-c60-trident-pro-300-c60-40ada3-s00b0-b0",
+"brand": "Christopher Ward",
+"family": "C60",
+"model": "Christopher Ward C60 Trident Pro 300",
+"reference": "C60-40ADA3-S00B0-B0",
+"caseMm": 40.0,
+"lugMm": 47.7,
+"thicknessMm": 12.9,
+"caseHex": "#c9cbcd",
+"dialHex": "#1a3a6b",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"sport"
+],
+"priceUsd": 995
+},
+{
+"id": "christopher-ward-c63-sealander-c63-39ada3-s00w0-rb",
+"brand": "Christopher Ward",
+"family": "C63",
+"model": "Christopher Ward C63 Sealander",
+"reference": "C63-39ADA3-S00W0-RB",
+"caseMm": 39.0,
+"lugMm": 46.8,
+"thicknessMm": 11.2,
+"caseHex": "#c9cbcd",
+"dialHex": "#f5f5f0",
+"strap": "rubber",
+"styles": [
+"field",
+"casual"
+],
+"priceUsd": 895
+},
+{
+"id": "baltic-aquascaphe-classic-aq-classic",
+"brand": "Baltic",
+"family": "Aquascaphe",
+"model": "Baltic Aquascaphe Classic",
+"reference": "AQ-CLASSIC",
+"caseMm": 39.0,
+"lugMm": 47.0,
+"thicknessMm": 12.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 650
+},
+{
+"id": "marathon-gsar-diver-ww194006",
+"brand": "Marathon",
+"family": "GSAR",
+"model": "Marathon GSAR Diver",
+"reference": "WW194006",
+"caseMm": 41.0,
+"lugMm": 49.0,
+"thicknessMm": 14.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "rubber",
+"styles": [
+"dive",
+"field"
+],
+"priceUsd": 1300
+},
+{
+"id": "movado-museum-classic-0607270",
+"brand": "Movado",
+"family": "Museum",
+"model": "Movado Museum Classic",
+"reference": "0607270",
+"caseMm": 40.0,
+"lugMm": 46.0,
+"thicknessMm": 7.5,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "leather",
+"styles": [
+"dress"
+],
+"priceUsd": 695
+},
+{
+"id": "michael-kors-lexington-chronograph-mk8281",
+"brand": "Michael Kors",
+"family": "Lexington",
+"model": "Michael Kors Lexington Chronograph",
+"reference": "MK8281",
+"caseMm": 44.0,
+"lugMm": 51.0,
+"thicknessMm": 12.0,
+"caseHex": "#d4af37",
+"dialHex": "#d4af37",
+"strap": "steel bracelet",
+"styles": [
+"chrono",
+"casual"
+],
+"priceUsd": 275
+},
+{
+"id": "invicta-pro-diver-40-8926ob",
+"brand": "Invicta",
+"family": "Pro Diver",
+"model": "Invicta Pro Diver 40",
+"reference": "8926OB",
+"caseMm": 40.0,
+"lugMm": 47.0,
+"thicknessMm": 14.0,
+"caseHex": "#c9cbcd",
+"dialHex": "#1c1c1c",
+"strap": "steel bracelet",
+"styles": [
+"dive",
+"casual"
+],
+"priceUsd": 90
+}
+]
