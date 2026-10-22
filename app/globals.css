@@ -205,62 +205,51 @@ h2 { font-size: 20px; margin: 0; letter-spacing: -0.02em; }
 
 /* Opening animation */
 .splash {
-  --skin: #e8c6a6;
-  --case: #1c1c1c;
-  --dial: #ffffff;
   position: fixed;
   inset: 0;
   z-index: 100;
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 4px;
+  gap: 6px;
   background: var(--bg);
-  animation: splash-out 0.45s ease-in 2.1s forwards;
+  animation: splash-out 0.4s ease-in 2.15s forwards;
 }
-@media (prefers-color-scheme: dark) {
-  .splash { --skin: #b98d6c; --case: #2a2a2a; --dial: #f2f1ee; }
+.splash-art {
+  width: min(38vw, 150px);
+  height: auto;
+  animation: splash-cinch 0.35s cubic-bezier(.3,1.6,.5,1) 1.05s both;
 }
-.splash-art { width: min(80vw, 340px); height: auto; overflow: visible; }
-.splash-arm { animation: splash-arm-in 0.45s cubic-bezier(.2,.8,.2,1) both; }
-.splash-watch {
-  transform-origin: 120px 130px;
-  animation: splash-drop 0.5s cubic-bezier(.3,1.6,.5,1) 0.3s both;
-}
-.splash-strap {
+.splash-s {
   fill: none;
-  stroke: var(--accent);
-  stroke-width: 30;
-  stroke-dasharray: 32;
-  stroke-dashoffset: 32;
-  animation: splash-wrap 0.42s cubic-bezier(.5,0,.3,1) forwards;
-}
-.splash-strap-top { animation-delay: 0.75s; }
-.splash-strap-bottom { animation-delay: 0.9s; }
-.splash-holes { fill: var(--skin); transform-box: fill-box; transform-origin: center; opacity: 0; animation: splash-pop 0.25s ease-out 1.3s forwards; }
-.splash-hand {
-  stroke: var(--ink-on-dial, #161616);
-  stroke-width: 2.6;
+  stroke: var(--ink);
+  stroke-width: 12;
   stroke-linecap: round;
-  transform-origin: 120px 130px;
-  animation: splash-tick 1.6s cubic-bezier(.4,0,.2,1) 0.5s both;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: splash-draw 0.9s cubic-bezier(.65,0,.35,1) 0.15s forwards;
 }
-.splash-hand-short { animation-duration: 2.2s; }
+.splash-hole {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(0);
+  animation: splash-punch 0.18s cubic-bezier(.3,1.8,.5,1) forwards;
+}
+.splash-hole:nth-of-type(1) { animation-delay: 1.15s; }
+.splash-hole:nth-of-type(2) { animation-delay: 1.27s; }
+.splash-hole:nth-of-type(3) { animation-delay: 1.39s; }
 .splash-name {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: -0.02em;
   opacity: 0;
-  animation: splash-name 0.4s ease-out 1.45s forwards;
+  animation: splash-name 0.4s ease-out 1.5s forwards;
 }
-@keyframes splash-arm-in { from { opacity: 0; transform: translateX(-24px); } }
-@keyframes splash-drop { from { opacity: 0; transform: translateY(-40px) scale(1.25); } }
-@keyframes splash-wrap { to { stroke-dashoffset: 0; } }
-@keyframes splash-pop { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: none; } }
-@keyframes splash-tick { from { transform: rotate(-90deg); } }
+@keyframes splash-draw { to { stroke-dashoffset: 0; } }
+@keyframes splash-cinch { 40% { transform: scale(0.92, 1.04); } }
+@keyframes splash-punch { to { transform: scale(1); } }
 @keyframes splash-name { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 @keyframes splash-out { to { opacity: 0; visibility: hidden; } }
-.splash-holes circle { transform-box: fill-box; transform-origin: center; }
 @media (prefers-reduced-motion: reduce) {
   .splash, .splash * { animation-duration: 0.01s !important; animation-delay: 0s !important; }
   .splash { animation: splash-out 0.3s ease-in 0.6s forwards !important; }
