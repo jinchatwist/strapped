@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Fraunces, Rubik } from "next/font/google";
 import { RegisterSW } from "@/components/RegisterSW";
 import { Splash } from "@/components/Splash";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Splash />
         {children}
         <RegisterSW />
+        <Analytics />
       </body>
     </html>
   );

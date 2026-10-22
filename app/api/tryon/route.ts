@@ -1,5 +1,7 @@
 import type { Part } from "@google/genai";
 import { imageClient } from "@/lib/gemini";
+import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
+import { deviceOf, track } from "@/lib/store";
 import type { Watch } from "@/lib/watch";
 
 export const maxDuration = 60;
@@ -9,6 +11,11 @@ type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img };
 
 // Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
+
+// How many free try-ons are left, for the line under the Generate button.
+export async function GET(req: Request) {
+  return Response.json({ ...(await remaining(req)), free: FREE_TRYONS });
+}
 
 export async function POST(req: Request) {
   let body: TryOnRequest;
@@ -24,6 +31,18 @@ export async function POST(req: Request) {
   if (!ai) {
     return Response.json({ error: "Try-on preview isn't set up yet (needs GOOGLE_CLOUD_API_KEY)." }, { status: 503 });
   }
+
+  const allowance = await useTry(req);
+  const device = deviceOf(req);
+  if (!allowance.ok) {
+    await track("limit_hit", device);
+    const error =
+      allowance.reason === "day"
+        ? "Strapped is busy today. Free try-ons open again tomorrow."
+        : `You've used your ${FREE_TRYONS} free try-ons. Thanks for testing Strapped!`;
+    return Response.json({ error, limit: true, left: 0 }, { status: 429 });
+  }
+  await track("generate", device);
 
   const w = body.watch;
   const prompt = [
@@ -45,11 +64,15 @@ export async function POST(req: Request) {
     });
     const image = response.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data)?.inlineData;
     if (!image?.data) {
+      await Promise.all([allowance.refund(), track("tryon_fail", device)]);
       return Response.json({ error: "Couldn't make the try-on picture this time. Try a clearer wrist photo." }, { status: 422 });
     }
-    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}` });
+    await track("tryon_ok", device);
+    const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
+    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left }, { headers });
   } catch (error) {
     console.error(error);
+    await Promise.all([allowance.refund(), track("tryon_fail", device)]);
     return Response.json({ error: "The try-on preview failed. Try again in a moment." }, { status: 502 });
   }
 }

@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import catalog from "@/data/catalog.json";
+import { Feedback } from "@/components/Feedback";
 import { Logo } from "@/components/Logo";
 import { ShareBar } from "@/components/ShareBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchFace } from "@/components/WatchFace";
 import { WristCamera } from "@/components/WristCamera";
+import { betaHeaders, rememberCode, track } from "@/lib/beta";
 import { prepareImage, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 
@@ -33,7 +35,7 @@ const POPULAR_IDS = [
 const POPULAR = POPULAR_IDS.map((id) => WATCHES.find((w) => w.id === id)).filter((w): w is Watch => !!w);
 
 type Step = "pick" | "photos" | "result";
-type TryOnState = { status: "idle" | "loading" | "done" | "error"; image?: string; error?: string };
+type TryOnState = { status: "idle" | "loading" | "done" | "error"; image?: string; error?: string; limit?: boolean };
 
 // Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
 const OLD_SAVED_WRIST = "strapped-wrist";
@@ -58,6 +60,9 @@ export default function Home() {
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
   const [camera, setCamera] = useState(false);
+  const [feedback, setFeedback] = useState(false);
+  // Free try-ons left for this person during the beta; null until the server answers.
+  const [left, setLeft] = useState<number | null>(null);
   // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
 
@@ -65,6 +70,12 @@ export default function Home() {
     try {
       localStorage.removeItem(OLD_SAVED_WRIST);
     } catch {}
+    rememberCode();
+    track("visit");
+    fetch("/api/tryon", { headers: betaHeaders() })
+      .then((r) => r.json())
+      .then((j) => typeof j.left === "number" && setLeft(j.left))
+      .catch(() => {});
   }, []);
 
   const browsing = !query.trim() && !brand;
@@ -72,6 +83,7 @@ export default function Home() {
   const shown = results.slice(0, 60);
 
   function pick(w: Watch) {
+    track("watch_open");
     setWatch(w);
     setWatchPhoto(null);
     setError("");
@@ -83,7 +95,7 @@ export default function Home() {
     setLookingUp(true);
     setError("");
     try {
-      const res = await fetch("/api/lookup", { method: "POST", body: JSON.stringify({ query }) });
+      const res = await fetch("/api/lookup", { method: "POST", headers: betaHeaders(), body: JSON.stringify({ query }) });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
       pick(json.watch);
@@ -112,6 +124,7 @@ export default function Home() {
     try {
       const res = await fetch("/api/tryon", {
         method: "POST",
+        headers: betaHeaders(),
         body: JSON.stringify({
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
@@ -119,11 +132,21 @@ export default function Home() {
         }),
       });
       const json = await res.json();
+      if (typeof json.left === "number") setLeft(json.left);
+      if (json.limit) {
+        if (id === attempt.current) setTryOn({ status: "error", error: json.error, limit: true });
+        return;
+      }
       if (!res.ok) throw new Error(json.error);
       if (id === attempt.current) setTryOn({ status: "done", image: json.image });
     } catch (e) {
       if (id === attempt.current) setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on picture failed." });
     }
+  }
+
+  function openCamera() {
+    track("camera_open");
+    setCamera(true);
   }
 
   function startOver() {
@@ -187,6 +210,7 @@ export default function Home() {
             </button>
           )}
           {error && <p className="error">{error}</p>}
+          <button className="link feedback-link" onClick={() => setFeedback(true)}>Send feedback</button>
         </>
       )}
 
@@ -202,7 +226,7 @@ export default function Home() {
                 </div>
                 {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
               </div>
-              <button className={`addwatch ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+              <button className={`addwatch ${wrist ? "filled" : ""}`} onClick={openCamera}>
                 {wrist ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={wrist.preview} alt="Your wrist" />
@@ -216,7 +240,7 @@ export default function Home() {
               </button>
             </>
           ) : (
-            <button className={`drop wide ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+            <button className={`drop wide ${wrist ? "filled" : ""}`} onClick={openCamera}>
               {wrist ? (
                 <>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -249,9 +273,14 @@ export default function Home() {
           {error && <p className="error">{error}</p>}
           {watch ? (
             <>
-              <button className="cta" disabled={!wrist} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
+              <button className="cta" disabled={!wrist || left === 0} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
                 Generate
               </button>
+              {left !== null && left < 100 && (
+                <p className="left-note">
+                  {left === 0 ? "You've used all your free try-ons." : `${left} free ${left === 1 ? "try-on" : "try-ons"} left`}
+                </p>
+              )}
               <button className="link back" onClick={startOver}>Pick a different watch</button>
             </>
           ) : (
@@ -268,7 +297,15 @@ export default function Home() {
             <ShareBar image={tryOn.image} watch={watch} />
           ) : (
             <>
-              <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
+              {tryOn.limit ? (
+                <div className="limit-box">
+                  <strong>{tryOn.error}</strong>
+                  <p>Paid packs are coming soon. Tell us what you thought while it&apos;s fresh?</p>
+                  <button className="ghost" onClick={() => setFeedback(true)}>Give feedback</button>
+                </div>
+              ) : (
+                <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
+              )}
               <div className="result-line">
                 <div style={{ minWidth: 0 }}>
                   <h2>{watch.model}</h2>
@@ -278,14 +315,20 @@ export default function Home() {
               </div>
             </>
           )}
-          <button className="cta" onClick={startOver}>Try another watch</button>
+          {tryOn.status === "done" && (
+            <button className="ghost" onClick={() => setFeedback(true)}>How did it look? Tell us</button>
+          )}
+          <button className="cta" onClick={() => { track("try_another"); startOver(); }}>Try another watch</button>
         </>
       )}
+
+      {feedback && <Feedback watch={watch ? `${watch.brand} ${watch.model}` : undefined} onClose={() => setFeedback(false)} />}
 
       {camera && (
         <WristCamera
           onClose={() => setCamera(false)}
           onDone={(photo) => {
+            track("wrist_ok");
             setWrist(photo);
             setError("");
             setCamera(false);
