@@ -5,6 +5,7 @@ import catalog from "@/data/catalog.json";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchFace } from "@/components/WatchFace";
+import { WristCamera } from "@/components/WristCamera";
 import type { FitResult } from "@/lib/fit";
 import { prepareImage, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
@@ -56,6 +57,7 @@ export default function Home() {
   const [demo, setDemo] = useState(false);
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
+  const [camera, setCamera] = useState(false);
   // Only the latest try counts; answers from an earlier watch are dropped.
   const attempt = useRef(0);
 
@@ -265,7 +267,20 @@ export default function Home() {
             <p className="sub">A clear photo of your bare wrist from above works best.</p>
           </div>
           <div className="photos">
-            <PhotoBox label="Your wrist" hint="Required, saved for next time" photo={wrist} capture="environment" onFile={(f) => onPhoto(f, setWrist)} />
+            <button className={`drop ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+              {wrist ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={wrist.preview} alt="Your wrist" />
+                  <span className="badge">Your wrist · tap to retake</span>
+                </>
+              ) : (
+                <>
+                  <span className="label">Your wrist</span>
+                  <span className="hint">Required, saved for next time</span>
+                </>
+              )}
+            </button>
             <PhotoBox label="Your outfit" hint="Optional, helps with style" photo={outfit} capture="user" onFile={(f) => onPhoto(f, setOutfit)} />
           </div>
           {watch && <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
@@ -335,6 +350,16 @@ export default function Home() {
           <button className="cta" onClick={startOver}>Try another watch</button>
           <button className="link center" onClick={() => setStep("photos")}>Use a different wrist photo</button>
         </>
+      )}
+      {camera && (
+        <WristCamera
+          onClose={() => setCamera(false)}
+          onDone={(photo) => {
+            setWrist(photo);
+            setError("");
+            setCamera(false);
+          }}
+        />
       )}
     </main>
   );
