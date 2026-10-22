@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import catalog from "@/data/catalog.json";
 import { Logo } from "@/components/Logo";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchFace } from "@/components/WatchFace";
 import type { FitResult } from "@/lib/fit";
 import { prepareImage, type ImagePayload } from "@/lib/image";
@@ -152,9 +153,12 @@ export default function Home() {
         <button className="brand" onClick={startOver} aria-label="Strapped home">
           <Logo size={30} /> Strapped
         </button>
-        <span className="steps">
-          {step === "pick" ? "1 of 3" : step === "photos" ? "2 of 3" : "3 of 3"}
-        </span>
+        <div className="top-right">
+          <ThemeToggle />
+          <span className="steps">
+            {step === "pick" ? "1 of 3" : step === "photos" ? "2 of 3" : "3 of 3"}
+          </span>
+        </div>
       </div>
 
       {step === "pick" && (

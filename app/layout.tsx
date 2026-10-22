@@ -20,9 +20,15 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const THEME_SCRIPT = `try{var t=localStorage.getItem("strapped-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={rubik.variable}>
+    <html lang="en" className={rubik.variable} suppressHydrationWarning>
+      <head>
+        {/* Apply the saved theme before the first paint so the opening animation matches it. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <Splash />
         {children}
