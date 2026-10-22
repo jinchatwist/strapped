@@ -9,8 +9,7 @@ export const metadata: Metadata = {
   title: "Strapped",
   description: "Find out if a watch suits you before you buy it.",
   appleWebApp: { capable: true, title: "Strapped", statusBarStyle: "default" },
-  icons: { icon: "/icon-192.png", apple: "/icon-192.png" },
-};
+   icons: { icon: "/icon-512.png", apple: "/icon-512.png" },
 
 export const viewport: Viewport = {
   themeColor: "#f7f6f3",
