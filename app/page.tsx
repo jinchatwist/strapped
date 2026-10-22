@@ -52,7 +52,6 @@ export default function Home() {
   const [outfit, setOutfit] = useState<ImagePayload | null>(null);
   const [watchPhoto, setWatchPhoto] = useState<ImagePayload | null>(null);
   const [tryOn, setTryOn] = useState<{ status: "idle" | "loading" | "done" | "error"; image?: string; error?: string }>({ status: "idle" });
-  const [wristCm, setWristCm] = useState("");
   const [result, setResult] = useState<FitResult | null>(null);
   const [demo, setDemo] = useState(false);
   const [error, setError] = useState("");
@@ -65,9 +64,7 @@ export default function Home() {
     try {
       const saved = localStorage.getItem(SAVED_WRIST);
       if (saved) {
-        const { wrist, wristCm } = JSON.parse(saved);
-        setWrist(wrist);
-        setWristCm(wristCm ?? "");
+        setWrist(JSON.parse(saved).wrist);
       }
     } catch {}
   }, []);
@@ -115,10 +112,8 @@ export default function Home() {
     setResult(null);
     setError("");
     window.scrollTo({ top: 0 });
-    const cm = parseFloat(wristCm);
-    const wristSize = cm > 10 && cm < 30 ? cm : undefined;
     saveWrist(wristImg);
-    makeTryOn(id, w, wristImg, productPhoto, wristSize);
+    makeTryOn(id, w, wristImg, productPhoto);
     try {
       const res = await fetch("/api/check", {
         method: "POST",
@@ -126,7 +121,6 @@ export default function Home() {
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
           outfit: outfit ? { data: outfit.data, mediaType: outfit.mediaType } : undefined,
-          wristCm: wristSize,
         }),
       });
       const json = await res.json();
@@ -141,7 +135,7 @@ export default function Home() {
   }
 
   // Runs alongside the fit check; the result screen shows it when it arrives.
-  async function makeTryOn(id: number, w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null, wristSize?: number) {
+  async function makeTryOn(id: number, w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
     setTryOn({ status: "loading" });
     try {
       const res = await fetch("/api/tryon", {
@@ -150,7 +144,6 @@ export default function Home() {
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
           watchPhoto: productPhoto ? { data: productPhoto.data, mediaType: productPhoto.mediaType } : undefined,
-          wristCm: wristSize,
         }),
       });
       const json = await res.json();
@@ -165,7 +158,7 @@ export default function Home() {
 
   function saveWrist(img: ImagePayload) {
     try {
-      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img, wristCm }));
+      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img }));
     } catch {}
   }
 
@@ -288,21 +281,6 @@ export default function Home() {
             </span>
             <input type="file" accept="image/*" onChange={(e) => onPhoto(e.target.files?.[0], setWatchPhoto)} />
           </label>}
-          <div className="card">
-            <div className="field">
-              <label htmlFor="wrist-cm">
-                Wrist size
-                <small>Optional. Wrap a string around it and measure.</small>
-              </label>
-              <input
-                id="wrist-cm"
-                inputMode="decimal"
-                placeholder="cm"
-                value={wristCm}
-                onChange={(e) => setWristCm(e.target.value)}
-              />
-            </div>
-          </div>
           {error && <p className="error">{error}</p>}
           {watch ? (
             <button className="cta" disabled={!wrist} onClick={() => wrist && check(watch, wrist, watchPhoto)}>

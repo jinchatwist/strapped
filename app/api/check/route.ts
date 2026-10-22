@@ -7,12 +7,12 @@ import { client, errorResponse, FALLBACK, MODEL } from "@/lib/claude";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: "image/jpeg" | "image/png" | "image/webp" };
-type CheckRequest = { watch: Watch; wrist: Img; outfit?: Img; wristCm?: number };
+type CheckRequest = { watch: Watch; wrist: Img; outfit?: Img };
 
 const SYSTEM = `You're a friendly watch stylist. Someone wants to know if a specific watch suits them. You get the watch's specs, a photo of their wrist, and maybe a photo of how they usually dress.
 
 Point out exactly what works and what doesn't. Every point names one concrete thing (case size or lug-to-lug against their wrist width, thickness, dial or case color against their skin tone, strap against their outfit, overall vibe) and what you see that makes it work or not. No scores, no generic advice.
-Size guide: lugs should not hang past the edges of the wrist (use the wrist measurement if given). Around 15 cm wrists usually suit 34-38 mm, 17 cm suits 38-42 mm, 19 cm+ suits 42 mm+.
+Size guide: lugs should not hang past the edges of the wrist (judge the wrist width from the photo). Around 15 cm wrists usually suit 34-38 mm, 17 cm suits 38-42 mm, 19 cm+ suits 42 mm+.
 If the wrist photo doesn't show a wrist, leave works empty and put one point in doesnt asking for a clear photo of their bare wrist.
 
 Write like a friend texting: casual, short, honest. US English.`;
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
   }
   content.push({
     type: "text",
-    text: `Does this watch suit me?${body.wristCm ? ` My wrist is ${body.wristCm} cm around.` : ""}`,
+    text: "Does this watch suit me?",
   });
 
   try {
