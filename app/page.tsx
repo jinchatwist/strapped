@@ -264,15 +264,20 @@ export default function Home() {
 
       {step === "result" && watch && (
         <>
-          <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
-          <div className="result-line">
-            <div style={{ minWidth: 0 }}>
-              <h2>{watch.model}</h2>
-              <div className="sub">{watch.brand} · {watch.caseMm} mm</div>
-            </div>
-            {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
-          </div>
-          {tryOn.status === "done" && tryOn.image && <ShareBar image={tryOn.image} watch={watch} />}
+          {tryOn.status === "done" && tryOn.image ? (
+            <ShareBar image={tryOn.image} watch={watch} />
+          ) : (
+            <>
+              <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
+              <div className="result-line">
+                <div style={{ minWidth: 0 }}>
+                  <h2>{watch.model}</h2>
+                  <div className="sub">{watch.brand} · {watch.caseMm} mm</div>
+                </div>
+                {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
+              </div>
+            </>
+          )}
           <button className="cta" onClick={startOver}>Try another watch</button>
         </>
       )}

@@ -316,3 +316,4 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .share-btn:disabled { opacity: .5; }
 .share-note { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
 .link.back { align-self: center; }
+.card-preview { aspect-ratio: 4 / 5; margin-bottom: 6px; }

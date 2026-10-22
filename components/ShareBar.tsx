@@ -1,34 +1,86 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Watch } from "@/lib/watch";
 
-// Builds a 4:5 picture for feeds and stories: the try-on photo, the watch and price, and the Strapped name.
-async function shareCard(image: string, watch: Watch): Promise<File> {
+const LOGO = "M72 23H42C17 23 17 49 41 49H59C84 49 84 77 58 77H28";
+
+// Builds a 4:5 picture for feeds and stories in the style of a workout share card:
+// the try-on photo fills the frame, with the watch name and big numbers along the bottom.
+export async function shareCard(image: string, watch: Watch): Promise<File> {
   const photo = new Image();
   photo.src = image;
   await photo.decode();
-  const W = 1080, H = 1350, band = 190;
+  await document.fonts?.ready;
+  const W = 1080, H = 1350, pad = 64;
   const canvas = document.createElement("canvas");
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext("2d")!;
-  const scale = Math.max(W / photo.width, (H - band) / photo.height);
+  const scale = Math.max(W / photo.width, H / photo.height);
   const dw = photo.width * scale, dh = photo.height * scale;
-  ctx.drawImage(photo, (W - dw) / 2, (H - band - dh) / 2, dw, dh);
+  ctx.drawImage(photo, (W - dw) / 2, (H - dh) / 2, dw, dh);
+
+  // Shade the top and bottom so white text reads on any photo.
+  const top = ctx.createLinearGradient(0, 0, 0, 240);
+  top.addColorStop(0, "rgba(0,0,0,.55)");
+  top.addColorStop(1, "rgba(0,0,0,0)");
+  ctx.fillStyle = top;
+  ctx.fillRect(0, 0, W, 240);
+  const bottom = ctx.createLinearGradient(0, H - 560, 0, H);
+  bottom.addColorStop(0, "rgba(0,0,0,0)");
+  bottom.addColorStop(0.45, "rgba(0,0,0,.55)");
+  bottom.addColorStop(1, "rgba(0,0,0,.85)");
+  ctx.fillStyle = bottom;
+  ctx.fillRect(0, H - 560, W, 560);
+
+  // Logo and name, top left.
+  ctx.save();
+  ctx.translate(pad - 6, 52);
+  ctx.scale(0.64, 0.64);
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 12;
+  ctx.lineCap = "round";
+  ctx.stroke(new Path2D(LOGO));
+  ctx.globalCompositeOperation = "destination-out";
+  for (const x of [33, 41, 49]) {
+    ctx.beginPath();
+    ctx.arc(x, 77, 2.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
   ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, H - band, W, band);
-  ctx.fillStyle = "#161616";
-  ctx.font = "700 46px Rubik, system-ui, sans-serif";
-  ctx.fillText(fit(ctx, watch.model, W - 120), 60, H - band + 78);
-  ctx.font = "500 36px Rubik, system-ui, sans-serif";
-  ctx.fillStyle = "#6b6a66";
-  const price = watch.priceUsd > 0 ? ` · $${watch.priceUsd.toLocaleString("en-US")}` : "";
-  ctx.fillText(`${watch.brand}${price}`, 60, H - band + 132);
-  ctx.textAlign = "right";
+  ctx.font = "700 40px Rubik, system-ui, sans-serif";
+  ctx.textBaseline = "middle";
+  ctx.fillText("Strapped", pad + 64, 84);
+
+  // Watch name, then a row of big numbers like a workout summary.
+  ctx.textBaseline = "alphabetic";
+  ctx.font = "600 30px Rubik, system-ui, sans-serif";
   ctx.fillStyle = "#ff5a36";
-  ctx.font = "700 34px Rubik, system-ui, sans-serif";
-  ctx.fillText("Strapped", W - 60, H - band + 132);
+  ctx.fillText(watch.brand.toUpperCase(), pad, H - 330);
+  ctx.font = "700 58px Rubik, system-ui, sans-serif";
+  ctx.fillStyle = "#ffffff";
+  ctx.fillText(fit(ctx, watch.model.replace(new RegExp(`^${watch.brand}\\s+`), ""), W - pad * 2), pad, H - 262);
+
+  const stats: [string, string][] = [["Case", `${watch.caseMm} mm`]];
+  if (watch.lugMm > 0) stats.push(["Lug to lug", `${watch.lugMm} mm`]);
+  if (watch.priceUsd > 0) stats.push(["Price", `$${watch.priceUsd.toLocaleString("en-US")}`]);
+  const col = (W - pad * 2) / stats.length;
+  stats.forEach(([label, value], i) => {
+    const x = pad + col * i;
+    ctx.fillStyle = "rgba(255,255,255,.7)";
+    ctx.font = "500 28px Rubik, system-ui, sans-serif";
+    ctx.fillText(label, x, H - 160);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "700 64px Rubik, system-ui, sans-serif";
+    ctx.fillText(fit(ctx, value, col - 24), x, H - 92);
+    if (i > 0) {
+      ctx.fillStyle = "rgba(255,255,255,.25)";
+      ctx.fillRect(x - 24, H - 190, 2, 110);
+    }
+  });
+
   const blob = await new Promise<Blob>((done) => canvas.toBlob((b) => done(b!), "image/jpeg", 0.92));
   return new File([blob], "strapped.jpg", { type: "image/jpeg" });
 }
@@ -56,12 +108,29 @@ type Target = "instagram" | "facebook" | "tiktok" | "save";
 export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
+  const [card, setCard] = useState<{ file: File; url: string } | null>(null);
+
+  // The card is made as soon as the try-on is ready, so people see exactly what they'll post.
+  useEffect(() => {
+    let url = "";
+    let live = true;
+    shareCard(image, watch)
+      .then((file) => {
+        url = URL.createObjectURL(file);
+        if (live) setCard({ file, url });
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [image, watch]);
 
   async function share(target: Target) {
     setBusy(true);
     setNote("");
     try {
-      const file = await shareCard(image, watch);
+      const file = card?.file ?? (await shareCard(image, watch));
       const text = `Trying on the ${watch.model} with Strapped`;
       if (target !== "save" && navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file], text });
@@ -82,6 +151,10 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
 
   return (
     <div className="share">
+      <figure className="tryon card-preview">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={card?.url ?? image} alt={`${watch.model} on your wrist, share card`} />
+      </figure>
       <div className="share-row">
         <button className="share-btn" onClick={() => share("instagram")} disabled={busy} aria-label="Share to Instagram">
           <svg viewBox="0 0 24 24" aria-hidden="true">
