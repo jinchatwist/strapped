@@ -10,8 +10,12 @@ import { WristCamera } from "@/components/WristCamera";
 import { prepareImage, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 
-const WATCHES = catalog as Watch[];
-const BRANDS = [...new Set(WATCHES.map((w) => w.brand))].sort((a, b) => a.localeCompare(b));
+// Only the brands people want most right now; the rest of the catalog stays in the data file for later.
+const BRANDS = [
+  "Audemars Piguet", "Breitling", "Cartier", "Casio", "Hamilton", "Omega",
+  "Patek Philippe", "Rolex", "Seiko", "TAG Heuer", "Tissot", "Tudor",
+];
+const WATCHES = (catalog as Watch[]).filter((w) => BRANDS.includes(w.brand));
 
 // Shown first, before any search. Picked by hand: the models people ask about most.
 const POPULAR_IDS = [
