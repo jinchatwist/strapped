@@ -1,4 +1,5 @@
-import { GoogleGenAI, type Part } from "@google/genai";
+import type { Part } from "@google/genai";
+import { imageClient } from "@/lib/gemini";
 import type { Watch } from "@/lib/watch";
 
 export const maxDuration = 60;
@@ -19,8 +20,9 @@ export async function POST(req: Request) {
   if (!body.watch || !body.wrist?.data) {
     return Response.json({ error: "Pick a watch and add a wrist photo first." }, { status: 400 });
   }
-  if (!process.env.GEMINI_API_KEY) {
-    return Response.json({ error: "Try-on preview isn't set up yet (needs GEMINI_API_KEY)." }, { status: 503 });
+  const ai = imageClient();
+  if (!ai) {
+    return Response.json({ error: "Try-on preview isn't set up yet (needs GOOGLE_CLOUD_API_KEY)." }, { status: 503 });
   }
 
   const w = body.watch;
@@ -36,7 +38,6 @@ export async function POST(req: Request) {
   if (body.watchPhoto?.data) parts.push({ inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } });
 
   try {
-    const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
     const response = await ai.models.generateContent({
       model: IMAGE_MODEL,
       contents: [{ role: "user", parts }],

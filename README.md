@@ -3,7 +3,7 @@
 Find out if a watch suits you before you buy it. Pick a watch from the catalog (or look up any model by name), add a photo of your wrist and, optionally, your outfit, and the AI gives a fit score with size and style notes, plus a try-on picture of the watch on your own wrist.
 
 - Fit score and lookups: Claude (`ANTHROPIC_API_KEY`)
-- Try-on picture: Google Gemini image model (`GEMINI_API_KEY`, optional `GEMINI_IMAGE_MODEL`)
+- Try-on picture: Google Gemini image model through Vertex AI (`GOOGLE_CLOUD_API_KEY`) or AI Studio (`GEMINI_API_KEY`), optional `GEMINI_IMAGE_MODEL`. See `.env.example`.
 
 ## Run it
 
@@ -13,7 +13,7 @@ cp .env.example .env.local   # then paste your API keys
 npm run dev
 ```
 
-Without `ANTHROPIC_API_KEY` the fit check returns a demo result and the "look up any watch" search is off. Without `GEMINI_API_KEY` the result shows no try-on picture.
+Without `ANTHROPIC_API_KEY` the fit check returns a demo result and the "look up any watch" search is off. Without a Google key the result shows no try-on picture.
 
 ## Deploy (Vercel)
 
