@@ -3,42 +3,40 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import catalog from "@/data/catalog.json";
 import { Logo } from "@/components/Logo";
+import { ShareBar } from "@/components/ShareBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchFace } from "@/components/WatchFace";
 import { WristCamera } from "@/components/WristCamera";
-import type { FitResult } from "@/lib/fit";
 import { prepareImage, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 
 const WATCHES = catalog as Watch[];
-const BRANDS = ["G-Shock", "Rolex", "Omega", "Cartier", "AP", "Seiko", "Tudor", "Tissot", "Casio", "Apple"];
-const BRAND_MATCH: Record<string, (w: Watch) => boolean> = {
-  "G-Shock": (w) => w.family === "G-Shock",
-  AP: (w) => w.brand === "Audemars Piguet",
-  Casio: (w) => w.brand === "Casio" && w.family !== "G-Shock",
-};
+const BRANDS = [...new Set(WATCHES.map((w) => w.brand))].sort((a, b) => a.localeCompare(b));
+
+// Shown first, before any search. Picked by hand: the models people ask about most.
+const POPULAR_IDS = [
+  "rolex-submariner-date-black-126610ln",
+  "rolex-cosmograph-daytona-white-panda-126500ln",
+  "rolex-datejust-41-blue-jubilee-126334",
+  "omega-speedmaster-moonwatch-professional-310-30-42-50-01-002",
+  "ap-royal-oak-41-blue-15510st-oo-1320st-03",
+  "patek-philippe-nautilus-5711-blue-5711-1a-010",
+  "cartier-santos-de-cartier-large-wssa0018",
+  "tudor-black-bay-58-m79030n-0001",
+  "prx-powermatic-80-40mm-ice-blue-t137-407-11-351-00",
+  "ga-2100-casioak-black-ga-2100-1a1",
+];
+const POPULAR = POPULAR_IDS.map((id) => WATCHES.find((w) => w.id === id)).filter((w): w is Watch => !!w);
 
 type Step = "pick" | "photos" | "result";
+type TryOnState = { status: "idle" | "loading" | "done" | "error"; image?: string; error?: string };
 
 const SAVED_WRIST = "strapped-wrist";
 
-// With no search, mix brands so the first screen isn't all one brand.
-const MIXED = (() => {
-  const byBrand = new Map<string, Watch[]>();
-  for (const w of WATCHES) byBrand.set(w.brand, [...(byBrand.get(w.brand) ?? []), w]);
-  const out: Watch[] = [];
-  const first = ["Rolex", "Casio", "Omega", "Cartier", "Audemars Piguet", "Seiko", "Tudor", "Tissot", "Patek Philippe", "Apple"];
-  const rank = (b: string) => (first.includes(b) ? first.indexOf(b) : first.length);
-  const lists = [...byBrand.entries()].sort((a, b) => rank(a[0]) - rank(b[0])).map(([, l]) => l);
-  for (let i = 0; out.length < WATCHES.length; i++) for (const l of lists) if (l[i]) out.push(l[i]);
-  return out;
-})();
-
 function search(query: string, brand: string | null) {
-  if (!query.trim() && !brand) return MIXED;
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
   return WATCHES.filter((w) => {
-    if (brand && !(BRAND_MATCH[brand]?.(w) ?? w.brand === brand)) return false;
+    if (brand && w.brand !== brand) return false;
     const hay = `${w.brand} ${w.family} ${w.model} ${w.reference} ${w.family === "G-Shock" ? "gshock g shock" : ""} ${w.brand === "Audemars Piguet" ? "ap" : ""}`.toLowerCase();
     return terms.every((t) => hay.includes(t));
   });
@@ -50,28 +48,24 @@ export default function Home() {
   const [brand, setBrand] = useState<string | null>(null);
   const [watch, setWatch] = useState<Watch | null>(null);
   const [wrist, setWrist] = useState<ImagePayload | null>(null);
-  const [outfit, setOutfit] = useState<ImagePayload | null>(null);
   const [watchPhoto, setWatchPhoto] = useState<ImagePayload | null>(null);
-  const [tryOn, setTryOn] = useState<{ status: "idle" | "loading" | "done" | "error"; image?: string; error?: string }>({ status: "idle" });
-  const [result, setResult] = useState<FitResult | null>(null);
-  const [demo, setDemo] = useState(false);
+  const [tryOn, setTryOn] = useState<TryOnState>({ status: "idle" });
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
   const [camera, setCamera] = useState(false);
-  // Only the latest try counts; answers from an earlier watch are dropped.
+  // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
 
   // The wrist photo is kept on this phone so people can try many watches with one photo.
   useEffect(() => {
     try {
       const saved = localStorage.getItem(SAVED_WRIST);
-      if (saved) {
-        setWrist(JSON.parse(saved).wrist);
-      }
+      if (saved) setWrist(JSON.parse(saved).wrist);
     } catch {}
   }, []);
 
-  const results = useMemo(() => search(query, brand), [query, brand]);
+  const browsing = !query.trim() && !brand;
+  const results = useMemo(() => (browsing ? POPULAR : search(query, brand)), [browsing, query, brand]);
   const shown = results.slice(0, 60);
 
   function pick(w: Watch) {
@@ -79,7 +73,7 @@ export default function Home() {
     setWatchPhoto(null);
     setError("");
     window.scrollTo({ top: 0 });
-    if (wrist) check(w, wrist, null);
+    if (wrist) tryItOn(w, wrist, null);
     else setStep("photos");
   }
 
@@ -98,47 +92,28 @@ export default function Home() {
     }
   }
 
-  async function onPhoto(file: File | undefined, set: (p: ImagePayload) => void) {
+  async function onWatchPhoto(file: File | undefined) {
     if (!file) return;
     try {
-      set(await prepareImage(file));
+      setWatchPhoto(await prepareImage(file));
       setError("");
     } catch {
       setError("Couldn't read that photo. Try a JPG or PNG.");
     }
   }
 
-  async function check(w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
-    const id = ++attempt.current;
-    setStep("result");
-    setResult(null);
-    setError("");
-    window.scrollTo({ top: 0 });
-    saveWrist(wristImg);
-    makeTryOn(id, w, wristImg, productPhoto);
+  function saveWrist(img: ImagePayload) {
     try {
-      const res = await fetch("/api/check", {
-        method: "POST",
-        body: JSON.stringify({
-          watch: w,
-          wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
-          outfit: outfit ? { data: outfit.data, mediaType: outfit.mediaType } : undefined,
-        }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error);
-      if (id !== attempt.current) return;
-      setResult(json.result);
-      setDemo(json.demo);
-    } catch (e) {
-      if (id !== attempt.current) return;
-      setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
-    }
+      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img }));
+    } catch {}
   }
 
-  // Runs alongside the fit check; the result screen shows it when it arrives.
-  async function makeTryOn(id: number, w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
+  async function tryItOn(w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
+    const id = ++attempt.current;
+    saveWrist(wristImg);
+    setStep("result");
     setTryOn({ status: "loading" });
+    window.scrollTo({ top: 0 });
     try {
       const res = await fetch("/api/tryon", {
         method: "POST",
@@ -150,24 +125,15 @@ export default function Home() {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
-      if (id !== attempt.current) return;
-      setTryOn({ status: "done", image: json.image });
+      if (id === attempt.current) setTryOn({ status: "done", image: json.image });
     } catch (e) {
-      if (id !== attempt.current) return;
-      setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on preview failed." });
+      if (id === attempt.current) setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on picture failed." });
     }
-  }
-
-  function saveWrist(img: ImagePayload) {
-    try {
-      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img }));
-    } catch {}
   }
 
   function startOver() {
     attempt.current++;
     setStep("pick");
-    setResult(null);
     setError("");
     window.scrollTo({ top: 0 });
   }
@@ -178,25 +144,17 @@ export default function Home() {
         <button className="brand" onClick={startOver} aria-label="Strapped home">
           <Logo size={30} /> Strapped
         </button>
-        <div className="top-right">
-          <ThemeToggle />
-          <span className="steps">
-            {step === "pick" ? "1 of 3" : step === "photos" ? "2 of 3" : "3 of 3"}
-          </span>
-        </div>
+        <ThemeToggle />
       </div>
 
       {step === "pick" && (
         <>
-          <div>
-            <h1>Will it suit you?</h1>
-            <p className="sub">Pick a watch. We&apos;ll put it on your wrist.</p>
-          </div>
+          <h1>Try a watch on</h1>
           {wrist && (
             <div className="saved">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={wrist.preview} alt="Your saved wrist photo" />
-              <span>Using your saved wrist photo</span>
+              <span>Using your wrist photo</span>
               <button className="link" onClick={() => { setWatch(null); setStep("photos"); }}>Change</button>
             </div>
           )}
@@ -204,7 +162,7 @@ export default function Home() {
             id="search"
             className="search"
             type="search"
-            placeholder="Try “G-Shock” or “Submariner”"
+            placeholder="Search any watch"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoComplete="off"
@@ -217,8 +175,7 @@ export default function Home() {
             ))}
           </div>
           <span className="count">
-            {results.length} {results.length === 1 ? "watch" : "watches"}
-            {results.length > shown.length ? `, showing ${shown.length}` : ""}
+            {browsing ? "Most popular" : `${results.length} ${results.length === 1 ? "watch" : "watches"}`}
           </span>
           <div className="list">
             {shown.map((w) => (
@@ -226,15 +183,15 @@ export default function Home() {
                 <WatchFace watch={w} size={56} />
                 <span style={{ minWidth: 0 }}>
                   <span className="name" style={{ display: "block" }}>{w.model}</span>
-                  <span className="meta">{w.brand} · {w.reference}</span>
+                  <span className="meta">{w.brand}</span>
                 </span>
-                <span className="mm">{w.caseMm} mm</span>
+                <span className="mm">{formatPrice(w.priceUsd)}</span>
               </button>
             ))}
             {query.trim().length > 1 && (
               <button className="lookup" onClick={lookup} disabled={lookingUp}>
                 <strong>{lookingUp ? "Looking it up…" : `Not here? Look up “${query.trim()}”`}</strong>
-                <span>We&apos;ll find the specs for any watch by name or reference number.</span>
+                <span>Any watch, by name or reference number.</span>
               </button>
             )}
             {error && <p className="error">{error}</p>}
@@ -244,61 +201,47 @@ export default function Home() {
 
       {step === "photos" && (
         <>
-          {watch && <div className="card">
-            <div className="picked">
-              <WatchFace watch={watch} size={80} />
+          {watch && (
+            <div className="card picked">
+              <WatchFace watch={watch} size={64} />
               <div style={{ minWidth: 0 }}>
                 <h2>{watch.model}</h2>
-                <div className="sub" style={{ fontSize: 14 }}>{watch.brand} · {watch.reference}</div>
+                <button className="link" onClick={startOver}>Pick a different watch</button>
               </div>
             </div>
-            <div className="specs">
-              <span className="tag">{watch.caseMm} mm case</span>
-              <span className="tag">{watch.lugMm} mm lug to lug</span>
-              <span className="tag">{watch.thicknessMm} mm thick</span>
-              <span className="tag">{watch.strap}</span>
-              {watch.custom && <span className="tag">Specs looked up by AI</span>}
-            </div>
-            <button className="link" onClick={startOver}>Pick a different watch</button>
-          </div>}
-
-          <div>
-            <h2>Now show us you</h2>
-            <p className="sub">A clear photo of your bare wrist from above works best.</p>
-          </div>
-          <div className="photos">
-            <button className={`drop ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
-              {wrist ? (
-                <>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={wrist.preview} alt="Your wrist" />
-                  <span className="badge">Your wrist · tap to retake</span>
-                </>
-              ) : (
-                <>
-                  <span className="label">Your wrist</span>
-                  <span className="hint">Required, saved for next time</span>
-                </>
-              )}
-            </button>
-            <PhotoBox label="Your outfit" hint="Optional, helps with style" photo={outfit} capture="user" onFile={(f) => onPhoto(f, setOutfit)} />
-          </div>
-          {watch && <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
-            {watchPhoto ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={watchPhoto.preview} alt="Watch photo" />
+          )}
+          <button className={`drop wide ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+            {wrist ? (
+              <>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={wrist.preview} alt="Your wrist" />
+                <span className="badge">Tap to retake</span>
+              </>
             ) : (
-              <span className="plus">+</span>
+              <>
+                <span className="label">Snap your wrist</span>
+                <span className="hint">We&apos;ll show you where to hold it</span>
+              </>
             )}
-            <span>
-              <strong>{watchPhoto ? "Watch photo added" : "Have a photo of the watch?"}</strong>
-              <small>Optional. A store or product shot makes the try-on picture match better.</small>
-            </span>
-            <input type="file" accept="image/*" onChange={(e) => onPhoto(e.target.files?.[0], setWatchPhoto)} />
-          </label>}
+          </button>
+          {watch && (
+            <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
+              {watchPhoto ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={watchPhoto.preview} alt="Watch photo" />
+              ) : (
+                <span className="plus">+</span>
+              )}
+              <span>
+                <strong>{watchPhoto ? "Watch photo added" : "Add a photo of the watch"}</strong>
+                <small>Optional. Makes the picture match better.</small>
+              </span>
+              <input type="file" accept="image/*" onChange={(e) => onWatchPhoto(e.target.files?.[0])} />
+            </label>
+          )}
           {error && <p className="error">{error}</p>}
           {watch ? (
-            <button className="cta" disabled={!wrist} onClick={() => wrist && check(watch, wrist, watchPhoto)}>
+            <button className="cta" disabled={!wrist} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
               Put it on my wrist
             </button>
           ) : (
@@ -311,46 +254,19 @@ export default function Home() {
 
       {step === "result" && watch && (
         <>
-          <TryOn state={tryOn} fallback={wrist?.preview} />
-          <div className="card">
-            <div className="picked-line">
-              <div style={{ minWidth: 0 }}>
-                <h2>{watch.model}</h2>
-                <div className="sub" style={{ fontSize: 14 }}>{watch.brand} · {watch.caseMm} mm</div>
-              </div>
-              {watch.priceUsd > 0 && (
-                <div className="price">
-                  ${watch.priceUsd.toLocaleString("en-US")}
-                  <small>about, new</small>
-                </div>
-              )}
+          <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
+          <div className="result-line">
+            <div style={{ minWidth: 0 }}>
+              <h2>{watch.model}</h2>
+              <div className="sub">{watch.brand}</div>
             </div>
-            {result ? (
-              <>
-                {result.works.length > 0 && (
-                  <div className="points">
-                    <div className="k good">What works</div>
-                    <ul>{result.works.map((t) => <li key={t} className="good">{t}</li>)}</ul>
-                  </div>
-                )}
-                {result.doesnt.length > 0 && (
-                  <div className="points">
-                    <div className="k bad">What doesn&apos;t</div>
-                    <ul>{result.doesnt.map((t) => <li key={t} className="bad">{t}</li>)}</ul>
-                  </div>
-                )}
-                {demo && <div className="demo">Demo notes. Add an Anthropic API key to check real photos.</div>}
-              </>
-            ) : error ? (
-              <p className="error">{error}</p>
-            ) : (
-              <p className="sub thinking">Looking at how it sits on you…</p>
-            )}
+            {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
           </div>
+          {tryOn.status === "done" && tryOn.image && <ShareBar image={tryOn.image} watch={watch} />}
           <button className="cta" onClick={startOver}>Try another watch</button>
-          <button className="link center" onClick={() => setStep("photos")}>Use a different wrist photo</button>
         </>
       )}
+
       {camera && (
         <WristCamera
           onClose={() => setCamera(false)}
@@ -365,39 +281,11 @@ export default function Home() {
   );
 }
 
-function PhotoBox({
-  label,
-  hint,
-  photo,
-  capture,
-  onFile,
-}: {
-  label: string;
-  hint: string;
-  photo: ImagePayload | null;
-  capture: "user" | "environment";
-  onFile: (f: File | undefined) => void;
-}) {
-  return (
-    <label className={`drop ${photo ? "filled" : ""}`}>
-      {photo ? (
-        <>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={photo.preview} alt={label} />
-          <span className="badge">{label} · tap to change</span>
-        </>
-      ) : (
-        <>
-          <span className="label">{label}</span>
-          <span className="hint">{hint}</span>
-        </>
-      )}
-      <input type="file" accept="image/*" capture={capture} onChange={(e) => onFile(e.target.files?.[0])} />
-    </label>
-  );
+function formatPrice(usd: number) {
+  return usd > 0 ? `$${usd.toLocaleString("en-US")}` : "";
 }
 
-function TryOn({ state, fallback }: { state: { status: string; image?: string; error?: string }; fallback?: string }) {
+function TryOn({ state, fallback, onRetry }: { state: TryOnState; fallback?: string; onRetry: () => void }) {
   if (state.status === "idle") return null;
   return (
     <figure className="tryon">
@@ -414,12 +302,15 @@ function TryOn({ state, fallback }: { state: { status: string; image?: string; e
                 <span className="spin"><Logo size={28} /></span> Putting it on your wrist…
               </>
             ) : (
-              state.error
+              <span className="tryon-error">
+                {state.error}
+                <button className="ghost" onClick={onRetry}>Try again</button>
+              </span>
             )}
           </span>
         </>
       )}
-      {state.status === "done" && <figcaption>AI preview, not a real photo</figcaption>}
+      {state.status === "done" && <figcaption>AI preview</figcaption>}
     </figure>
   );
 }
