@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Rubik } from "next/font/google";
 import { RegisterSW } from "@/components/RegisterSW";
+import { Splash } from "@/components/Splash";
 import "./globals.css";
 
 const rubik = Rubik({ subsets: ["latin"], variable: "--font-rubik" });
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={rubik.variable}>
       <body>
+        <Splash />
         {children}
         <RegisterSW />
       </body>
