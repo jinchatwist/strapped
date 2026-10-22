@@ -137,8 +137,9 @@ h2 { font-size: 20px; margin: 0; letter-spacing: -0.02em; }
 .lookup span { font-size: 14px; color: var(--muted); }
 
 .card { background: var(--card); border: 1.5px solid var(--line); border-radius: 20px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-.picked { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; align-items: center; }
-.picked h2 { margin: 0 0 4px; font-size: 18px; }
+.detail-pic { display: grid; place-items: center; aspect-ratio: 1; border-radius: 22px; background: var(--card); border: 1px solid var(--line); }
+.detail-pic svg { width: 70%; height: 70%; }
+button.addwatch { font: inherit; color: inherit; text-align: left; width: 100%; }
 .specs { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag { font-size: 12px; background: var(--bg); border-radius: 999px; padding: 3px 9px; color: var(--muted); }
 .link { background: none; border: 0; padding: 0; color: var(--muted); text-decoration: underline; cursor: pointer; font-size: 14px; justify-self: start; }
@@ -314,3 +315,4 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .share-btn svg { width: 24px; height: 24px; }
 .share-btn:disabled { opacity: .5; }
 .share-note { margin: 0; font-size: 13px; color: var(--muted); text-align: center; }
+.link.back { align-self: center; }

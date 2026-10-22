@@ -35,7 +35,8 @@ const POPULAR = POPULAR_IDS.map((id) => WATCHES.find((w) => w.id === id)).filter
 type Step = "pick" | "photos" | "result";
 type TryOnState = { status: "idle" | "loading" | "done" | "error"; image?: string; error?: string };
 
-const SAVED_WRIST = "strapped-wrist";
+// Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
+const OLD_SAVED_WRIST = "strapped-wrist";
 
 function search(query: string, brand: string | null) {
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -60,11 +61,9 @@ export default function Home() {
   // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
 
-  // The wrist photo is kept on this phone so people can try many watches with one photo.
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(SAVED_WRIST);
-      if (saved) setWrist(JSON.parse(saved).wrist);
+      localStorage.removeItem(OLD_SAVED_WRIST);
     } catch {}
   }, []);
 
@@ -77,8 +76,7 @@ export default function Home() {
     setWatchPhoto(null);
     setError("");
     window.scrollTo({ top: 0 });
-    if (wrist) tryItOn(w, wrist, null);
-    else setStep("photos");
+    setStep("photos");
   }
 
   async function lookup() {
@@ -106,15 +104,8 @@ export default function Home() {
     }
   }
 
-  function saveWrist(img: ImagePayload) {
-    try {
-      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img }));
-    } catch {}
-  }
-
   async function tryItOn(w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
     const id = ++attempt.current;
-    saveWrist(wristImg);
     setStep("result");
     setTryOn({ status: "loading" });
     window.scrollTo({ top: 0 });
@@ -201,29 +192,45 @@ export default function Home() {
 
       {step === "photos" && (
         <>
-          {watch && (
-            <div className="card picked">
-              <WatchFace watch={watch} size={64} />
-              <div style={{ minWidth: 0 }}>
-                <h2>{watch.model}</h2>
-                <button className="link" onClick={startOver}>Pick a different watch</button>
+          {watch ? (
+            <>
+              <div className="detail-pic"><WatchFace watch={watch} size={220} /></div>
+              <div className="result-line">
+                <div style={{ minWidth: 0 }}>
+                  <h2>{watch.model}</h2>
+                  <div className="sub">{watch.brand} · {watch.caseMm} mm</div>
+                </div>
+                {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
               </div>
-            </div>
+              <button className={`addwatch ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+                {wrist ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={wrist.preview} alt="Your wrist" />
+                ) : (
+                  <span className="plus">+</span>
+                )}
+                <span>
+                  <strong>{wrist ? "Your wrist photo" : "Snap your wrist"}</strong>
+                  <small>{wrist ? "Tap to retake." : "We'll show you where to hold it."}</small>
+                </span>
+              </button>
+            </>
+          ) : (
+            <button className={`drop wide ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
+              {wrist ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={wrist.preview} alt="Your wrist" />
+                  <span className="badge">Tap to retake</span>
+                </>
+              ) : (
+                <>
+                  <span className="label">Snap your wrist</span>
+                  <span className="hint">We&apos;ll show you where to hold it</span>
+                </>
+              )}
+            </button>
           )}
-          <button className={`drop wide ${wrist ? "filled" : ""}`} onClick={() => setCamera(true)}>
-            {wrist ? (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={wrist.preview} alt="Your wrist" />
-                <span className="badge">Tap to retake</span>
-              </>
-            ) : (
-              <>
-                <span className="label">Snap your wrist</span>
-                <span className="hint">We&apos;ll show you where to hold it</span>
-              </>
-            )}
-          </button>
           {watch && (
             <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
               {watchPhoto ? (
@@ -241,12 +248,15 @@ export default function Home() {
           )}
           {error && <p className="error">{error}</p>}
           {watch ? (
-            <button className="cta" disabled={!wrist} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
-              Put it on my wrist
-            </button>
+            <>
+              <button className="cta" disabled={!wrist} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
+                Generate
+              </button>
+              <button className="link back" onClick={startOver}>Pick a different watch</button>
+            </>
           ) : (
-            <button className="cta" disabled={!wrist} onClick={() => { if (wrist) saveWrist(wrist); startOver(); }}>
-              Save and pick a watch
+            <button className="cta" disabled={!wrist} onClick={startOver}>
+              Pick a watch
             </button>
           )}
         </>
