@@ -92,6 +92,11 @@ function fit(ctx: CanvasRenderingContext2D, text: string, max: number) {
   return `${t}…`;
 }
 
+function isIOS() {
+  return /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+// On Android a downloaded picture lands in Downloads, which the gallery shows.
 function download(file: File) {
   const url = URL.createObjectURL(file);
   const a = document.createElement("a");
@@ -132,6 +137,12 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
     try {
       const file = card?.file ?? (await shareCard(image, watch));
       const text = `Trying on the ${watch.model} with Strapped`;
+      if (target === "save" && isIOS() && navigator.canShare?.({ files: [file] })) {
+        // A web page can't write to Photos on iPhone. The share sheet with only the picture offers "Save Image",
+        // which puts it straight in Photos. (Adding text hides that option.)
+        await navigator.share({ files: [file] });
+        return;
+      }
       if (target !== "save" && navigator.canShare?.({ files: [file] })) {
         await navigator.share({ files: [file], text });
         return;
@@ -141,7 +152,7 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
       }
       download(file);
       const app = target === "instagram" ? "Instagram" : target === "tiktok" ? "TikTok" : target === "facebook" ? "Facebook" : "";
-      setNote(app ? `Picture saved. Open ${app} and post it from your photos.` : "Picture saved to your photos.");
+      setNote(app ? `Picture saved. Open ${app} and post it from your gallery.` : "Saved to your gallery.");
     } catch (e) {
       if (!(e instanceof DOMException && e.name === "AbortError")) setNote("Couldn't share that. Try Save instead.");
     } finally {
