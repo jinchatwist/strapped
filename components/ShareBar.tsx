@@ -12,7 +12,7 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   photo.src = image;
   await photo.decode();
   const wordmark = `${getComputedStyle(document.documentElement).getPropertyValue("--font-wordmark").trim() || "Georgia"}, Georgia, serif`;
-  await document.fonts?.load(`italic 500 44px ${wordmark}`).catch(() => {});
+  await document.fonts?.load(`italic 600 44px ${wordmark}`).catch(() => {});
   await document.fonts?.ready;
   const W = 1080, H = 1350, pad = 64;
   const canvas = document.createElement("canvas");
@@ -52,7 +52,7 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   }
   ctx.restore();
   ctx.fillStyle = "#ffffff";
-  ctx.font = `italic 500 46px ${wordmark}`;
+  ctx.font = `italic 600 46px ${wordmark}`;
   ctx.textBaseline = "middle";
   ctx.fillText("Strapped", pad + 64, 82);
 
