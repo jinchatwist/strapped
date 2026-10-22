@@ -176,7 +176,7 @@ export default function Home() {
               <button key={w.id} className="wcard" onClick={() => pick(w)}>
                 <span className="wcard-pic"><WatchFace watch={w} size={120} /></span>
                 <span className="wcard-name">{w.model}</span>
-                <span className="wcard-price">{w.priceUsd > 0 ? formatPrice(w.priceUsd) : w.brand}</span>
+                <span className="wcard-price">{w.caseMm} mm</span>
               </button>
             ))}
           </div>
