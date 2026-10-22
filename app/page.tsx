@@ -137,7 +137,7 @@ export default function Home() {
     <main className="app">
       <div className="top">
         <button className="brand" onClick={startOver} aria-label="Strapped home">
-          <Logo size={30} /> Strapped
+          <Logo size={30} /> <span className="wordmark">Strapped</span>
         </button>
         <ThemeToggle />
       </div>

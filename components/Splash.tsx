@@ -27,7 +27,7 @@ export function Splash() {
           <path className="splash-s" pathLength="100" d="M72 23H42C17 23 17 49 41 49H59C84 49 84 77 58 77H28" />
         </g>
       </svg>
-      <div className="splash-name">Strapped</div>
+      <div className="splash-name wordmark">Strapped</div>
     </div>
   );
 }

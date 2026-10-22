@@ -11,6 +11,8 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   const photo = new Image();
   photo.src = image;
   await photo.decode();
+  const wordmark = `${getComputedStyle(document.documentElement).getPropertyValue("--font-wordmark").trim() || "Georgia"}, Georgia, serif`;
+  await document.fonts?.load(`italic 500 44px ${wordmark}`).catch(() => {});
   await document.fonts?.ready;
   const W = 1080, H = 1350, pad = 64;
   const canvas = document.createElement("canvas");
@@ -50,9 +52,9 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   }
   ctx.restore();
   ctx.fillStyle = "#ffffff";
-  ctx.font = "700 40px Rubik, system-ui, sans-serif";
+  ctx.font = `italic 500 46px ${wordmark}`;
   ctx.textBaseline = "middle";
-  ctx.fillText("Strapped", pad + 64, 84);
+  ctx.fillText("Strapped", pad + 64, 82);
 
   // Watch name, then a row of big numbers like a workout summary.
   ctx.textBaseline = "alphabetic";
