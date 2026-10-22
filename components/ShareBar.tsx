@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HOLES, S_PATH } from "@/components/Logo";
+import { DEPTH, HOLES, S_PATH } from "@/components/Logo";
 import type { Watch } from "@/lib/watch";
 
 
@@ -43,6 +43,20 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   const strap = new Path2D(S_PATH);
+  DEPTH.forEach(([x, y, color], i) => {
+    ctx.save();
+    ctx.translate(x, y);
+    if (i === 0) {
+      ctx.shadowColor = "rgba(0,0,0,.35)";
+      ctx.shadowOffsetX = 1.6 * 0.64 * 2;
+      ctx.shadowOffsetY = 2.4 * 0.64 * 2;
+      ctx.shadowBlur = 4;
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 16;
+    ctx.stroke(strap);
+    ctx.restore();
+  });
   ctx.strokeStyle = "#161616";
   ctx.lineWidth = 16;
   ctx.stroke(strap);
@@ -56,8 +70,12 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   ctx.stroke(strap);
   ctx.setLineDash([]);
   ctx.lineWidth = 1.5;
-  ctx.fillStyle = "#ffffff";
   for (const x of HOLES) {
+    const g = ctx.createRadialGradient(x - 0.4, 76.6, 0, x - 0.4, 76.6, 3.4);
+    g.addColorStop(0, "#3a3a3a");
+    g.addColorStop(0.55, "#8d8a84");
+    g.addColorStop(1, "#f2f0ec");
+    ctx.fillStyle = g;
     ctx.beginPath();
     ctx.arc(x, 77, 2.4, 0, Math.PI * 2);
     ctx.fill();
