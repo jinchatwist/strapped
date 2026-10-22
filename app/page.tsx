@@ -183,9 +183,9 @@ export default function Home() {
                 <WatchFace watch={w} size={56} />
                 <span style={{ minWidth: 0 }}>
                   <span className="name" style={{ display: "block" }}>{w.model}</span>
-                  <span className="meta">{w.brand}</span>
+                  <span className="meta">{w.brand}{w.priceUsd > 0 ? ` · ${formatPrice(w.priceUsd)}` : ""}</span>
                 </span>
-                <span className="mm">{formatPrice(w.priceUsd)}</span>
+                <span className="mm">{w.caseMm} mm</span>
               </button>
             ))}
             {query.trim().length > 1 && (
@@ -258,7 +258,7 @@ export default function Home() {
           <div className="result-line">
             <div style={{ minWidth: 0 }}>
               <h2>{watch.model}</h2>
-              <div className="sub">{watch.brand}</div>
+              <div className="sub">{watch.brand} · {watch.caseMm} mm</div>
             </div>
             {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
           </div>
