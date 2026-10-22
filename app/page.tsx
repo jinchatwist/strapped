@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import catalog from "@/data/catalog.json";
 import { Logo } from "@/components/Logo";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -17,7 +17,9 @@ const BRAND_MATCH: Record<string, (w: Watch) => boolean> = {
   Casio: (w) => w.brand === "Casio" && w.family !== "G-Shock",
 };
 
-type Step = "pick" | "photos" | "checking" | "result";
+type Step = "pick" | "photos" | "result";
+
+const SAVED_WRIST = "strapped-wrist";
 
 // With no search, mix brands so the first screen isn't all one brand.
 const MIXED = (() => {
@@ -55,6 +57,20 @@ export default function Home() {
   const [demo, setDemo] = useState(false);
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
+  // Only the latest try counts; answers from an earlier watch are dropped.
+  const attempt = useRef(0);
+
+  // The wrist photo is kept on this phone so people can try many watches with one photo.
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(SAVED_WRIST);
+      if (saved) {
+        const { wrist, wristCm } = JSON.parse(saved);
+        setWrist(wrist);
+        setWristCm(wristCm ?? "");
+      }
+    } catch {}
+  }, []);
 
   const results = useMemo(() => search(query, brand), [query, brand]);
   const shown = results.slice(0, 60);
@@ -63,8 +79,9 @@ export default function Home() {
     setWatch(w);
     setWatchPhoto(null);
     setError("");
-    setStep("photos");
     window.scrollTo({ top: 0 });
+    if (wrist) check(w, wrist, null);
+    else setStep("photos");
   }
 
   async function lookup() {
@@ -92,36 +109,39 @@ export default function Home() {
     }
   }
 
-  async function check() {
-    if (!watch || !wrist) return;
-    setStep("checking");
+  async function check(w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
+    const id = ++attempt.current;
+    setStep("result");
+    setResult(null);
     setError("");
+    window.scrollTo({ top: 0 });
     const cm = parseFloat(wristCm);
     const wristSize = cm > 10 && cm < 30 ? cm : undefined;
-    makeTryOn(watch, wrist, wristSize);
+    saveWrist(wristImg);
+    makeTryOn(id, w, wristImg, productPhoto, wristSize);
     try {
       const res = await fetch("/api/check", {
         method: "POST",
         body: JSON.stringify({
-          watch,
-          wrist: { data: wrist.data, mediaType: wrist.mediaType },
+          watch: w,
+          wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
           outfit: outfit ? { data: outfit.data, mediaType: outfit.mediaType } : undefined,
           wristCm: wristSize,
         }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
+      if (id !== attempt.current) return;
       setResult(json.result);
       setDemo(json.demo);
-      setStep("result");
     } catch (e) {
+      if (id !== attempt.current) return;
       setError(e instanceof Error ? e.message : "Something went wrong. Try again.");
-      setStep("photos");
     }
   }
 
   // Runs alongside the fit check; the result screen shows it when it arrives.
-  async function makeTryOn(w: Watch, wristImg: ImagePayload, wristSize?: number) {
+  async function makeTryOn(id: number, w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null, wristSize?: number) {
     setTryOn({ status: "loading" });
     try {
       const res = await fetch("/api/tryon", {
@@ -129,22 +149,32 @@ export default function Home() {
         body: JSON.stringify({
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
-          watchPhoto: watchPhoto ? { data: watchPhoto.data, mediaType: watchPhoto.mediaType } : undefined,
+          watchPhoto: productPhoto ? { data: productPhoto.data, mediaType: productPhoto.mediaType } : undefined,
           wristCm: wristSize,
         }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error);
+      if (id !== attempt.current) return;
       setTryOn({ status: "done", image: json.image });
     } catch (e) {
+      if (id !== attempt.current) return;
       setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on preview failed." });
     }
   }
 
+  function saveWrist(img: ImagePayload) {
+    try {
+      localStorage.setItem(SAVED_WRIST, JSON.stringify({ wrist: img, wristCm }));
+    } catch {}
+  }
+
   function startOver() {
+    attempt.current++;
     setStep("pick");
     setResult(null);
     setError("");
+    window.scrollTo({ top: 0 });
   }
 
   return (
@@ -165,8 +195,16 @@ export default function Home() {
         <>
           <div>
             <h1>Will it suit you?</h1>
-            <p className="sub">Find the watch you&apos;re eyeing. Then snap your wrist.</p>
+            <p className="sub">Pick a watch. We&apos;ll put it on your wrist.</p>
           </div>
+          {wrist && (
+            <div className="saved">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={wrist.preview} alt="Your saved wrist photo" />
+              <span>Using your saved wrist photo</span>
+              <button className="link" onClick={() => { setWatch(null); setStep("photos"); }}>Change</button>
+            </div>
+          )}
           <input
             id="search"
             className="search"
@@ -209,9 +247,9 @@ export default function Home() {
         </>
       )}
 
-      {step === "photos" && watch && (
+      {step === "photos" && (
         <>
-          <div className="card">
+          {watch && <div className="card">
             <div className="picked">
               <WatchFace watch={watch} size={80} />
               <div style={{ minWidth: 0 }}>
@@ -227,17 +265,17 @@ export default function Home() {
               {watch.custom && <span className="tag">Specs looked up by AI</span>}
             </div>
             <button className="link" onClick={startOver}>Pick a different watch</button>
-          </div>
+          </div>}
 
           <div>
             <h2>Now show us you</h2>
             <p className="sub">A clear photo of your bare wrist from above works best.</p>
           </div>
           <div className="photos">
-            <PhotoBox label="Your wrist" hint="Required" photo={wrist} capture="environment" onFile={(f) => onPhoto(f, setWrist)} />
+            <PhotoBox label="Your wrist" hint="Required, saved for next time" photo={wrist} capture="environment" onFile={(f) => onPhoto(f, setWrist)} />
             <PhotoBox label="Your outfit" hint="Optional, helps with style" photo={outfit} capture="user" onFile={(f) => onPhoto(f, setOutfit)} />
           </div>
-          <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
+          {watch && <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
             {watchPhoto ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={watchPhoto.preview} alt="Watch photo" />
@@ -249,7 +287,7 @@ export default function Home() {
               <small>Optional. A store or product shot makes the try-on picture match better.</small>
             </span>
             <input type="file" accept="image/*" onChange={(e) => onPhoto(e.target.files?.[0], setWatchPhoto)} />
-          </label>
+          </label>}
           <div className="card">
             <div className="field">
               <label htmlFor="wrist-cm">
@@ -266,54 +304,58 @@ export default function Home() {
             </div>
           </div>
           {error && <p className="error">{error}</p>}
-          <button className="cta" disabled={!wrist} onClick={check}>
-            Check my fit
-          </button>
+          {watch ? (
+            <button className="cta" disabled={!wrist} onClick={() => wrist && check(watch, wrist, watchPhoto)}>
+              Put it on my wrist
+            </button>
+          ) : (
+            <button className="cta" disabled={!wrist} onClick={() => { if (wrist) saveWrist(wrist); startOver(); }}>
+              Save and pick a watch
+            </button>
+          )}
         </>
       )}
 
-      {step === "checking" && (
-        <div className="loading">
-          <span className="spin"><Logo size={48} /></span>
-          Checking how it fits…
-        </div>
-      )}
-
-      {step === "result" && watch && result && (
+      {step === "result" && watch && (
         <>
           <TryOn state={tryOn} fallback={wrist?.preview} />
           <div className="card">
-            <div className="score">
-              <ScoreRing score={result.score} />
+            <div className="picked-line">
               <div style={{ minWidth: 0 }}>
-                <p className="verdict">{result.verdict}</p>
-                <div className="sub" style={{ fontSize: 14 }}>{watch.model}</div>
+                <h2>{watch.model}</h2>
+                <div className="sub" style={{ fontSize: 14 }}>{watch.brand} · {watch.caseMm} mm</div>
               </div>
+              {watch.priceUsd > 0 && (
+                <div className="price">
+                  ${watch.priceUsd.toLocaleString("en-US")}
+                  <small>about, new</small>
+                </div>
+              )}
             </div>
-            <div className="line">
-              <div className="k">
-                Size <span className={`pill ${tone(result.size.rating)}`}>{result.size.rating}</span>
-              </div>
-              <span className="sub" style={{ margin: 0 }}>{result.size.comment}</span>
-            </div>
-            <div className="line">
-              <div className="k">
-                Style <span className={`pill ${tone(result.style.rating)}`}>{result.style.rating}</span>
-              </div>
-              <span className="sub" style={{ margin: 0 }}>{result.style.comment}</span>
-            </div>
-            {result.tips.length > 0 && (
-              <div className="line">
-                <div className="k">Tips</div>
-                <ul className="tips">
-                  {result.tips.map((t) => <li key={t}>{t}</li>)}
-                </ul>
-              </div>
+            {result ? (
+              <>
+                {result.works.length > 0 && (
+                  <div className="points">
+                    <div className="k good">What works</div>
+                    <ul>{result.works.map((t) => <li key={t} className="good">{t}</li>)}</ul>
+                  </div>
+                )}
+                {result.doesnt.length > 0 && (
+                  <div className="points">
+                    <div className="k bad">What doesn&apos;t</div>
+                    <ul>{result.doesnt.map((t) => <li key={t} className="bad">{t}</li>)}</ul>
+                  </div>
+                )}
+                {demo && <div className="demo">Demo notes. Add an Anthropic API key to check real photos.</div>}
+              </>
+            ) : error ? (
+              <p className="error">{error}</p>
+            ) : (
+              <p className="sub thinking">Looking at how it sits on you…</p>
             )}
-            {demo && <div className="demo">This is a demo result. Add an Anthropic API key to check real photos.</div>}
           </div>
           <button className="cta" onClick={startOver}>Try another watch</button>
-          <button className="ghost" onClick={() => setStep("photos")}>Change my photos</button>
+          <button className="link center" onClick={() => setStep("photos")}>Use a different wrist photo</button>
         </>
       )}
     </main>
@@ -377,34 +419,4 @@ function TryOn({ state, fallback }: { state: { status: string; image?: string; e
       {state.status === "done" && <figcaption>AI preview, not a real photo</figcaption>}
     </figure>
   );
-}
-
-function ScoreRing({ score }: { score: number }) {
-  const s = Math.max(0, Math.min(100, Math.round(score)));
-  const r = 42;
-  const len = 2 * Math.PI * r;
-  const color = s >= 75 ? "var(--good)" : s >= 50 ? "var(--ok)" : "var(--bad)";
-  return (
-    <svg className="ring" viewBox="0 0 100 100" role="img" aria-label={`Fit score ${s} out of 100`}>
-      <circle cx="50" cy="50" r={r} fill="none" stroke="var(--line)" strokeWidth="9" />
-      <circle
-        cx="50"
-        cy="50"
-        r={r}
-        fill="none"
-        stroke={color}
-        strokeWidth="9"
-        strokeLinecap="round"
-        strokeDasharray={`${(len * s) / 100} ${len}`}
-        transform="rotate(-90 50 50)"
-      />
-      <text x="50" y="58" textAnchor="middle" fontSize="26">{s}</text>
-    </svg>
-  );
-}
-
-function tone(rating: string) {
-  if (rating === "Just right" || rating === "Great match") return "good";
-  if (rating === "Works") return "ok";
-  return "bad";
 }
