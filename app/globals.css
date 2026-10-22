@@ -71,13 +71,44 @@ h2 { font-size: 20px; margin: 0; letter-spacing: -0.02em; }
 
 .search {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: 14px;
-  border: 1.5px solid var(--line);
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
   background: var(--card);
   font-size: 17px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 .search:focus { outline: none; border-color: var(--ink); }
+
+/* Big picture cards, two across: picture, name, price. */
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+.wcard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  min-width: 0;
+}
+.wcard-pic {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  margin-bottom: 8px;
+  transition: transform 0.15s;
+}
+.wcard-pic svg { width: 72%; height: 72%; }
+.wcard:active .wcard-pic { transform: scale(0.97); }
+.wcard:focus-visible { outline: none; }
+.wcard:focus-visible .wcard-pic, .wcard:hover .wcard-pic { border-color: var(--ink); }
+.wcard-name { font-weight: 600; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wcard-price { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
@@ -92,24 +123,6 @@ h2 { font-size: 20px; margin: 0; letter-spacing: -0.02em; }
 }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 
-.list { display: flex; flex-direction: column; gap: 8px; }
-.row {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr) auto;
-  gap: 12px;
-  align-items: center;
-  text-align: left;
-  width: 100%;
-  background: var(--card);
-  border: 1.5px solid var(--line);
-  border-radius: 16px;
-  padding: 8px 12px 8px 8px;
-  cursor: pointer;
-}
-.row:hover, .row:focus-visible { border-color: var(--ink); outline: none; }
-.row .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.row .meta { font-size: 13px; color: var(--muted); }
-.mm { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted); }
 .count { font-size: 13px; color: var(--muted); }
 
 .lookup {

@@ -153,15 +153,6 @@ export default function Home() {
 
       {step === "pick" && (
         <>
-          <h1>Try a watch on</h1>
-          {wrist && (
-            <div className="saved">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={wrist.preview} alt="Your saved wrist photo" />
-              <span>Using your wrist photo</span>
-              <button className="link" onClick={() => { setWatch(null); setStep("photos"); }}>Change</button>
-            </div>
-          )}
           <input
             id="search"
             className="search"
@@ -171,6 +162,14 @@ export default function Home() {
             onChange={(e) => setQuery(e.target.value)}
             autoComplete="off"
           />
+          {wrist && (
+            <div className="saved">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={wrist.preview} alt="Your saved wrist photo" />
+              <span>Using your wrist photo</span>
+              <button className="link" onClick={() => { setWatch(null); setStep("photos"); }}>Change</button>
+            </div>
+          )}
           <div className="chips" role="group" aria-label="Brands">
             {BRANDS.map((b) => (
               <button key={b} className="chip" aria-pressed={brand === b} onClick={() => setBrand(brand === b ? null : b)}>
@@ -181,25 +180,22 @@ export default function Home() {
           <span className="count">
             {browsing ? "Most popular" : `${results.length} ${results.length === 1 ? "watch" : "watches"}`}
           </span>
-          <div className="list">
+          <div className="cards">
             {shown.map((w) => (
-              <button key={w.id} className="row" onClick={() => pick(w)}>
-                <WatchFace watch={w} size={56} />
-                <span style={{ minWidth: 0 }}>
-                  <span className="name" style={{ display: "block" }}>{w.model}</span>
-                  <span className="meta">{w.brand}{w.priceUsd > 0 ? ` · ${formatPrice(w.priceUsd)}` : ""}</span>
-                </span>
-                <span className="mm">{w.caseMm} mm</span>
+              <button key={w.id} className="wcard" onClick={() => pick(w)}>
+                <span className="wcard-pic"><WatchFace watch={w} size={120} /></span>
+                <span className="wcard-name">{w.model}</span>
+                <span className="wcard-price">{w.priceUsd > 0 ? formatPrice(w.priceUsd) : w.brand}</span>
               </button>
             ))}
-            {query.trim().length > 1 && (
-              <button className="lookup" onClick={lookup} disabled={lookingUp}>
-                <strong>{lookingUp ? "Looking it up…" : `Not here? Look up “${query.trim()}”`}</strong>
-                <span>Any watch, by name or reference number.</span>
-              </button>
-            )}
-            {error && <p className="error">{error}</p>}
           </div>
+          {query.trim().length > 1 && (
+            <button className="lookup" onClick={lookup} disabled={lookingUp}>
+              <strong>{lookingUp ? "Looking it up…" : `Not here? Look up “${query.trim()}”`}</strong>
+              <span>Any watch, by name or reference number.</span>
+            </button>
+          )}
+          {error && <p className="error">{error}</p>}
         </>
       )}
 
