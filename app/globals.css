@@ -62,7 +62,7 @@ img { max-width: 100%; }
   gap: 20px;
 }
 .top { display: flex; align-items: center; justify-content: space-between; }
-.wordmark { font-family: var(--font-wordmark), Georgia, serif; font-style: italic; font-weight: 600; letter-spacing: -0.01em; }
+.wordmark { font-family: var(--font-wordmark), Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: -0.01em; }
 .brand .wordmark { font-size: 24px; }
 .brand { display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; background: none; border: 0; padding: 0; cursor: pointer; }
 .steps { font-size: 13px; color: var(--muted); }
@@ -240,14 +240,12 @@ button.addwatch { font: inherit; color: inherit; text-align: left; width: 100%; 
   animation: splash-cinch 0.35s cubic-bezier(.3,1.6,.5,1) 1.05s both;
 }
 .splash-s {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 12;
-  stroke-linecap: round;
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
   animation: splash-draw 0.9s cubic-bezier(.65,0,.35,1) 0.15s forwards;
 }
+.splash-stitch { opacity: 0; animation: splash-fade 0.25s ease-out 1.0s forwards; }
+@keyframes splash-fade { to { opacity: 1; } }
 .splash-hole {
   transform-box: fill-box;
   transform-origin: center;

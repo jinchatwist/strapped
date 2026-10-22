@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { HOLES, S_PATH } from "@/components/Logo";
 import type { Watch } from "@/lib/watch";
 
-const LOGO = "M72 23H42C17 23 17 49 41 49H59C84 49 84 77 58 77H28";
 
 // Builds a 4:5 picture for feeds and stories in the style of a workout share card:
 // the try-on photo fills the frame, with the watch name and big numbers along the bottom.
@@ -12,7 +12,7 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   photo.src = image;
   await photo.decode();
   const wordmark = `${getComputedStyle(document.documentElement).getPropertyValue("--font-wordmark").trim() || "Georgia"}, Georgia, serif`;
-  await document.fonts?.load(`italic 600 44px ${wordmark}`).catch(() => {});
+  await document.fonts?.load(`italic 500 44px ${wordmark}`).catch(() => {});
   await document.fonts?.ready;
   const W = 1080, H = 1350, pad = 64;
   const canvas = document.createElement("canvas");
@@ -40,19 +40,32 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   ctx.save();
   ctx.translate(pad - 6, 52);
   ctx.scale(0.64, 0.64);
-  ctx.strokeStyle = "#ffffff";
-  ctx.lineWidth = 12;
   ctx.lineCap = "round";
-  ctx.stroke(new Path2D(LOGO));
-  ctx.globalCompositeOperation = "destination-out";
-  for (const x of [33, 41, 49]) {
+  ctx.lineJoin = "round";
+  const strap = new Path2D(S_PATH);
+  ctx.strokeStyle = "#161616";
+  ctx.lineWidth = 16;
+  ctx.stroke(strap);
+  ctx.strokeStyle = "#ffffff";
+  ctx.lineWidth = 11;
+  ctx.stroke(strap);
+  ctx.strokeStyle = "#161616";
+  ctx.lineWidth = 1.4;
+  ctx.lineCap = "butt";
+  ctx.setLineDash([2.8, 2.2]);
+  ctx.stroke(strap);
+  ctx.setLineDash([]);
+  ctx.lineWidth = 1.5;
+  ctx.fillStyle = "#ffffff";
+  for (const x of HOLES) {
     ctx.beginPath();
     ctx.arc(x, 77, 2.4, 0, Math.PI * 2);
     ctx.fill();
+    ctx.stroke();
   }
   ctx.restore();
   ctx.fillStyle = "#ffffff";
-  ctx.font = `italic 600 46px ${wordmark}`;
+  ctx.font = `italic 500 46px ${wordmark}`;
   ctx.textBaseline = "middle";
   ctx.fillText("Strapped", pad + 64, 82);
 

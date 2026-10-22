@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { HOLES, S_PATH } from "@/components/Logo";
 
-// Opening animation: the S draws itself like a strap wrapping, then the holes punch in.
+// Opening animation: the S draws itself like a strap wrapping, the stitching appears, then the holes punch in.
 // It is drawn on the server so it covers the page from the first paint; CSS alone hides it at the end.
 export function Splash() {
   const [gone, setGone] = useState(false);
@@ -17,15 +18,14 @@ export function Splash() {
   return (
     <div className="splash" aria-hidden="true" onClick={() => setGone(true)}>
       <svg className="splash-art" viewBox="0 0 100 100">
-        <mask id="splash-holes" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100">
-          <rect width="100" height="100" fill="#fff" />
-          <circle className="splash-hole" cx="33" cy="77" r="2.4" fill="#000" />
-          <circle className="splash-hole" cx="41" cy="77" r="2.4" fill="#000" />
-          <circle className="splash-hole" cx="49" cy="77" r="2.4" fill="#000" />
-        </mask>
-        <g mask="url(#splash-holes)">
-          <path className="splash-s" pathLength="100" d="M72 23H42C17 23 17 49 41 49H59C84 49 84 77 58 77H28" />
+        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+          <path className="splash-s" pathLength={100} d={S_PATH} stroke="#161616" strokeWidth={16} />
+          <path className="splash-s" pathLength={100} d={S_PATH} stroke="#ffffff" strokeWidth={11} />
+          <path className="splash-stitch" d={S_PATH} stroke="#161616" strokeWidth={1.4} strokeDasharray="2.8 2.2" strokeLinecap="butt" />
         </g>
+        {HOLES.map((x) => (
+          <circle key={x} className="splash-hole" cx={x} cy={77} r={2.4} fill="#ffffff" stroke="#161616" strokeWidth={1.5} />
+        ))}
       </svg>
       <div className="splash-name wordmark">Strapped</div>
     </div>

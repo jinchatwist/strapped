@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Rubik } from "next/font/google";
+import { Fraunces, Rubik } from "next/font/google";
 import { RegisterSW } from "@/components/RegisterSW";
 import { Splash } from "@/components/Splash";
 import "./globals.css";
 
 const rubik = Rubik({ subsets: ["latin"], variable: "--font-rubik" });
 // The Strapped wordmark.
-const playfair = Playfair_Display({ subsets: ["latin"], style: "italic", weight: "600", variable: "--font-wordmark" });
+const fraunces = Fraunces({ subsets: ["latin"], style: "italic", weight: "500", variable: "--font-wordmark" });
 
 export const metadata: Metadata = {
   title: "Strapped",
@@ -26,7 +26,7 @@ const THEME_SCRIPT = `try{var t=localStorage.getItem("strapped-theme");if(t==="l
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${rubik.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${rubik.variable} ${fraunces.variable}`} suppressHydrationWarning>
       <head>
         {/* Apply the saved theme before the first paint so the opening animation matches it. */}
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
