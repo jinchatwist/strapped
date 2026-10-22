@@ -114,6 +114,9 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const [card, setCard] = useState<{ file: File; url: string } | null>(null);
+  const [photo, setPhoto] = useState<File | null>(null);
+  // Tapping the card shows just the photo, with no words on it. Save and share use whichever is showing.
+  const [plain, setPlain] = useState(false);
 
   // The card is made as soon as the try-on is ready, so people see exactly what they'll post.
   useEffect(() => {
@@ -125,6 +128,10 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
         if (live) setCard({ file, url });
       })
       .catch(() => {});
+    fetch(image)
+      .then((r) => r.blob())
+      .then((b) => live && setPhoto(new File([b], "strapped-photo.jpg", { type: b.type || "image/jpeg" })))
+      .catch(() => {});
     return () => {
       live = false;
       if (url) URL.revokeObjectURL(url);
@@ -135,7 +142,7 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
     setBusy(true);
     setNote("");
     try {
-      const file = card?.file ?? (await shareCard(image, watch));
+      const file = plain && photo ? photo : card?.file ?? (await shareCard(image, watch));
       const text = `Trying on the ${watch.model} with Strapped`;
       if (target === "save" && isIOS() && navigator.canShare?.({ files: [file] })) {
         // A web page can't write to Photos on iPhone. The share sheet with only the picture offers "Save Image",
@@ -162,10 +169,11 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
 
   return (
     <div className="share">
-      <figure className="tryon card-preview">
+      <button className="card-preview" onClick={() => setPlain(!plain)} aria-label={plain ? "Show the share card" : "Show the photo only"}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={card?.url ?? image} alt={`${watch.model} on your wrist, share card`} />
-      </figure>
+        <img src={plain || !card ? image : card.url} alt={plain ? `${watch.model} on your wrist` : `${watch.model} on your wrist, share card`} />
+        <span className="card-hint">{plain ? "Tap for the card" : "Tap for the photo only"}</span>
+      </button>
       <div className="share-row">
         <button className="share-btn" onClick={() => share("instagram")} disabled={busy} aria-label="Share to Instagram">
           <svg viewBox="0 0 24 24" aria-hidden="true">
