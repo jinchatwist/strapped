@@ -39,6 +39,7 @@ export const EVENTS = [
   "tryon_ok", "tryon_fail", "limit_hit", "wish_used",
   "share_instagram", "share_facebook", "share_tiktok", "share_save", "card_toggle",
   "try_another", "feedback",
+  "buy_click", "collection_open", "compare_open", "compare_share",
 ] as const;
 export type EventName = (typeof EVENTS)[number];
 

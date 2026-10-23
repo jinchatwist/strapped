@@ -126,12 +126,12 @@ function fit(ctx: CanvasRenderingContext2D, text: string, max: number) {
   return `${t}…`;
 }
 
-function isIOS() {
+export function isIOS() {
   return /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 }
 
 // On Android a downloaded picture lands in Downloads, which the gallery shows.
-function download(file: File) {
+export function download(file: File) {
   const url = URL.createObjectURL(file);
   const a = document.createElement("a");
   a.href = url;
