@@ -67,15 +67,23 @@ export async function POST(req: Request) {
       : "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
   ].join(" ");
 
-  const parts: Part[] = [{ text: prompt }, { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } }];
-  if (body.watchPhoto?.data) parts.push({ inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } });
+  const wristPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
+  const photoPart: Part | null = body.watchPhoto?.data
+    ? { inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } }
+    : null;
+  const generate = (parts: Part[]) =>
+    ai.models.generateContent({ model: IMAGE_MODEL, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
 
   try {
-    const response = await ai.models.generateContent({
-      model: IMAGE_MODEL,
-      contents: [{ role: "user", parts }],
-      config: { responseModalities: ["IMAGE"] },
-    });
+    let response;
+    try {
+      response = await generate(photoPart ? [{ text: prompt }, wristPart, photoPart] : [{ text: prompt }, wristPart]);
+    } catch (error) {
+      // If the watch photo was the problem, one more try with the wrist photo alone.
+      if (!photoPart || reasonOf(error) !== "other") throw error;
+      console.error("Retrying without the watch photo", error);
+      response = await generate([{ text: prompt.replace("The second photo shows exactly what the watch looks like. Match its design, colors and details.", "Draw the watch as it really looks.") }, wristPart]);
+    }
     const image = response.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data)?.inlineData;
     if (!image?.data) {
       await Promise.all([allowance.refund(), track("tryon_fail", device)]);
@@ -87,14 +95,37 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
-    return Response.json({ error: "The try-on preview failed. Try again in a moment." }, { status: 502 });
+    const reason = reasonOf(error);
+    // The short code at the end helps tell from a phone screenshot what went wrong.
+    const error_ =
+      reason === "credit" ? "Strapped's AI is out of credit right now. Please try again later."
+      : reason === "key" ? "The try-on AI isn't set up right yet."
+      : reason === "busy" ? "Lots of people trying right now. Try again in a minute."
+      : "The try-on preview failed. Try again in a moment.";
+    return Response.json({ error: `${error_} (${reason}${statusOf(error) ? ` ${statusOf(error)}` : ""})`, reason }, { status: 502 });
   }
+}
+
+function statusOf(error: unknown) {
+  const s = (error as { status?: number })?.status;
+  return typeof s === "number" ? s : 0;
+}
+
+// Sorts Google's errors into the few cases that need different handling.
+function reasonOf(error: unknown): "credit" | "key" | "busy" | "model" | "other" {
+  const text = String((error as Error)?.message || error).toLowerCase();
+  const status = statusOf(error);
+  if (/billing|credit|prepay|quota|resource_exhausted|exceeded your current/.test(text)) return "credit";
+  if (status === 401 || status === 403 || /api key|api_key|permission/.test(text)) return "key";
+  if (status === 404 || /not found|is not supported|unknown model/.test(text)) return "model";
+  if (status === 429 || status === 503 || /overloaded|unavailable/.test(text)) return "busy";
+  return "other";
 }
 
 async function ownPhoto(req: Request, id: string): Promise<Img | undefined> {
   try {
     const res = await fetch(new URL(`/watches/${id}.jpg`, req.url));
-    if (!res.ok) return undefined;
+    if (!res.ok || !res.headers.get("content-type")?.startsWith("image/")) return undefined;
     return { data: Buffer.from(await res.arrayBuffer()).toString("base64"), mediaType: "image/jpeg" };
   } catch {
     return undefined;
