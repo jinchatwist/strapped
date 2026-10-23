@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DEPTH, HOLES, S_PATH } from "@/components/Logo";
+import { track } from "@/lib/beta";
 import type { Watch } from "@/lib/watch";
 
 
@@ -172,6 +173,7 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
   }, [image, watch]);
 
   async function share(target: Target) {
+    track(`share_${target}`);
     setBusy(true);
     setNote("");
     try {
@@ -202,7 +204,7 @@ export function ShareBar({ image, watch }: { image: string; watch: Watch }) {
 
   return (
     <div className="share">
-      <button className="card-preview" onClick={() => setPlain(!plain)} aria-label={plain ? "Show the share card" : "Show the photo only"}>
+      <button className="card-preview" onClick={() => { track("card_toggle"); setPlain(!plain); }} aria-label={plain ? "Show the share card" : "Show the photo only"}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={plain || !card ? image : card.url} alt={plain ? `${watch.model} on your wrist` : `${watch.model} on your wrist, share card`} />
         <span className="card-hint">{plain ? "Tap for the card" : "Tap for the photo only"}</span>

@@ -2,6 +2,7 @@ import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
 import { WatchSchema, type Watch } from "@/lib/watch";
 import { client, errorResponse, FALLBACK, MODEL } from "@/lib/claude";
+import { ipOf, isUnlimited, redis, today } from "@/lib/store";
 
 export const maxDuration = 60;
 
@@ -17,6 +18,15 @@ export async function POST(req: Request) {
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return Response.json({ error: "Watch lookup needs an API key. Pick one from the list for now." }, { status: 503 });
+  }
+
+  // Lookups are cheap but not free, so one address gets a fair number a day.
+  if (!isUnlimited(req)) {
+    const key = `lookups:${today()}:${ipOf(req)}`;
+    const out = await redis([["INCR", key], ["EXPIRE", key, 172800]]);
+    if (out && Number(out[0]) > 20) {
+      return Response.json({ error: "That's a lot of lookups for one day. Pick one from the list for now." }, { status: 429 });
+    }
   }
 
   try {

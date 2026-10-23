@@ -317,3 +317,28 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .card-preview { position: relative; display: block; width: 100%; padding: 0; margin: 0 0 6px; border: 1.5px solid var(--line); border-radius: 20px; overflow: hidden; background: var(--card); aspect-ratio: 4 / 5; cursor: pointer; }
 .card-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .card-hint { position: absolute; right: 10px; top: 10px; background: rgba(0,0,0,.55); color: #fff; border-radius: 999px; padding: 4px 10px; font-size: 12px; }
+
+/* Beta: free try-ons left, feedback sheet */
+.left-note { text-align: center; font-size: 13px; color: var(--muted); margin: -4px 0 0; }
+.feedback-link { align-self: center; }
+.sheet-back { position: fixed; inset: 0; z-index: 80; background: rgba(0,0,0,.45); display: flex; align-items: flex-end; justify-content: center; }
+.sheet { width: 100%; max-width: 520px; background: var(--bg); border-radius: 22px 22px 0 0; padding: 20px 16px max(20px, env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: 14px; max-height: 92dvh; overflow-y: auto; }
+.sheet h2 { margin: 0; }
+.sheet-sub { margin: 0; color: var(--muted); }
+.q { display: flex; flex-direction: column; gap: 8px; font-size: 15px; font-weight: 500; }
+.stars { display: flex; gap: 6px; }
+.star { background: none; border: 0; padding: 0 2px; font-size: 30px; line-height: 1; color: var(--accent); cursor: pointer; }
+.sheet-text { font: inherit; color: inherit; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 12px; resize: vertical; }
+.limit-box { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
+.limit-box p { margin: 0; color: var(--muted); font-size: 14px; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+.stat b { font-size: 28px; }
+.stat span { font-size: 13px; color: var(--muted); }
+.admin h3 { margin: 8px 0 0; }
+.admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin-table td, .admin-table th { padding: 8px 4px; border-bottom: 1px solid var(--line); text-align: right; }
+.admin-table td:first-child, .admin-table th:first-child { text-align: left; }
+/* AI studio photo of the watch (white background), filling the card */
+.watch-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wcard-pic:has(.watch-photo), .detail-pic:has(.watch-photo) { overflow: hidden; background: #fff; }
