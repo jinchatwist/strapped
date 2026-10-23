@@ -1,8 +1,8 @@
-import { CAMERA_GUIDE, wristWidthMm, type WristSize } from "@/lib/wrist";
+import { wristWidthMm, type WristSize } from "@/lib/wrist";
 
-// Where the wrist sits in a photo from the in-app camera, in the photo's own pixels.
+// Where the wrist sits in a photo, in the photo's own pixels; angle is the line across the wrist.
 export type WristSpot = { x: number; y: number; width: number; angle: number };
-export type ImagePayload = { data: string; mediaType: "image/jpeg"; preview: string; spot?: WristSpot };
+export type ImagePayload = { data: string; mediaType: "image/jpeg"; preview: string };
 
 // Shrinks a photo to at most 1024px on its long side and returns base64 JPEG.
 export async function prepareImage(file: File): Promise<ImagePayload> {
@@ -10,25 +10,9 @@ export async function prepareImage(file: File): Promise<ImagePayload> {
   return toPayload(bitmap, bitmap.width, bitmap.height);
 }
 
-// Same, for the current frame of a live camera. The person lined their arm up with the outline,
-// so we also know where the wrist is and how wide it is in the picture.
+// Same, for the current frame of a live camera.
 export function captureFrame(video: HTMLVideoElement): ImagePayload {
-  const vw = video.videoWidth, vh = video.videoHeight;
-  const payload = toPayload(video, vw, vh);
-  const W = video.clientWidth || window.innerWidth, H = video.clientHeight || window.innerHeight;
-  const g = CAMERA_GUIDE;
-  // Outline drawing → screen (preserveAspectRatio slice), screen → video frame (object-fit cover).
-  const s = Math.max(W / g.viewW, H / g.viewH);
-  const v = Math.max(W / vw, H / vh);
-  const ratio = Math.min(1, 1024 / Math.max(vw, vh));
-  const toFrame = (screen: number, view: number, frame: number) => ((screen - (view - frame * v) / 2) / v) * ratio;
-  payload.spot = {
-    x: toFrame((W - g.viewW * s) / 2 + g.x * s, W, vw),
-    y: toFrame((H - g.viewH * s) / 2 + g.y * s, H, vh),
-    width: ((g.wristUnits * s) / v) * ratio,
-    angle: g.angle,
-  };
-  return payload;
+  return toPayload(video, video.videoWidth, video.videoHeight);
 }
 
 // Paints a bright magenta patch exactly the watch's real size where the watch goes, so the AI

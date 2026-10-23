@@ -72,7 +72,7 @@ export async function POST(req: Request) {
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
     body.watchPhoto ? "The second photo shows exactly what the watch looks like. Match its design, colors and details." : "Draw the watch as it really looks.",
     marked
-      ? "The solid magenta patch on the wrist in the first photo marks exactly where the watch goes and exactly how big it is: its long side is the lug-to-lug length across the wrist, its short side is the case width. Put the watch head exactly over the patch, same size, same angle, with the strap wrapping around the wrist. Do not make the watch bigger or smaller than the patch. No magenta may remain anywhere. The last photo is the same wrist without the patch; use it for the real skin, hand and background."
+      ? "The solid magenta patch on the wrist in the first photo marks exactly where the watch goes and exactly how big it is: its long side is the lug-to-lug length across the wrist, its short side is the case width. Put the watch head exactly over the patch, same size, same angle, with the strap wrapping around the wrist. Do not make the watch bigger or smaller than the patch. No magenta may remain anywhere. The last photo is the same wrist without the patch; use it for the real skin, hand and background. " + scaleNote(size, w.caseMm, w.lugMm)
       : scaleNote(size, w.caseMm, w.lugMm),
     "It must look like a real, unedited phone photo: the watch sits flat on the skin with the bracelet following the curve of the wrist, reflections and highlights that match the room's light, and sharp, correct details.",
     wish
