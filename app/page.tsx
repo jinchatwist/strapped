@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
-import type { ImagePayload } from "@/lib/image";
+import { markWatchSpot, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 import { inches, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 
@@ -125,12 +125,15 @@ export default function Home() {
     setTryOn({ status: "loading" });
     window.scrollTo({ top: 0 });
     try {
+      // Camera photos get the watch's true size painted on the wrist first; library photos can't.
+      const marked = await markWatchSpot(wristImg, wristSize, w.caseMm, w.lugMm).catch(() => null);
       const res = await fetch("/api/tryon", {
         method: "POST",
         headers: betaHeaders(),
         body: JSON.stringify({
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
+          marked: marked ? { data: marked, mediaType: "image/jpeg" } : undefined,
           wish: extra.trim() || undefined,
           wristSize,
         }),

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { captureFrame, prepareImage, type ImagePayload } from "@/lib/image";
+import { CAMERA_GUIDE } from "@/lib/wrist";
 
 // Full-screen camera with an outline showing where the wrist goes, so every photo is framed the same way.
 export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload) => void; onClose: () => void }) {
@@ -75,8 +76,8 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
 
 // Thin brown outline at the angle people check a watch: forearm running up to the right, hand at the top.
 // Drawn upright around the wrist, then turned; the watch sits on a jubilee bracelet across the wrist.
-const ANGLE = 58;
-const WRIST = { x: 222, y: 480 };
+const ANGLE = CAMERA_GUIDE.angle;
+const WRIST = { x: CAMERA_GUIDE.x, y: CAMERA_GUIDE.y };
 const EDGES = "M-126 -520 C-118 -330 -98 -200 -92 -70 L-118 760 M126 -520 C118 -330 98 -200 92 -70 L118 760";
 const LANE = "M-92 -70 C-98 -200 -118 -330 -126 -520 L126 -520 C118 -330 98 -200 92 -70 L118 760 L-118 760 Z";
 

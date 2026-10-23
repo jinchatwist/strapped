@@ -14,7 +14,7 @@ export function inches(cm: number) {
 // circumference wide, so a 17 cm wrist is about 56 mm across.
 export function scaleNote(size: WristSize, caseMm: number, lugMm: number) {
   const { cm } = WRIST_SIZES[size];
-  const widthMm = Math.round(cm * 10 * 0.33);
+  const widthMm = wristWidthMm(size);
   const lug = Math.max(lugMm, caseMm);
   const lugShare = Math.round((lug / widthMm) * 100);
   const caseShare = Math.round((caseMm / widthMm) * 100);
@@ -24,4 +24,13 @@ export function scaleNote(size: WristSize, caseMm: number, lugMm: number) {
     `So the ${caseMm} mm case must span about ${caseShare}% of the wrist's width, and the ${lug} mm lug-to-lug about ${lugShare}% of it.${overhang}`,
     "Measure against the wrist in the photo and draw the watch at exactly that size, not bigger or smaller.",
   ].join(" ");
+}
+
+// Where the in-app camera's outline puts the wrist, in the outline's 390×844 drawing. The lane is
+// about 188 units wide at the watch, and the forearm is turned 58°.
+export const CAMERA_GUIDE = { x: 222, y: 480, angle: 58, wristUnits: 188, viewW: 390, viewH: 844 };
+
+// Millimetres across the wrist seen from above (about a third of the circumference).
+export function wristWidthMm(size: WristSize) {
+  return Math.round(WRIST_SIZES[size].cm * 10 * 0.33);
 }
