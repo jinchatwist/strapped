@@ -74,15 +74,13 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
   );
 }
 
-// Thin brown outline of a relaxed hand, fingers together, forearm running in from the bottom left.
+// Thin brown outline of a relaxed hand, fingers gently curled, forearm running in from the bottom left.
 // Drawn upright with the watch at 0,0 (hand toward -y, wrist 101 units wide), then placed and turned.
 const G = CAMERA_GUIDE;
 const ARM =
-  "M50 -26 C54 -44 62 -60 72 -76 C82 -92 90 -112 86 -126 C82 -136 72 -132 66 -122 C62 -116 60 -112 58 -110 " +
-  "C60 -136 58 -158 54 -172 C54 -216 50 -248 44 -258 Q36 -270 28 -260 Q24 -284 12 -286 Q0 -286 -2 -268 " +
-  "Q-6 -278 -16 -276 Q-26 -274 -26 -258 Q-30 -250 -38 -248 Q-48 -246 -50 -232 C-54 -196 -60 -146 -58 -96 " +
-  "C-56 -62 -52 -38 -50 -26 C-51 -2 -54 54 -58 144 L-68 534 L68 534 L58 144 C54 54 51 -2 50 -26 Z";
-const FINGERS = "M28 -260 C29 -226 30 -202 30 -184 M-2 -268 C0 -226 1 -202 2 -184 M-26 -258 C-25 -226 -24 -202 -24 -184";
+  "M50 -26 C54 -44 62 -60 72 -76 C82 -92 88 -110 84 -124 C80 -134 70 -130 64 -120 L58 -112 C60 -136 58 -158 54 -172 C56 -196 54 -218 46 -230 Q38 -240 28 -232 Q22 -250 10 -250 Q-2 -250 -4 -234 " +
+  "Q-10 -244 -20 -242 Q-30 -240 -30 -226 Q-36 -220 -44 -216 Q-52 -212 -54 -198 C-58 -166 -60 -136 -58 -96 C-56 -62 -52 -38 -50 -26 C-51 -2 -54 54 -58 144 L-68 534 L68 534 L58 144 C54 54 51 -2 50 -26 Z";
+const FINGERS = "M28 -232 C29 -212 30 -196 30 -182 M-4 -234 C-2 -212 0 -196 0 -182 M-30 -226 C-28 -210 -27 -196 -26 -182 M58 -112 C52 -96 48 -86 46 -76";
 const CASE = 22;
 
 // Jubilee bracelet running from the case to both edges of the wrist.
