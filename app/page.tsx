@@ -60,6 +60,8 @@ function search(query: string, brand: string | null) {
 
 export default function Home() {
   const [step, setStep] = useState<Step>("pick");
+  // Set when someone arrives from the mystery-box demo with the watch they just unboxed.
+  const [unboxed, setUnboxed] = useState(false);
   const [query, setQuery] = useState("");
   const [brand, setBrand] = useState<string | null>(null);
   const [watch, setWatch] = useState<Watch | null>(null);
@@ -90,6 +92,14 @@ export default function Home() {
       if (saved && saved in WRIST_SIZES) setWristSize(saved as WristSize);
     } catch {}
     track("visit");
+    // A link like /?watch=<id> opens that watch straight away (used by the mystery-box demo).
+    const params = new URLSearchParams(window.location.search);
+    const linked = WATCHES.find((w) => w.id === params.get("watch"));
+    if (linked) {
+      pick(linked);
+      setUnboxed(params.get("from") === "box");
+      window.history.replaceState(null, "", "/");
+    }
     // Wakes the wrist check up early so the first try-on doesn't wait for it to start.
     fetch("/api/wrist").catch(() => {});
     fetch("/api/tryon", { headers: betaHeaders() })
@@ -191,6 +201,7 @@ export default function Home() {
 
   function startOver() {
     attempt.current++;
+    setUnboxed(false);
     setStep("pick");
     setError("");
     window.scrollTo({ top: 0 });
@@ -258,6 +269,7 @@ export default function Home() {
         <>
           {watch ? (
             <>
+              {unboxed && <p className="unboxed-note">You unboxed it. Now see it on your wrist.</p>}
               <div className="detail-pic"><WatchPic watch={watch} size={220} /></div>
               <div className="result-line">
                 <div style={{ minWidth: 0 }}>
