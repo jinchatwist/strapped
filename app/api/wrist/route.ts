@@ -1,38 +1,18 @@
 import { ThinkingLevel, Type, type GoogleGenAI } from "@google/genai";
-import { imageClient } from "@/lib/gemini";
+import { flashModels, imageClient, imageModels } from "@/lib/gemini";
 
 export const maxDuration = 30;
 
-// A fast vision model finds the wrist in the photo. Set WRIST_MODEL to choose one; otherwise we ask
-// Google which Flash models this key can use, newest first, so a renamed model doesn't break it.
-let models: Promise<string[]> | undefined;
+// A fast vision model finds the wrist in the photo. Set WRIST_MODEL to choose one.
 function wristModels(ai: GoogleGenAI) {
-  if (process.env.WRIST_MODEL) return Promise.resolve([process.env.WRIST_MODEL]);
-  models ??= (async () => {
-    const found: string[] = [];
-    for await (const m of await ai.models.list()) {
-      const name = (m.name || "").replace(/^.*models\//, "");
-      if (!/flash/.test(name) || /image|tts|live|audio|embed|lite/.test(name)) continue;
-      if (m.supportedActions && !m.supportedActions.includes("generateContent")) continue;
-      found.push(name);
-    }
-    const version = (n: string) => parseFloat(n.match(/\d+(\.\d+)?/)?.[0] || "0");
-    // Newest first; a finished model before a preview of the same version.
-    found.sort((a, b) => version(b) - version(a) || Number(/preview|exp/.test(a)) - Number(/preview|exp/.test(b)));
-    return found.length ? found.slice(0, 3) : ["gemini-2.5-flash"];
-  })().catch((error) => {
-    console.error("Couldn't list Google models", error);
-    models = undefined;
-    return ["gemini-2.5-flash"];
-  });
-  return models;
+  return process.env.WRIST_MODEL ? Promise.resolve([process.env.WRIST_MODEL]) : flashModels(ai, "text");
 }
 
-// Open /api/wrist in a browser to see which model the wrist check uses.
+// Open /api/wrist in a browser to see which models the wrist check and the try-on picture use.
 export async function GET() {
   const ai = imageClient();
   if (!ai) return Response.json({ ready: false, reason: "no Google key" });
-  return Response.json({ ready: true, models: await wristModels(ai) });
+  return Response.json({ ready: true, models: await wristModels(ai), imageModels: await imageModels(ai) });
 }
 
 const PROMPT = [
