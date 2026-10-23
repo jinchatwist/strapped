@@ -356,3 +356,28 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .size-btn small { font-size: 12px; color: var(--muted); }
 .size-btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 .size-btn[aria-pressed="true"] small { color: var(--bg); opacity: .75; }
+
+.unboxed-note { margin: 0; padding: 10px 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); font-weight: 600; text-align: center; }
+
+/* Mystery-box demo (/demo): a dark unboxing screen that hands the watch to the try-on. */
+.box-demo { min-height: 100dvh; background: radial-gradient(120% 70% at 50% 35%, #2b2118 0%, #0d0b09 70%); color: #f5efe6; display: flex; flex-direction: column; align-items: center; padding: max(24px, env(safe-area-inset-top)) 16px 32px; gap: 18px; text-align: center; }
+.box-demo header { width: 100%; max-width: 420px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: #bfae97; }
+.box-demo h1 { margin: 8px 0 0; font-family: var(--font-wordmark), serif; font-style: italic; font-weight: 500; font-size: 34px; }
+.box-demo .lead { margin: 0; color: #bfae97; font-size: 15px; max-width: 320px; }
+.box-stage { position: relative; width: 280px; height: 280px; display: grid; place-items: center; }
+.box-stage .glow { position: absolute; inset: 10%; border-radius: 50%; background: radial-gradient(circle, rgba(255,196,110,.55), rgba(255,196,110,0) 70%); opacity: 0; transition: opacity .6s; }
+.box-stage.open .glow { opacity: 1; }
+.chest { width: 220px; transition: transform .3s; }
+.box-stage.shaking .chest { animation: chest-shake .12s linear infinite; }
+.chest .lid { transform-origin: 20px 70px; transition: transform .7s cubic-bezier(.2,.9,.3,1.3); }
+.box-stage.open .chest .lid { transform: rotate(-28deg) translate(-6px, -18px); }
+.box-stage.open .chest { transform: translateY(46px) scale(.8); opacity: .5; }
+@keyframes chest-shake { 0% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(-2deg); } }
+.prize { position: absolute; top: 0; left: 50%; width: 180px; transform: translate(-50%, 40px) scale(.6); opacity: 0; transition: transform .8s cubic-bezier(.2,.9,.3,1.2) .2s, opacity .5s .2s; background: #fff; border-radius: 22px; padding: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+.box-stage.open .prize { transform: translate(-50%, -10px) scale(1); opacity: 1; }
+.prize .watch-photo { width: 100%; aspect-ratio: 1; object-fit: contain; }
+.prize-name { margin: 0; font-size: 20px; font-weight: 700; }
+.prize-sub { margin: 4px 0 0; color: #bfae97; font-size: 14px; }
+.box-demo .cta { width: 100%; max-width: 380px; }
+.box-demo .ghost { width: 100%; max-width: 380px; color: #f5efe6; border-color: #4a3d30; background: transparent; }
+.box-demo .fine { margin-top: auto; font-size: 12px; color: #8a7b68; max-width: 320px; }
