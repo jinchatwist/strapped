@@ -16,6 +16,7 @@ const FUNNEL: [string, string][] = [
   ["camera_open", "Opened the camera"],
   ["wrist_ok", "Took a wrist photo"],
   ["generate", "Tapped Generate"],
+  ["wish_used", "Typed their own idea"],
   ["tryon_ok", "Got a picture"],
   ["tryon_fail", "Picture failed"],
   ["try_another", "Tried another watch"],
