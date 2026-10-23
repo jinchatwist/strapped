@@ -1,4 +1,4 @@
-import { Type, type GoogleGenAI } from "@google/genai";
+import { ThinkingLevel, Type, type GoogleGenAI } from "@google/genai";
 import { imageClient } from "@/lib/gemini";
 
 export const maxDuration = 30;
@@ -68,6 +68,8 @@ export async function POST(req: Request) {
             },
             required: ["found"],
           },
+          // Finding two edges doesn't need long thinking, and the customer is waiting.
+          thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
         },
       });
       const out = JSON.parse(res.text || "{}");

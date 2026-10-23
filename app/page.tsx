@@ -369,6 +369,8 @@ export default function Home() {
           onDone={(photo) => {
             track("wrist_ok");
             setWrist(photo);
+            // Start measuring the wrist now, while they pick a size, so Generate doesn't wait for it.
+            void measureWrist(photo);
             setError("");
             setCamera(false);
           }}
