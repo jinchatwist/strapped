@@ -123,6 +123,13 @@ export default function Home() {
       });
       const json = await res.json();
       if (typeof json.left === "number") setLeft(json.left);
+      if (json.wishRejected) {
+        if (id === attempt.current) {
+          setStep("photos");
+          setError(json.error);
+        }
+        return;
+      }
       if (json.limit) {
         if (id === attempt.current) setTryOn({ status: "error", error: json.error, limit: true });
         return;
