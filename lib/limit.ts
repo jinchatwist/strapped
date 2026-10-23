@@ -1,8 +1,10 @@
 import { deviceOf, ipOf, isUnlimited, redis, today } from "@/lib/store";
 
-// Each try-on picture costs about $0.07, so the beta gives everyone a few for free and caps the whole day.
-export const FREE_TRYONS = Number(process.env.FREE_TRYONS || 5);
-const DAILY_CAP = Number(process.env.DAILY_TRYON_CAP || 60);
+// Each try-on picture costs about $0.07. During the beta there is no limit by default: people can keep
+// going until the AI credit runs out (see lib/pause.ts). Set FREE_TRYONS / DAILY_TRYON_CAP to bring limits back.
+export const FREE_TRYONS = Number(process.env.FREE_TRYONS || 0);
+const LIMITED = FREE_TRYONS > 0;
+const DAILY_CAP = Number(process.env.DAILY_TRYON_CAP || 0);
 // Several people can share one internet address (home Wi-Fi, a phone network), so it gets more room.
 const PER_IP_PER_DAY = FREE_TRYONS * 3;
 const COOKIE = "strapped_tries";
@@ -22,7 +24,7 @@ export function triesCookie(used: number) {
 
 // How many free try-ons this person has left, without using one.
 export async function remaining(req: Request) {
-  if (isUnlimited(req)) return { left: 999, unlimited: true };
+  if (!LIMITED || isUnlimited(req)) return { left: 999, unlimited: true };
   const device = deviceOf(req);
   const out = device ? await redis([["GET", `tries:dev:${device}`]]) : null;
   const used = Math.max(cookieCount(req), Number(out?.[0] || 0));
@@ -33,8 +35,12 @@ export async function remaining(req: Request) {
 export async function useTry(req: Request): Promise<Allowance> {
   const day = today();
   const dayKey = `tries:day:${day}`;
-  if (isUnlimited(req)) {
-    await redis([["INCR", dayKey], ["EXPIRE", dayKey, 172800]]);
+  if (!LIMITED || isUnlimited(req)) {
+    const out = await redis([["INCR", dayKey], ["EXPIRE", dayKey, 172800]]);
+    if (DAILY_CAP > 0 && !isUnlimited(req) && Number(out?.[0] || 0) > DAILY_CAP) {
+      await redis([["DECR", dayKey]]);
+      return { ok: false, reason: "day", left: 0 };
+    }
     return { ok: true, left: 999, used: 0, refund: async () => { await redis([["DECR", dayKey]]); } };
   }
 
@@ -63,7 +69,7 @@ export async function useTry(req: Request): Promise<Allowance> {
     await redis(back);
   };
 
-  if (dayCount > DAILY_CAP) {
+  if (DAILY_CAP > 0 && dayCount > DAILY_CAP) {
     await undo();
     return { ok: false, reason: "day", left: 0 };
   }
