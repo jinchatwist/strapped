@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import catalog from "@/data/catalog.json";
+import { BuyButton } from "@/components/BuyButton";
+import { Collection } from "@/components/Collection";
 import { Feedback } from "@/components/Feedback";
 import { Logo } from "@/components/Logo";
 import { ShareBar } from "@/components/ShareBar";
@@ -9,6 +11,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
+import { addToCollection, listCollection } from "@/lib/collection";
 import type { ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 import { inches, WRIST_SIZES, type WristSize } from "@/lib/wrist";
@@ -35,7 +38,7 @@ const POPULAR_IDS = [
 ];
 const POPULAR = POPULAR_IDS.map((id) => WATCHES.find((w) => w.id === id)).filter((w): w is Watch => !!w);
 
-type Step = "pick" | "photos" | "result";
+type Step = "pick" | "photos" | "result" | "collection";
 // timing: seconds spent waiting in total and on the picture itself (beta only).
 type TryOnState = {
   status: "idle" | "loading" | "done" | "error";
@@ -81,6 +84,10 @@ export default function Home() {
   const [paused, setPaused] = useState(false);
   // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
+  // My collection: how many try-ons are saved, the newest one's id, and whether it opens in compare mode.
+  const [saved, setSaved] = useState(0);
+  const [lastSaved, setLastSaved] = useState<string | undefined>();
+  const [coll, setColl] = useState<{ compare: boolean; preselect?: string; n: number }>({ compare: false, n: 0 });
 
   useEffect(() => {
     try {
@@ -92,6 +99,7 @@ export default function Home() {
       if (saved && saved in WRIST_SIZES) setWristSize(saved as WristSize);
     } catch {}
     track("visit");
+    listCollection().then((all) => setSaved(all.length)).catch(() => {});
     // A link like /?watch=<id> opens that watch straight away (used by the mystery-box demo).
     const params = new URLSearchParams(window.location.search);
     const linked = WATCHES.find((w) => w.id === params.get("watch"));
@@ -174,6 +182,13 @@ export default function Home() {
       if (!res.ok) throw new Error(json.error);
       const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000 };
       if (id === attempt.current) setTryOn({ status: "done", image: json.image, timing });
+      setLastSaved(undefined);
+      addToCollection(w, json.image)
+        .then((item) => {
+          setSaved((n) => n + 1);
+          if (id === attempt.current) setLastSaved(item.id);
+        })
+        .catch(() => {});
     } catch (e) {
       if (id === attempt.current) setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on picture failed." });
     }
@@ -189,6 +204,14 @@ export default function Home() {
   function openCamera() {
     track("camera_open");
     setCamera(true);
+  }
+
+  function openCollection(compare: boolean, preselect?: string) {
+    track(compare ? "compare_open" : "collection_open");
+    attempt.current++;
+    setColl((c) => ({ compare, preselect, n: c.n + 1 }));
+    setStep("collection");
+    window.scrollTo({ top: 0 });
   }
 
   function startOver() {
@@ -227,6 +250,12 @@ export default function Home() {
               <button className="link" onClick={() => { setWatch(null); setStep("photos"); }}>Change</button>
             </div>
           )}
+          <div className="home-actions">
+            <button className="pill" onClick={() => openCollection(false)}>
+              My collection{saved > 0 && <span className="pill-count">{saved}</span>}
+            </button>
+            <button className="pill" onClick={() => openCollection(true)}>Compare</button>
+          </div>
           <div className="chips" role="group" aria-label="Brands">
             {BRANDS.map((b) => (
               <button key={b} className="chip" aria-pressed={brand === b} onClick={() => setBrand(brand === b ? null : b)}>
@@ -351,6 +380,8 @@ export default function Home() {
           {tryOn.status === "done" && tryOn.image ? (
             <>
               <ShareBar image={tryOn.image} watch={watch} />
+              <BuyButton watch={watch} />
+              <button className="ghost" onClick={() => openCollection(true, lastSaved)}>Compare with another watch</button>
               {tryOn.timing && (
                 <p className="left-note">
                   Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s
@@ -382,6 +413,10 @@ export default function Home() {
           )}
           <button className="cta" onClick={() => { track("try_another"); startOver(); }}>Try another watch</button>
         </>
+      )}
+
+      {step === "collection" && (
+        <Collection key={coll.n} startCompare={coll.compare} preselect={coll.preselect} onClose={startOver} />
       )}
 
       {feedback && <Feedback watch={watch ? `${watch.brand} ${watch.model}` : undefined} onClose={() => setFeedback(false)} />}
