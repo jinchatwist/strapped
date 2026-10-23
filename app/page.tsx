@@ -88,6 +88,18 @@ export default function Home() {
   const [saved, setSaved] = useState(0);
   const [lastSaved, setLastSaved] = useState<string | undefined>();
   const [coll, setColl] = useState<{ compare: boolean; preselect?: string; n: number }>({ compare: false, n: 0 });
+  const collBack = useRef<(() => boolean) | null>(null);
+  // Going back one screen: the phone's back button, Safari's edge swipe, or our own swipe in the installed app.
+  const goBack = useRef<() => boolean>(() => false);
+  goBack.current = () => {
+    if (camera) setCamera(false);
+    else if (feedback) setFeedback(false);
+    else if (step === "collection" && collBack.current?.()) return true;
+    else if (step === "result") { attempt.current++; setStep("photos"); }
+    else if (step === "photos" || step === "collection") startOver();
+    else return false;
+    return true;
+  };
 
   useEffect(() => {
     try {
@@ -116,6 +128,48 @@ export default function Home() {
       })
       .catch(() => {});
   }, []);
+
+  // Away from home there is always one extra history entry, so Back (or a swipe) lands here instead of leaving the app.
+  const armed = useRef(false);
+  const skipPop = useRef(false);
+  useEffect(() => {
+    if (step !== "pick" && !armed.current) {
+      window.history.pushState({ strapped: true }, "");
+      armed.current = true;
+    } else if (step === "pick" && armed.current) {
+      // Came home with an in-app button: drop the extra entry so the next Back isn't wasted.
+      armed.current = false;
+      skipPop.current = true;
+      window.history.back();
+    }
+  }, [step]);
+  useEffect(() => {
+    function onPop() {
+      armed.current = false;
+      if (skipPop.current) {
+        skipPop.current = false;
+        return;
+      }
+      goBack.current();
+      // Still not home: put the extra entry back for the next swipe.
+      setTimeout(() => {
+        if (document.body.dataset.step !== "pick" && !armed.current) {
+          window.history.pushState({ strapped: true }, "");
+          armed.current = true;
+        }
+      }, 0);
+    }
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, []);
+  useEffect(() => {
+    document.body.dataset.step = step;
+  }, [step]);
+  // The installed app has no browser swipe, so a drag from the left edge does it.
+  useSwipeBack(() => {
+    if (armed.current) window.history.back();
+    else goBack.current();
+  });
 
   const browsing = !query.trim() && !brand;
   const results = useMemo(() => (browsing ? POPULAR : search(query, brand)), [browsing, query, brand]);
@@ -416,7 +470,7 @@ export default function Home() {
       )}
 
       {step === "collection" && (
-        <Collection key={coll.n} startCompare={coll.compare} preselect={coll.preselect} onClose={startOver} />
+        <Collection key={coll.n} backRef={collBack} startCompare={coll.compare} preselect={coll.preselect} onClose={startOver} />
       )}
 
       {feedback && <Feedback watch={watch ? `${watch.brand} ${watch.model}` : undefined} onClose={() => setFeedback(false)} />}
@@ -434,6 +488,46 @@ export default function Home() {
       )}
     </main>
   );
+}
+
+function useSwipeBack(onBack: () => void) {
+  const cb = useRef(onBack);
+  cb.current = onBack;
+  useEffect(() => {
+    const standalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as { standalone?: boolean }).standalone;
+    // In a browser tab Safari and Chrome already swipe back on their own; doing it twice would skip a screen.
+    if (!standalone) return;
+    let start: { x: number; y: number } | null = null;
+    const app = document.querySelector<HTMLElement>(".app");
+    function down(e: TouchEvent) {
+      const t = e.touches[0];
+      start = t.clientX < 28 ? { x: t.clientX, y: t.clientY } : null;
+    }
+    function move(e: TouchEvent) {
+      if (!start || !app) return;
+      const dx = e.touches[0].clientX - start.x;
+      const dy = Math.abs(e.touches[0].clientY - start.y);
+      if (dy > dx) { start = null; app.style.transform = ""; return; }
+      app.style.transition = "none";
+      app.style.transform = `translateX(${Math.max(0, dx) * 0.5}px)`;
+    }
+    function up(e: TouchEvent) {
+      if (!start || !app) return;
+      const dx = e.changedTouches[0].clientX - start.x;
+      start = null;
+      app.style.transition = "transform .2s ease";
+      app.style.transform = "";
+      if (dx > 70) cb.current();
+    }
+    document.addEventListener("touchstart", down, { passive: true });
+    document.addEventListener("touchmove", move, { passive: true });
+    document.addEventListener("touchend", up);
+    return () => {
+      document.removeEventListener("touchstart", down);
+      document.removeEventListener("touchmove", move);
+      document.removeEventListener("touchend", up);
+    };
+  }, []);
 }
 
 function formatPrice(usd: number) {
