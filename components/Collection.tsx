@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { BuyButton } from "@/components/BuyButton";
 import { ShareBar, download, isIOS } from "@/components/ShareBar";
 import { track } from "@/lib/beta";
@@ -11,7 +11,18 @@ type Mode = "grid" | "view" | "pick" | "compare";
 
 // "My collection": every try-on made on this phone. Tap one to see and share it again,
 // or pick two to see them side by side.
-export function Collection({ startCompare, preselect, onClose }: { startCompare?: boolean; preselect?: string; onClose: () => void }) {
+export function Collection({
+  startCompare,
+  preselect,
+  onClose,
+  backRef,
+}: {
+  startCompare?: boolean;
+  preselect?: string;
+  onClose: () => void;
+  // Set to a function the swipe-back gesture calls; it returns false when the collection itself should close.
+  backRef?: RefObject<(() => boolean) | null>;
+}) {
   const [items, setItems] = useState<Item[] | null>(null);
   const [mode, setMode] = useState<Mode>(startCompare ? "pick" : "grid");
   const [open, setOpen] = useState<Item | null>(null);
@@ -50,6 +61,17 @@ export function Collection({ startCompare, preselect, onClose }: { startCompare?
     setPicked((p) => p.filter((id) => id !== item.id));
     setOpen(null);
     setMode("grid");
+  }
+
+  if (backRef) {
+    backRef.current = () => {
+      if (mode === "view") setMode("grid");
+      else if (mode === "compare") { setPicked([]); setMode("pick"); }
+      else if (mode === "pick" && !startCompare) { setPicked([]); setMode("grid"); }
+      else return false;
+      window.scrollTo({ top: 0 });
+      return true;
+    };
   }
 
   const pair = picked.map((id) => items?.find((i) => i.id === id)).filter((i): i is Item => !!i);
