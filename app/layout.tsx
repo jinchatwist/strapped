@@ -23,7 +23,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-const THEME_SCRIPT = `try{var t=localStorage.getItem("strapped-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
+// Also: the opening animation plays once per visit; a reload or a swipe back to the page doesn't replay it.
+const THEME_SCRIPT = `try{var t=localStorage.getItem("strapped-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}try{if(sessionStorage.getItem("strapped-splash"))document.documentElement.dataset.splash="seen";else sessionStorage.setItem("strapped-splash","1")}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
