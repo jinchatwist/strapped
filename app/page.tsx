@@ -6,7 +6,7 @@ import { Feedback } from "@/components/Feedback";
 import { Logo } from "@/components/Logo";
 import { ShareBar } from "@/components/ShareBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { WatchFace } from "@/components/WatchFace";
+import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
 import { prepareImage, type ImagePayload } from "@/lib/image";
@@ -197,7 +197,7 @@ export default function Home() {
           <div className="cards">
             {shown.map((w) => (
               <button key={w.id} className="wcard" onClick={() => pick(w)}>
-                <span className="wcard-pic"><WatchFace watch={w} size={120} /></span>
+                <span className="wcard-pic"><WatchPic watch={w} size={120} /></span>
                 <span className="wcard-name">{w.model}</span>
                 <span className="wcard-price">{w.caseMm} mm</span>
               </button>
@@ -218,7 +218,7 @@ export default function Home() {
         <>
           {watch ? (
             <>
-              <div className="detail-pic"><WatchFace watch={watch} size={220} /></div>
+              <div className="detail-pic"><WatchPic watch={watch} size={220} /></div>
               <div className="result-line">
                 <div style={{ minWidth: 0 }}>
                   <h2>{watch.model}</h2>

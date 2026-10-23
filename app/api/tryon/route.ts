@@ -1,4 +1,5 @@
 import type { Part } from "@google/genai";
+import photos from "@/data/photos.json";
 import { imageClient } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
@@ -45,6 +46,8 @@ export async function POST(req: Request) {
   await track("generate", device);
 
   const w = body.watch;
+  // Our own studio photo of the watch keeps the result looking like the picture people picked.
+  if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
   const prompt = [
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
@@ -74,5 +77,15 @@ export async function POST(req: Request) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
     return Response.json({ error: "The try-on preview failed. Try again in a moment." }, { status: 502 });
+  }
+}
+
+async function ownPhoto(req: Request, id: string): Promise<Img | undefined> {
+  try {
+    const res = await fetch(new URL(`/watches/${id}.jpg`, req.url));
+    if (!res.ok) return undefined;
+    return { data: Buffer.from(await res.arrayBuffer()).toString("base64"), mediaType: "image/jpeg" };
+  } catch {
+    return undefined;
   }
 }

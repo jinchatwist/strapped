@@ -339,3 +339,6 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .admin-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .admin-table td, .admin-table th { padding: 8px 4px; border-bottom: 1px solid var(--line); text-align: right; }
 .admin-table td:first-child, .admin-table th:first-child { text-align: left; }
+/* AI studio photo of the watch (white background), filling the card */
+.watch-photo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wcard-pic:has(.watch-photo), .detail-pic:has(.watch-photo) { overflow: hidden; background: #fff; }
