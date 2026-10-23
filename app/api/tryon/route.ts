@@ -89,6 +89,7 @@ export async function POST(req: Request) {
   const generate = (parts: Part[]) =>
     ai.models.generateContent({ model: IMAGE_MODEL, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
 
+  const aiStarted = Date.now();
   try {
     let response;
     try {
@@ -106,7 +107,9 @@ export async function POST(req: Request) {
     }
     await Promise.all([track("tryon_ok", device), countSpend()]);
     const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
-    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left }, { headers });
+    const aiMs = Date.now() - aiStarted;
+    console.log(`Try-on ${w.id}: picture took ${aiMs} ms${photoPart ? " with photo" : ""}${marked ? ", size patch" : ""}`);
+    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs }, { headers });
   } catch (error) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
