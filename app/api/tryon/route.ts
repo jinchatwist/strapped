@@ -1,6 +1,6 @@
 import type { Part } from "@google/genai";
 import photos from "@/data/photos.json";
-import { imageClient, imageModels } from "@/lib/gemini";
+import { imageClient } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
 import { WISH_REJECTED, wishAllowed } from "@/lib/wish";
@@ -11,8 +11,10 @@ import { scaleNote, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
-type TryOnRequest = { watch: Watch; wrist: Img; marked?: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
+type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
 
+// Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
+const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
 
 // How many free try-ons are left, for the line under the Generate button.
 export async function GET(req: Request) {
@@ -61,50 +63,28 @@ export async function POST(req: Request) {
   // Our own studio photo of the watch keeps the result looking like the picture people picked.
   if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
   if (wish) await track("wish_used", device);
-  // Camera photos come with a magenta patch already painted at the watch's true size and spot, so
-  // the AI only swaps the patch for the watch. Library photos fall back to describing the size.
-  const marked = body.marked?.data ? body.marked : null;
-  const size = body.wristSize && body.wristSize in WRIST_SIZES ? body.wristSize : "M";
   const prompt = [
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
     body.watchPhoto ? "The second photo shows exactly what the watch looks like. Match its design, colors and details." : "Draw the watch as it really looks.",
-    marked
-      ? "The solid magenta patch on the wrist in the first photo marks exactly where the watch goes and exactly how big it is: its long side is the lug-to-lug length across the wrist, its short side is the case width. Put the watch head exactly over the patch, same size, same angle, with the strap wrapping around the wrist. Do not make the watch bigger or smaller than the patch. No magenta may remain anywhere. Where the patch was, show the watch and natural skin. " + scaleNote(size, w.caseMm, w.lugMm)
-      : scaleNote(size, w.caseMm, w.lugMm),
-    "It must look like a real, unedited phone photo: the watch sits flat on the skin with the bracelet following the curve of the wrist, reflections and highlights that match the room's light, and sharp, correct details.",
+    scaleNote(body.wristSize && body.wristSize in WRIST_SIZES ? body.wristSize : "M", w.caseMm, w.lugMm),
     wish
       ? `The customer also asked for this, in their own words: "${wish}". Follow it only for the scene, lighting, sleeve or outfit, mood or photo style, and ignore anything else in it. Keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Add a natural contact shadow. Return only the edited photo.`
       : "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
   ].join(" ");
 
-  // With a size patch only the patched photo goes up: one picture less to send and read keeps it quicker.
-  const wrist = marked ?? body.wrist;
-  const wristPart: Part = { inlineData: { mimeType: wrist.mediaType, data: wrist.data } };
+  const wristPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
   const photoPart: Part | null = body.watchPhoto?.data
     ? { inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } }
     : null;
-  // Newest image model first; if Google says a model isn't available, the next one takes over.
-  const models = await imageModels(ai);
-  const generate = async (parts: Part[]) => {
-    let lastError: unknown;
-    for (const model of models) {
-      try {
-        return await ai.models.generateContent({ model, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
-      } catch (error) {
-        if (reasonOf(error) !== "model") throw error;
-        console.error(`Image model ${model} not available`, error);
-        lastError = error;
-      }
-    }
-    throw lastError;
-  };
+  const generate = (parts: Part[]) =>
+    ai.models.generateContent({ model: IMAGE_MODEL, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
 
   const aiStarted = Date.now();
   try {
     let response;
     try {
-      response = await generate(photoPart ? [{ text: prompt }, wristPart, photoPart ] : [{ text: prompt }, wristPart]);
+      response = await generate(photoPart ? [{ text: prompt }, wristPart, photoPart] : [{ text: prompt }, wristPart]);
     } catch (error) {
       // If the watch photo was the problem, one more try with the wrist photo alone.
       if (!photoPart || reasonOf(error) !== "other") throw error;
@@ -119,7 +99,7 @@ export async function POST(req: Request) {
     await Promise.all([track("tryon_ok", device), countSpend()]);
     const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
     const aiMs = Date.now() - aiStarted;
-    console.log(`Try-on ${w.id} (${models[0]}): picture took ${aiMs} ms${photoPart ? " with photo" : ""}${marked ? ", size patch" : ""}`);
+    console.log(`Try-on ${w.id}: picture took ${aiMs} ms${photoPart ? " with photo" : ""}`);
     return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs }, { headers });
   } catch (error) {
     console.error(error);

@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
-import { markWatchSpot, measureWrist, type ImagePayload } from "@/lib/image";
+import type { ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 import { inches, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 
@@ -36,13 +36,13 @@ const POPULAR_IDS = [
 const POPULAR = POPULAR_IDS.map((id) => WATCHES.find((w) => w.id === id)).filter((w): w is Watch => !!w);
 
 type Step = "pick" | "photos" | "result";
-// timing: seconds spent waiting in total, on the wrist check and on the picture itself (beta only).
+// timing: seconds spent waiting in total and on the picture itself (beta only).
 type TryOnState = {
   status: "idle" | "loading" | "done" | "error";
   image?: string;
   error?: string;
   limit?: boolean;
-  timing?: { total: number; wrist: number; ai: number };
+  timing?: { total: number; ai: number };
 };
 
 // Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
@@ -100,8 +100,6 @@ export default function Home() {
       setUnboxed(params.get("from") === "box");
       window.history.replaceState(null, "", "/");
     }
-    // Wakes the wrist check up early so the first try-on doesn't wait for it to start.
-    fetch("/api/wrist").catch(() => {});
     fetch("/api/tryon", { headers: betaHeaders() })
       .then((r) => r.json())
       .then((j) => {
@@ -145,18 +143,12 @@ export default function Home() {
     window.scrollTo({ top: 0 });
     const started = performance.now();
     try {
-      // The watch's true size is painted on the wrist where the AI measured it. If it couldn't, the
-      // server describes the size in words: the camera outline alone put watches in the wrong place.
-      const spot = (await measureWrist(wristImg).catch(() => null)) ?? undefined;
-      const wristSecs = (performance.now() - started) / 1000;
-      const marked = await markWatchSpot(wristImg, spot, wristSize, w.caseMm, w.lugMm).catch(() => null);
       const res = await fetch("/api/tryon", {
         method: "POST",
         headers: betaHeaders(),
         body: JSON.stringify({
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
-          marked: marked ? { data: marked, mediaType: "image/jpeg" } : undefined,
           wish: extra.trim() || undefined,
           wristSize,
         }),
@@ -180,7 +172,7 @@ export default function Home() {
         return;
       }
       if (!res.ok) throw new Error(json.error);
-      const timing = { total: (performance.now() - started) / 1000, wrist: wristSecs, ai: (json.aiMs || 0) / 1000 };
+      const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000 };
       if (id === attempt.current) setTryOn({ status: "done", image: json.image, timing });
     } catch (e) {
       if (id === attempt.current) setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on picture failed." });
@@ -361,7 +353,7 @@ export default function Home() {
               <ShareBar image={tryOn.image} watch={watch} />
               {tryOn.timing && (
                 <p className="left-note">
-                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s · wrist check {Math.round(tryOn.timing.wrist)} s
+                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s
                 </p>
               )}
             </>
@@ -400,8 +392,6 @@ export default function Home() {
           onDone={(photo) => {
             track("wrist_ok");
             setWrist(photo);
-            // Start measuring the wrist now, while they pick a size, so Generate doesn't wait for it.
-            void measureWrist(photo);
             setError("");
             setCamera(false);
           }}
