@@ -348,3 +348,11 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .wish textarea { font: inherit; font-size: 16px; color: inherit; background: transparent; border: 0; padding: 0; resize: none; outline: none; }
 .wish textarea::placeholder { color: var(--muted); }
 .wish:focus-within { border-color: var(--ink); }
+/* Wrist size: Small / Medium / Large */
+.wrist-size { display: flex; flex-direction: column; gap: 8px; }
+.wrist-size > span { font-size: 14px; color: var(--muted); }
+.sizes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.size-btn { font: inherit; color: inherit; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 10px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+.size-btn small { font-size: 12px; color: var(--muted); }
+.size-btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.size-btn[aria-pressed="true"] small { color: var(--bg); opacity: .75; }

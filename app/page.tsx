@@ -11,6 +11,7 @@ import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
 import type { ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
+import { inches, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 
 // Only the brands people want most right now; the rest of the catalog stays in the data file for later.
 const BRANDS = [
@@ -39,6 +40,7 @@ type TryOnState = { status: "idle" | "loading" | "done" | "error"; image?: strin
 
 // Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
 const OLD_SAVED_WRIST = "strapped-wrist";
+const WRIST_SIZE_KEY = "strapped-wrist-size";
 
 function search(query: string, brand: string | null) {
   const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
@@ -57,6 +59,8 @@ export default function Home() {
   const [wrist, setWrist] = useState<ImagePayload | null>(null);
   // What the customer types for their picture ("at night", "with a suit"…). Kept when they pick another watch.
   const [wish, setWish] = useState("");
+  // Wrist size picked on the watch screen; remembered on this phone.
+  const [wristSize, setWristSize] = useState<WristSize>("M");
   const [tryOn, setTryOn] = useState<TryOnState>({ status: "idle" });
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
@@ -74,6 +78,10 @@ export default function Home() {
       localStorage.removeItem(OLD_SAVED_WRIST);
     } catch {}
     rememberCode();
+    try {
+      const saved = localStorage.getItem(WRIST_SIZE_KEY);
+      if (saved && saved in WRIST_SIZES) setWristSize(saved as WristSize);
+    } catch {}
     track("visit");
     fetch("/api/tryon", { headers: betaHeaders() })
       .then((r) => r.json())
@@ -124,6 +132,7 @@ export default function Home() {
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
           wish: extra.trim() || undefined,
+          wristSize,
         }),
       });
       const json = await res.json();
@@ -149,6 +158,13 @@ export default function Home() {
     } catch (e) {
       if (id === attempt.current) setTryOn({ status: "error", error: e instanceof Error ? e.message : "The try-on picture failed." });
     }
+  }
+
+  function pickWristSize(k: WristSize) {
+    setWristSize(k);
+    try {
+      localStorage.setItem(WRIST_SIZE_KEY, k);
+    } catch {}
   }
 
   function openCamera() {
@@ -232,6 +248,17 @@ export default function Home() {
                   <div className="sub">{watch.brand} · {watch.caseMm} mm</div>
                 </div>
                 {watch.priceUsd > 0 && <div className="price">{formatPrice(watch.priceUsd)}</div>}
+              </div>
+              <div className="wrist-size">
+                <span>Your wrist size</span>
+                <div className="sizes" role="group" aria-label="Wrist size">
+                  {(Object.keys(WRIST_SIZES) as WristSize[]).map((k) => (
+                    <button key={k} className="size-btn" aria-pressed={wristSize === k} onClick={() => pickWristSize(k)}>
+                      <strong>{WRIST_SIZES[k].label}</strong>
+                      <small>{inches(WRIST_SIZES[k].cm)} in</small>
+                    </button>
+                  ))}
+                </div>
               </div>
               <button className={`addwatch ${wrist ? "filled" : ""}`} onClick={openCamera}>
                 {wrist ? (
