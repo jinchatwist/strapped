@@ -4,6 +4,7 @@ import { imageClient } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
 import { WISH_REJECTED, wishAllowed } from "@/lib/wish";
+import { aiPaused, countSpend, pauseAi, PAUSED_MESSAGE } from "@/lib/pause";
 import type { Watch } from "@/lib/watch";
 
 export const maxDuration = 60;
@@ -16,7 +17,8 @@ const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
 
 // How many free try-ons are left, for the line under the Generate button.
 export async function GET(req: Request) {
-  return Response.json({ ...(await remaining(req)), free: FREE_TRYONS });
+  const [left, paused] = await Promise.all([remaining(req), aiPaused()]);
+  return Response.json({ ...left, free: FREE_TRYONS, paused });
 }
 
 export async function POST(req: Request) {
@@ -32,6 +34,9 @@ export async function POST(req: Request) {
   const ai = imageClient();
   if (!ai) {
     return Response.json({ error: "Try-on preview isn't set up yet (needs GOOGLE_CLOUD_API_KEY)." }, { status: 503 });
+  }
+  if (await aiPaused()) {
+    return Response.json({ error: PAUSED_MESSAGE, paused: true }, { status: 503 });
   }
 
   // The customer's own words for the picture, kept short and on one line.
@@ -89,17 +94,20 @@ export async function POST(req: Request) {
       await Promise.all([allowance.refund(), track("tryon_fail", device)]);
       return Response.json({ error: "Couldn't make the try-on picture this time. Try a clearer wrist photo." }, { status: 422 });
     }
-    await track("tryon_ok", device);
+    await Promise.all([track("tryon_ok", device), countSpend()]);
     const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
     return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left }, { headers });
   } catch (error) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
     const reason = reasonOf(error);
+    if (reason === "credit") {
+      await pauseAi();
+      return Response.json({ error: `${PAUSED_MESSAGE} (credit)`, paused: true, reason }, { status: 503 });
+    }
     // The short code at the end helps tell from a phone screenshot what went wrong.
     const error_ =
-      reason === "credit" ? "Strapped's AI is out of credit right now. Please try again later."
-      : reason === "key" ? "The try-on AI isn't set up right yet."
+      reason === "key" ? "The try-on AI isn't set up right yet."
       : reason === "busy" ? "Lots of people trying right now. Try again in a minute."
       : "The try-on preview failed. Try again in a moment.";
     return Response.json({ error: `${error_} (${reason}${statusOf(error) ? ` ${statusOf(error)}` : ""})`, reason }, { status: 502 });

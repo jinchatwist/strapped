@@ -64,6 +64,8 @@ export default function Home() {
   const [feedback, setFeedback] = useState(false);
   // Free try-ons left for this person during the beta; null until the server answers.
   const [left, setLeft] = useState<number | null>(null);
+  // True while the AI money has run out; Generate is turned off until it's back.
+  const [paused, setPaused] = useState(false);
   // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
 
@@ -75,7 +77,10 @@ export default function Home() {
     track("visit");
     fetch("/api/tryon", { headers: betaHeaders() })
       .then((r) => r.json())
-      .then((j) => typeof j.left === "number" && setLeft(j.left))
+      .then((j) => {
+        if (typeof j.left === "number") setLeft(j.left);
+        setPaused(Boolean(j.paused));
+      })
       .catch(() => {});
   }, []);
 
@@ -128,6 +133,11 @@ export default function Home() {
           setStep("photos");
           setError(json.error);
         }
+        return;
+      }
+      if (json.paused) {
+        setPaused(true);
+        if (id === attempt.current) setTryOn({ status: "error", error: json.error, limit: true });
         return;
       }
       if (json.limit) {
@@ -268,10 +278,12 @@ export default function Home() {
           {error && <p className="error">{error}</p>}
           {watch ? (
             <>
-              <button className="cta" disabled={!wrist || left === 0} onClick={() => wrist && tryItOn(watch, wrist, wish)}>
+              <button className="cta" disabled={!wrist || left === 0 || paused} onClick={() => wrist && tryItOn(watch, wrist, wish)}>
                 Generate
               </button>
-              {left !== null && left < 100 && (
+              {paused ? (
+                <p className="left-note">Try-ons are paused for a little while. Please check back soon!</p>
+              ) : left !== null && left < 100 && (
                 <p className="left-note">
                   {left === 0 ? "You've used all your free try-ons." : `${left} free ${left === 1 ? "try-on" : "try-ons"} left`}
                 </p>
@@ -295,7 +307,7 @@ export default function Home() {
               {tryOn.limit ? (
                 <div className="limit-box">
                   <strong>{tryOn.error}</strong>
-                  <p>Paid packs are coming soon. Tell us what you thought while it&apos;s fresh?</p>
+                  <p>{paused ? "Meanwhile, tell us what you think?" : "Paid packs are coming soon. Tell us what you thought while it\u2019s fresh?"}</p>
                   <button className="ghost" onClick={() => setFeedback(true)}>Give feedback</button>
                 </div>
               ) : (

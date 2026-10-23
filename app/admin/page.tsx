@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type Row = Record<string, number | string> & { day: string; people: number };
 type Entry = { at: string; looks: number | null; pay: string | null; text: string; watch: string };
-type Data = { rows: Row[]; people: number; feedback: Entry[]; events: string[] };
+type Data = { rows: Row[]; people: number; feedback: Entry[]; events: string[]; spent: number; budget: number; paused: boolean };
 
 const KEY = "strapped-admin";
 // Rough cost of one try-on picture, for the money line.
@@ -88,6 +88,10 @@ export default function Admin() {
         <div className="stat"><b>{payers.length ? `${Math.round(((yes + maybe / 2) / payers.length) * 100)}%` : "–"}</b><span>Would pay ({yes} yes · {maybe} maybe · {payers.length - yes - maybe} no)</span></div>
       </div>
       <p className="left-note">AI cost, last 14 days: about ${(total("tryon_ok") * COST_PER_TRYON).toFixed(2)}</p>
+      <p className="left-note">
+        AI spend so far: about ${data.spent.toFixed(2)}{data.budget > 0 && ` of $${data.budget.toFixed(2)} budget`}
+        {data.paused && " · Try-ons are PAUSED (out of AI credit)"}
+      </p>
 
       <h3>Last 14 days</h3>
       <table className="admin-table">

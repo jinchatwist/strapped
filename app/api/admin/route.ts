@@ -1,3 +1,4 @@
+import { aiPaused, spentUsd } from "@/lib/pause";
 import { EVENTS, hasStore, redis, today } from "@/lib/store";
 
 // Numbers and feedback for /admin. Needs ADMIN_KEY set in Vercel.
@@ -22,5 +23,6 @@ export async function GET(req: Request) {
     return { day, people: Number(out[i * 2 + 1] || 0), ...Object.fromEntries(EVENTS.map((e) => [e, counts[e] || 0])) };
   });
   const feedback = ((out[days.length * 2 + 1] as string[]) || []).map((s) => JSON.parse(s));
-  return Response.json({ rows, people: Number(out[days.length * 2] || 0), feedback, events: EVENTS });
+  const [money, paused] = await Promise.all([spentUsd(), aiPaused()]);
+  return Response.json({ rows, people: Number(out[days.length * 2] || 0), feedback, events: EVENTS, ...money, paused });
 }
