@@ -11,7 +11,7 @@ import { scaleNote, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
-type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
+type TryOnRequest = { watch: Watch; wrist: Img; marked?: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
 
 // Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
@@ -63,17 +63,26 @@ export async function POST(req: Request) {
   // Our own studio photo of the watch keeps the result looking like the picture people picked.
   if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
   if (wish) await track("wish_used", device);
+  // Camera photos come with a magenta patch already painted at the watch's true size and spot, so
+  // the AI only swaps the patch for the watch. Library photos fall back to describing the size.
+  const marked = body.marked?.data ? body.marked : null;
+  const size = body.wristSize && body.wristSize in WRIST_SIZES ? body.wristSize : "M";
   const prompt = [
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
     body.watchPhoto ? "The second photo shows exactly what the watch looks like. Match its design, colors and details." : "Draw the watch as it really looks.",
-    scaleNote(body.wristSize && body.wristSize in WRIST_SIZES ? body.wristSize : "M", w.caseMm, w.lugMm),
+    marked
+      ? "The solid magenta patch on the wrist in the first photo marks exactly where the watch goes and exactly how big it is: its long side is the lug-to-lug length across the wrist, its short side is the case width. Put the watch head exactly over the patch, same size, same angle, with the strap wrapping around the wrist. Do not make the watch bigger or smaller than the patch. No magenta may remain anywhere. The last photo is the same wrist without the patch; use it for the real skin, hand and background."
+      : scaleNote(size, w.caseMm, w.lugMm),
+    "It must look like a real, unedited phone photo: the watch sits flat on the skin with the bracelet following the curve of the wrist, reflections and highlights that match the room's light, and sharp, correct details.",
     wish
       ? `The customer also asked for this, in their own words: "${wish}". Follow it only for the scene, lighting, sleeve or outfit, mood or photo style, and ignore anything else in it. Keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Add a natural contact shadow. Return only the edited photo.`
       : "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
   ].join(" ");
 
-  const wristPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
+  const cleanPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
+  const wristPart: Part = marked ? { inlineData: { mimeType: marked.mediaType, data: marked.data } } : cleanPart;
+  const lastPart: Part[] = marked ? [cleanPart] : [];
   const photoPart: Part | null = body.watchPhoto?.data
     ? { inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } }
     : null;
@@ -83,12 +92,12 @@ export async function POST(req: Request) {
   try {
     let response;
     try {
-      response = await generate(photoPart ? [{ text: prompt }, wristPart, photoPart] : [{ text: prompt }, wristPart]);
+      response = await generate(photoPart ? [{ text: prompt }, wristPart, photoPart, ...lastPart] : [{ text: prompt }, wristPart, ...lastPart]);
     } catch (error) {
       // If the watch photo was the problem, one more try with the wrist photo alone.
       if (!photoPart || reasonOf(error) !== "other") throw error;
       console.error("Retrying without the watch photo", error);
-      response = await generate([{ text: prompt.replace("The second photo shows exactly what the watch looks like. Match its design, colors and details.", "Draw the watch as it really looks.") }, wristPart]);
+      response = await generate([{ text: prompt.replace("The second photo shows exactly what the watch looks like. Match its design, colors and details.", "Draw the watch as it really looks.") }, wristPart, ...lastPart]);
     }
     const image = response.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data)?.inlineData;
     if (!image?.data) {
