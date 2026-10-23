@@ -33,8 +33,8 @@ export function captureFrame(video: HTMLVideoElement): ImagePayload {
 
 // Paints a bright magenta patch exactly the watch's real size where the watch goes, so the AI
 // only has to swap the patch for the watch instead of guessing the size.
-export async function markWatchSpot(photo: ImagePayload, size: WristSize, caseMm: number, lugMm: number) {
-  if (!photo.spot) return null;
+export async function markWatchSpot(photo: ImagePayload, spot: WristSpot | undefined, size: WristSize, caseMm: number, lugMm: number) {
+  if (!spot) return null;
   const img = new Image();
   img.src = photo.preview;
   await img.decode();
@@ -43,16 +43,46 @@ export async function markWatchSpot(photo: ImagePayload, size: WristSize, caseMm
   canvas.height = img.naturalHeight;
   const ctx = canvas.getContext("2d")!;
   ctx.drawImage(img, 0, 0);
-  const pxPerMm = photo.spot.width / wristWidthMm(size);
+  const pxPerMm = spot.width / wristWidthMm(size);
   const across = Math.max(lugMm, caseMm) * pxPerMm; // lug to lug runs across the arm
   const along = caseMm * pxPerMm;
-  ctx.translate(photo.spot.x, photo.spot.y);
-  ctx.rotate((photo.spot.angle * Math.PI) / 180);
+  ctx.translate(spot.x, spot.y);
+  ctx.rotate((spot.angle * Math.PI) / 180);
   ctx.fillStyle = "#ff00ff";
   ctx.beginPath();
   ctx.roundRect(-across / 2, -along / 2, across, along, along * 0.3);
   ctx.fill();
   return canvas.toDataURL("image/jpeg", 0.9).split(",")[1];
+}
+
+// Asks the server where the wrist really is in this photo. Works for library photos too, and for
+// camera photos where the arm didn't quite fill the outline. Null when it can't tell.
+const measured = new WeakMap<ImagePayload, Promise<WristSpot | null>>();
+export function measureWrist(photo: ImagePayload): Promise<WristSpot | null> {
+  // Once per photo: trying several watches on the same wrist reuses it.
+  if (!measured.has(photo)) measured.set(photo, findWrist(photo).catch(() => null));
+  return measured.get(photo)!;
+}
+
+async function findWrist(photo: ImagePayload): Promise<WristSpot | null> {
+  const res = await fetch("/api/wrist", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ data: photo.data, mediaType: photo.mediaType }),
+  });
+  const out = await res.json();
+  if (!out.found) return null;
+  const img = new Image();
+  img.src = photo.preview;
+  await img.decode();
+  const [ay, ax] = out.a as [number, number];
+  const [by, bx] = out.b as [number, number];
+  const A = { x: (ax / 1000) * img.naturalWidth, y: (ay / 1000) * img.naturalHeight };
+  const B = { x: (bx / 1000) * img.naturalWidth, y: (by / 1000) * img.naturalHeight };
+  const width = Math.hypot(B.x - A.x, B.y - A.y);
+  // A wrist narrower than a tenth of the picture is more likely a misread than a real wrist.
+  if (width < Math.max(img.naturalWidth, img.naturalHeight) / 10) return null;
+  return { x: (A.x + B.x) / 2, y: (A.y + B.y) / 2, width, angle: (Math.atan2(B.y - A.y, B.x - A.x) * 180) / Math.PI };
 }
 
 function toPayload(source: CanvasImageSource, width: number, height: number): ImagePayload {

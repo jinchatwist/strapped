@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
-import { markWatchSpot, type ImagePayload } from "@/lib/image";
+import { markWatchSpot, measureWrist, type ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 import { inches, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 
@@ -125,8 +125,10 @@ export default function Home() {
     setTryOn({ status: "loading" });
     window.scrollTo({ top: 0 });
     try {
-      // Camera photos get the watch's true size painted on the wrist first; library photos can't.
-      const marked = await markWatchSpot(wristImg, wristSize, w.caseMm, w.lugMm).catch(() => null);
+      // The watch's true size is painted on the wrist first: where the AI measured the wrist,
+      // else where the camera outline put it. Without either, the server describes the size in words.
+      const spot = (await measureWrist(wristImg).catch(() => null)) ?? wristImg.spot;
+      const marked = await markWatchSpot(wristImg, spot, wristSize, w.caseMm, w.lugMm).catch(() => null);
       const res = await fetch("/api/tryon", {
         method: "POST",
         headers: betaHeaders(),
