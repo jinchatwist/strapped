@@ -125,9 +125,9 @@ export default function Home() {
     setTryOn({ status: "loading" });
     window.scrollTo({ top: 0 });
     try {
-      // The watch's true size is painted on the wrist first: where the AI measured the wrist,
-      // else where the camera outline put it. Without either, the server describes the size in words.
-      const spot = (await measureWrist(wristImg).catch(() => null)) ?? wristImg.spot;
+      // The watch's true size is painted on the wrist where the AI measured it. If it couldn't, the
+      // server describes the size in words: the camera outline alone put watches in the wrong place.
+      const spot = (await measureWrist(wristImg).catch(() => null)) ?? undefined;
       const marked = await markWatchSpot(wristImg, spot, wristSize, w.caseMm, w.lugMm).catch(() => null);
       const res = await fetch("/api/tryon", {
         method: "POST",
