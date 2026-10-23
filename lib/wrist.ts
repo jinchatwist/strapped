@@ -27,8 +27,8 @@ export function scaleNote(size: WristSize, caseMm: number, lugMm: number) {
 }
 
 // Where the in-app camera's hand outline puts the watch, in the outline's 390×844 drawing:
-// the wrist there is about 121 units wide, and the forearm is turned 30°.
-export const CAMERA_GUIDE = { x: 174, y: 547, angle: 30, wristUnits: 121, viewW: 390, viewH: 844 };
+// the wrist there is about 145 units wide, and the forearm is turned 30°.
+export const CAMERA_GUIDE = { x: 158, y: 572, angle: 30, wristUnits: 145, viewW: 390, viewH: 844 };
 
 // Millimetres across the wrist seen from above (about a third of the circumference).
 export function wristWidthMm(size: WristSize) {
