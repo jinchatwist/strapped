@@ -9,7 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
 import { betaHeaders, rememberCode, track } from "@/lib/beta";
-import { prepareImage, type ImagePayload } from "@/lib/image";
+import type { ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
 
 // Only the brands people want most right now; the rest of the catalog stays in the data file for later.
@@ -55,7 +55,8 @@ export default function Home() {
   const [brand, setBrand] = useState<string | null>(null);
   const [watch, setWatch] = useState<Watch | null>(null);
   const [wrist, setWrist] = useState<ImagePayload | null>(null);
-  const [watchPhoto, setWatchPhoto] = useState<ImagePayload | null>(null);
+  // What the customer types for their picture ("at night", "with a suit"…). Kept when they pick another watch.
+  const [wish, setWish] = useState("");
   const [tryOn, setTryOn] = useState<TryOnState>({ status: "idle" });
   const [error, setError] = useState("");
   const [lookingUp, setLookingUp] = useState(false);
@@ -85,7 +86,6 @@ export default function Home() {
   function pick(w: Watch) {
     track("watch_open");
     setWatch(w);
-    setWatchPhoto(null);
     setError("");
     window.scrollTo({ top: 0 });
     setStep("photos");
@@ -106,17 +106,7 @@ export default function Home() {
     }
   }
 
-  async function onWatchPhoto(file: File | undefined) {
-    if (!file) return;
-    try {
-      setWatchPhoto(await prepareImage(file));
-      setError("");
-    } catch {
-      setError("Couldn't read that photo. Try a JPG or PNG.");
-    }
-  }
-
-  async function tryItOn(w: Watch, wristImg: ImagePayload, productPhoto: ImagePayload | null) {
+  async function tryItOn(w: Watch, wristImg: ImagePayload, extra: string) {
     const id = ++attempt.current;
     setStep("result");
     setTryOn({ status: "loading" });
@@ -128,7 +118,7 @@ export default function Home() {
         body: JSON.stringify({
           watch: w,
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
-          watchPhoto: productPhoto ? { data: productPhoto.data, mediaType: productPhoto.mediaType } : undefined,
+          wish: extra.trim() || undefined,
         }),
       });
       const json = await res.json();
@@ -256,24 +246,22 @@ export default function Home() {
             </button>
           )}
           {watch && (
-            <label className={`addwatch ${watchPhoto ? "filled" : ""}`}>
-              {watchPhoto ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={watchPhoto.preview} alt="Watch photo" />
-              ) : (
-                <span className="plus">+</span>
-              )}
-              <span>
-                <strong>{watchPhoto ? "Watch photo added" : "Add a photo of the watch"}</strong>
-                <small>Optional. Makes the picture match better.</small>
-              </span>
-              <input type="file" accept="image/*" onChange={(e) => onWatchPhoto(e.target.files?.[0])} />
+            <label className="wish">
+              <strong>Make it yours</strong>
+              <textarea
+                value={wish}
+                onChange={(e) => setWish(e.target.value)}
+                placeholder="Optional. e.g. night out with city lights, navy suit sleeve, black and white…"
+                rows={2}
+                maxLength={200}
+                enterKeyHint="done"
+              />
             </label>
           )}
           {error && <p className="error">{error}</p>}
           {watch ? (
             <>
-              <button className="cta" disabled={!wrist || left === 0} onClick={() => wrist && tryItOn(watch, wrist, watchPhoto)}>
+              <button className="cta" disabled={!wrist || left === 0} onClick={() => wrist && tryItOn(watch, wrist, wish)}>
                 Generate
               </button>
               {left !== null && left < 100 && (
@@ -304,7 +292,7 @@ export default function Home() {
                   <button className="ghost" onClick={() => setFeedback(true)}>Give feedback</button>
                 </div>
               ) : (
-                <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, watchPhoto)} />
+                <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, wish)} />
               )}
               <div className="result-line">
                 <div style={{ minWidth: 0 }}>

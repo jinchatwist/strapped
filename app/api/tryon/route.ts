@@ -8,7 +8,7 @@ import type { Watch } from "@/lib/watch";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
-type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img };
+type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string };
 
 // Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
@@ -48,12 +48,17 @@ export async function POST(req: Request) {
   const w = body.watch;
   // Our own studio photo of the watch keeps the result looking like the picture people picked.
   if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
+  // The customer's own words for the picture, kept short and on one line.
+  const wish = String(body.wish || "").replace(/\s+/g, " ").replace(/"/g, "'").trim().slice(0, 200);
+  if (wish) await track("wish_used", device);
   const prompt = [
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
     body.watchPhoto ? "The second photo shows exactly what the watch looks like. Match its design, colors and details." : "Draw the watch as it really looks.",
     `Keep it at true scale for the wrist: a ${w.caseMm} mm watch on an average 17 cm wrist covers roughly two-thirds of the wrist's width.`,
-    "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
+    wish
+      ? `The customer also asked for this, in their own words: "${wish}". Follow it for the scene, lighting, outfit or photo style, but keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Add a natural contact shadow. Return only the edited photo.`
+      : "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
   ].join(" ");
 
   const parts: Part[] = [{ text: prompt }, { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } }];

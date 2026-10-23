@@ -36,7 +36,7 @@ export function today(offsetDays = 0) {
 // Usage counters people see on /admin. Kept to a fixed list so nobody can fill the store with junk.
 export const EVENTS = [
   "visit", "watch_open", "camera_open", "wrist_ok", "generate",
-  "tryon_ok", "tryon_fail", "limit_hit",
+  "tryon_ok", "tryon_fail", "limit_hit", "wish_used",
   "share_instagram", "share_facebook", "share_tiktok", "share_save", "card_toggle",
   "try_another", "feedback",
 ] as const;
