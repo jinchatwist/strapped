@@ -417,3 +417,4 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .compare-brand { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
 .compare-name { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .compare-stat { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+:root[data-splash="seen"] .splash { display: none; }
