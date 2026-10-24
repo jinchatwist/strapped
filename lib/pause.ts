@@ -20,8 +20,9 @@ export async function pauseAi() {
   await redis([["SET", "ai:paused", 1, "EX", PAUSE_SECONDS]]);
 }
 
-export async function countSpend() {
-  await redis([["INCRBY", "ai:spent_cents", CENTS_PER_TRYON]]);
+// A Pro image model costs about twice as much per picture as Flash.
+export async function countSpend(model = "") {
+  await redis([["INCRBY", "ai:spent_cents", /pro/.test(model) ? CENTS_PER_TRYON * 2 : CENTS_PER_TRYON]]);
 }
 
 export async function spentUsd() {

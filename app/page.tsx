@@ -45,7 +45,7 @@ type TryOnState = {
   image?: string;
   error?: string;
   limit?: boolean;
-  timing?: { total: number; ai: number };
+  timing?: { total: number; ai: number; pro: boolean };
 };
 
 // Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
@@ -234,7 +234,7 @@ export default function Home() {
         return;
       }
       if (!res.ok) throw new Error(json.error);
-      const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000 };
+      const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000, pro: /pro/.test(json.model || "") };
       if (id === attempt.current) setTryOn({ status: "done", image: json.image, timing });
       setLastSaved(undefined);
       addToCollection(w, json.image)
@@ -438,7 +438,7 @@ export default function Home() {
               <button className="ghost" onClick={() => openCollection(true, lastSaved)}>Compare with another watch</button>
               {tryOn.timing && (
                 <p className="left-note">
-                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s
+                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s · {tryOn.timing.pro ? "Pro" : "Flash"}
                 </p>
               )}
             </>
