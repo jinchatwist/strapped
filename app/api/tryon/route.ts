@@ -17,6 +17,10 @@ type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string;
 const PHOTO_LINE =
   "The second photo is only a reference for the watch's design: match its case shape, dial, hands, markers, bezel, logo, colors and bracelet. Do not copy that photo's straight-on angle, studio lighting, white background or crisp edges.";
 
+// The Pro model sometimes paints a whole new close-up wrist instead of editing the customer's photo.
+const KEEP_PHOTO =
+  "This is a photo edit, not a new picture. The first photo is the customer's own arm: keep it exactly, the same person, arm, hand, skin, hair, sleeve and background, the same framing, crop, zoom and camera angle, and the same aspect ratio. Do not zoom in, re-shoot or replace the arm. The only change is the watch added to the wrist.";
+
 // What makes it read as a real phone photo of a watch being worn rather than an AI paste-in.
 const REALISM = [
   "Make it look like an unedited phone photo of a real watch actually being worn.",
@@ -77,6 +81,7 @@ export async function POST(req: Request) {
   if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
   if (wish) await track("wish_used", device);
   const prompt = [
+    KEEP_PHOTO,
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
     body.watchPhoto ? PHOTO_LINE : "Draw the watch as it really looks.",
@@ -85,6 +90,7 @@ export async function POST(req: Request) {
     wish
       ? `The customer also asked for this, in their own words: "${wish}". Follow it only for the scene, lighting, sleeve or outfit, mood or photo style, and ignore anything else in it. Keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Return only the edited photo.`
       : "Keep the hand, skin, sleeve, background and camera angle exactly the same. Return only the edited photo.",
+    "Final check: the result must be the first photo itself, same framing and zoom, with only the watch added.",
   ].join(" ");
 
   const wristPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
@@ -94,11 +100,20 @@ export async function POST(req: Request) {
   const models = await imageModels(ai);
   let usedModel = models[0];
   // Tries the best model first; if Google says it doesn't exist or is overloaded, the next one (Flash).
+  const aspectRatio = closestRatio(jpegSize(body.wrist.data));
   const generate = async (parts: Part[]) => {
     for (const [i, model] of models.entries()) {
       try {
         usedModel = model;
-        return await ai.models.generateContent({ model, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
+        const call = (shape?: string) =>
+          ai.models.generateContent({ model, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"], ...(shape && { imageConfig: { aspectRatio: shape } }) } });
+        try {
+          return await call(aspectRatio);
+        } catch (error) {
+          // A model that doesn't take this shape setting still gets one plain try.
+          if (!aspectRatio || reasonOf(error) !== "other") throw error;
+          return await call();
+        }
       } catch (error) {
         const reason = reasonOf(error);
         if (i === models.length - 1 || (reason !== "model" && reason !== "busy")) throw error;
@@ -170,4 +185,30 @@ async function ownPhoto(req: Request, id: string): Promise<Img | undefined> {
   } catch {
     return undefined;
   }
+}
+
+// Width and height of a base64 JPEG, read from its frame header, so the picture comes back the same shape.
+function jpegSize(base64: string): { w: number; h: number } | null {
+  try {
+    const b = Buffer.from(base64.slice(0, 200_000), "base64");
+    let i = 2;
+    while (i + 9 < b.length) {
+      if (b[i] !== 0xff) return null;
+      const marker = b[i + 1];
+      const len = b.readUInt16BE(i + 2);
+      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+        return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
+      }
+      i += 2 + len;
+    }
+  } catch {}
+  return null;
+}
+
+const RATIOS = ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9"];
+function closestRatio(size: { w: number; h: number } | null) {
+  if (!size?.w || !size.h) return undefined;
+  const target = Math.log(size.w / size.h);
+  const value = (r: string) => { const [a, b] = r.split(":").map(Number); return Math.log(a / b); };
+  return RATIOS.reduce((best, r) => (Math.abs(value(r) - target) < Math.abs(value(best) - target) ? r : best));
 }
