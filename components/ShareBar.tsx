@@ -91,7 +91,7 @@ export async function shareCard(image: string, watch: Watch): Promise<File> {
   // Watch name, then a row of big numbers like a workout summary.
   ctx.textBaseline = "alphabetic";
   ctx.font = "600 30px Rubik, system-ui, sans-serif";
-  ctx.fillStyle = "#ff5a36";
+  ctx.fillStyle = "#c9a07a";
   ctx.fillText(watch.brand.toUpperCase(), pad, H - 330);
   ctx.font = "700 58px Rubik, system-ui, sans-serif";
   ctx.fillStyle = "#ffffff";

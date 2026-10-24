@@ -4,7 +4,7 @@
   --ink: #161616;
   --muted: #6b6a66;
   --line: #e6e4de;
-  --accent: #ff5a36;
+  --accent: #5c3d26;
   --accent-ink: #ffffff;
   --good: #1f8a5b;
   --ok: #b7791f;
@@ -18,8 +18,8 @@
     --ink: #f2f1ee;
     --muted: #a3a19b;
     --line: #2e2e2e;
-    --accent: #ff6b4a;
-    --accent-ink: #121212;
+    --accent: #c9a07a;
+    --accent-ink: #1a120c;
     --good: #4cc38a;
     --ok: #e0a84a;
     --bad: #ef7a64;
@@ -32,8 +32,8 @@
     --ink: #f2f1ee;
     --muted: #a3a19b;
     --line: #2e2e2e;
-    --accent: #ff6b4a;
-    --accent-ink: #121212;
+    --accent: #c9a07a;
+    --accent-ink: #1a120c;
     --good: #4cc38a;
     --ok: #e0a84a;
     --bad: #ef7a64;
@@ -382,15 +382,8 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .box-demo .ghost { width: 100%; max-width: 380px; color: #f5efe6; border-color: #4a3d30; background: transparent; }
 .box-demo .fine { margin-top: auto; font-size: 12px; color: #8a7b68; max-width: 320px; }
 
-/* Buy button, My collection, compare */
-.buy {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; padding: 15px; border-radius: 16px; background: var(--ink); color: var(--bg);
-  font-weight: 700; text-decoration: none;
-}
-.buy small { font-weight: 500; opacity: .7; font-size: 13px; }
-.buy-small { width: auto; padding: 8px 16px; border-radius: 999px; font-size: 14px; align-self: flex-start; margin-top: 4px; }
-.home-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+/* My collection */
+.home-actions { display: grid; gap: 8px; }
 .pill {
   display: flex; align-items: center; justify-content: center; gap: 6px;
   padding: 11px 12px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--card);
@@ -402,21 +395,10 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .coll-card .wcard-pic { position: relative; overflow: hidden; aspect-ratio: 4 / 5; }
 .coll-card .wcard-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .coll-card.picked .wcard-pic { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
-.pick-num {
-  position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%;
-  background: var(--accent); color: var(--accent-ink); font-weight: 700; display: grid; place-items: center;
-}
 .coll-empty { background: var(--card); border: 1.5px dashed var(--line); border-radius: 18px; padding: 28px 20px; text-align: center; }
 .coll-empty p { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 .row-links { display: flex; justify-content: space-between; }
 .link.danger { color: var(--bad); }
-.compare-title { margin: 0; text-align: center; }
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.compare-side { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.compare-side img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 16px; border: 1.5px solid var(--line); margin-bottom: 6px; }
-.compare-brand { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .04em; }
-.compare-name { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.compare-stat { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 :root[data-splash="seen"] .splash { display: none; }
 .coll-actions { display: flex; gap: 8px; }
 .pick-check {
