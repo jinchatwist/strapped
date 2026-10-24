@@ -18,3 +18,36 @@ export function imageClient(): GoogleGenAI | null {
   if (env.GEMINI_API_KEY) return new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
   return null;
 }
+
+const FLASH_IMAGE = "gemini-3.1-flash-image";
+
+// The newest "Pro" image model this key can use: slower and about twice the price of Flash, but it
+// blends the watch into the photo (angle, light, shadows) instead of pasting it on. Looked up once per
+// server start; null if the key has none.
+let pro: Promise<string | null> | undefined;
+function proImageModel(ai: GoogleGenAI): Promise<string | null> {
+  pro ??= (async () => {
+    const found: string[] = [];
+    for await (const m of await ai.models.list()) {
+      const name = (m.name || "").replace(/^.*models\//, "");
+      if (/pro/.test(name) && /image/.test(name)) found.push(name);
+    }
+    const version = (n: string) => parseFloat(n.match(/\d+(\.\d+)?/)?.[0] || "0");
+    found.sort((a, b) => version(b) - version(a) || Number(/preview|exp/.test(a)) - Number(/preview|exp/.test(b)));
+    return found[0] ?? null;
+  })().catch((error) => {
+    console.error("Couldn't list Google models", error);
+    pro = undefined;
+    return null;
+  });
+  return pro;
+}
+
+// Image models for the try-on picture, best first; Flash stays last so there is always a fallback.
+// GEMINI_IMAGE_MODEL pins one model; TRYON_QUALITY=fast skips Pro.
+export async function imageModels(ai: GoogleGenAI): Promise<string[]> {
+  if (process.env.GEMINI_IMAGE_MODEL) return [process.env.GEMINI_IMAGE_MODEL];
+  if (process.env.TRYON_QUALITY === "fast") return [FLASH_IMAGE];
+  const best = await proImageModel(ai);
+  return best ? [best, FLASH_IMAGE] : [FLASH_IMAGE];
+}

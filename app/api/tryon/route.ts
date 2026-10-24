@@ -1,6 +1,6 @@
 import type { Part } from "@google/genai";
 import photos from "@/data/photos.json";
-import { imageClient } from "@/lib/gemini";
+import { imageClient, imageModels } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
 import { WISH_REJECTED, wishAllowed } from "@/lib/wish";
@@ -12,9 +12,6 @@ export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
 type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
-
-// Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
-const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
 
 // The catalog photo is a flat, front-on studio shot; copied as is, the watch looks pasted on like a sticker.
 const PHOTO_LINE =
@@ -33,8 +30,9 @@ const REALISM = [
 
 // How many free try-ons are left, for the line under the Generate button.
 export async function GET(req: Request) {
-  const [left, paused] = await Promise.all([remaining(req), aiPaused()]);
-  return Response.json({ ...left, free: FREE_TRYONS, paused });
+  const ai = imageClient();
+  const [left, paused, models] = await Promise.all([remaining(req), aiPaused(), ai ? imageModels(ai) : []]);
+  return Response.json({ ...left, free: FREE_TRYONS, paused, model: models[0] ?? null });
 }
 
 export async function POST(req: Request) {
@@ -93,8 +91,22 @@ export async function POST(req: Request) {
   const photoPart: Part | null = body.watchPhoto?.data
     ? { inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } }
     : null;
-  const generate = (parts: Part[]) =>
-    ai.models.generateContent({ model: IMAGE_MODEL, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
+  const models = await imageModels(ai);
+  let usedModel = models[0];
+  // Tries the best model first; if Google says it doesn't exist or is overloaded, the next one (Flash).
+  const generate = async (parts: Part[]) => {
+    for (const [i, model] of models.entries()) {
+      try {
+        usedModel = model;
+        return await ai.models.generateContent({ model, contents: [{ role: "user", parts }], config: { responseModalities: ["IMAGE"] } });
+      } catch (error) {
+        const reason = reasonOf(error);
+        if (i === models.length - 1 || (reason !== "model" && reason !== "busy")) throw error;
+        console.error(`Image model ${model} failed (${reason}), trying ${models[i + 1]}`, error);
+      }
+    }
+    throw new Error("No image model");
+  };
 
   const aiStarted = Date.now();
   try {
@@ -112,11 +124,11 @@ export async function POST(req: Request) {
       await Promise.all([allowance.refund(), track("tryon_fail", device)]);
       return Response.json({ error: "Couldn't make the try-on picture this time. Try a clearer wrist photo." }, { status: 422 });
     }
-    await Promise.all([track("tryon_ok", device), countSpend()]);
+    await Promise.all([track("tryon_ok", device), countSpend(usedModel)]);
     const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
     const aiMs = Date.now() - aiStarted;
-    console.log(`Try-on ${w.id}: picture took ${aiMs} ms${photoPart ? " with photo" : ""}`);
-    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs }, { headers });
+    console.log(`Try-on ${w.id}: picture took ${aiMs} ms with ${usedModel}${photoPart ? " and photo" : ""}`);
+    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs, model: usedModel }, { headers });
   } catch (error) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
