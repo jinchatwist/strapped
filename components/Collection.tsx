@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { BuyButton } from "@/components/BuyButton";
 import { ShareBar, download, isIOS } from "@/components/ShareBar";
 import { track } from "@/lib/beta";
 import { listCollection, removeFromCollection, type Saved } from "@/lib/collection";
 
 type Item = Saved & { url: string };
-type Mode = "grid" | "view" | "pick" | "compare";
+type Mode = "grid" | "view" | "pick" | "compare" | "select";
 
 // "My collection": every try-on made on this phone. Tap one to see and share it again,
-// or pick two to see them side by side.
+// pick two to see them side by side, or select several to delete at once.
 export function Collection({
   startCompare,
   preselect,
@@ -27,6 +27,12 @@ export function Collection({
   const [mode, setMode] = useState<Mode>(startCompare ? "pick" : "grid");
   const [open, setOpen] = useState<Item | null>(null);
   const [picked, setPicked] = useState<string[]>(preselect ? [preselect] : []);
+  // Select mode: the pictures ticked for deleting, and whether Delete was tapped once (it asks for a second tap).
+  const [selected, setSelected] = useState<string[]>([]);
+  const [confirming, setConfirming] = useState(false);
+  // Which way the last swipe went, so the next picture slides in from that side.
+  const [slide, setSlide] = useState<"left" | "right" | null>(null);
+  const touch = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     let urls: string[] = [];
@@ -41,6 +47,11 @@ export function Collection({
   }, []);
 
   function tap(item: Item) {
+    if (mode === "select") {
+      setConfirming(false);
+      setSelected((sel) => (sel.includes(item.id) ? sel.filter((id) => id !== item.id) : [...sel, item.id]));
+      return;
+    }
     if (mode === "pick") {
       const next = picked.includes(item.id) ? picked.filter((p) => p !== item.id) : [...picked, item.id].slice(-2);
       setPicked(next);
@@ -50,6 +61,7 @@ export function Collection({
       }
       return;
     }
+    setSlide(null);
     setOpen(item);
     setMode("view");
   }
@@ -63,9 +75,30 @@ export function Collection({
     setMode("grid");
   }
 
+  function startSelect() {
+    setSelected([]);
+    setConfirming(false);
+    setMode("select");
+  }
+
+  async function removeSelected() {
+    if (!confirming) {
+      setConfirming(true);
+      return;
+    }
+    const gone = new Set(selected);
+    await Promise.all(selected.map((id) => removeFromCollection(id).catch(() => {})));
+    items?.filter((i) => gone.has(i.id)).forEach((i) => URL.revokeObjectURL(i.url));
+    setItems((list) => list?.filter((i) => !gone.has(i.id)) ?? null);
+    setPicked((p) => p.filter((id) => !gone.has(id)));
+    setSelected([]);
+    setConfirming(false);
+    setMode("grid");
+  }
+
   if (backRef) {
     backRef.current = () => {
-      if (mode === "view") setMode("grid");
+      if (mode === "view" || mode === "select") setMode("grid");
       else if (mode === "compare") { setPicked([]); setMode("pick"); }
       else if (mode === "pick" && !startCompare) { setPicked([]); setMode("grid"); }
       else return false;
@@ -76,10 +109,45 @@ export function Collection({
 
   const pair = picked.map((id) => items?.find((i) => i.id === id)).filter((i): i is Item => !!i);
 
+  // Swipe left for the next picture, right for the one before (not from the very edge, which goes back).
+  function step(dir: 1 | -1) {
+    if (!items || !open) return;
+    const i = items.findIndex((it) => it.id === open.id);
+    const next = items[i + dir];
+    if (!next) return;
+    setSlide(dir === 1 ? "left" : "right");
+    setOpen(next);
+  }
+
   if (mode === "view" && open) {
+    const index = items?.findIndex((it) => it.id === open.id) ?? 0;
     return (
       <>
-        <ShareBar image={open.url} watch={open.watch} />
+        <div
+          key={open.id}
+          className={`coll-viewer ${slide ? `slide-${slide}` : ""}`}
+          onTouchStart={(e) => {
+            const t = e.touches[0];
+            touch.current = t.clientX > 28 ? { x: t.clientX, y: t.clientY } : null;
+          }}
+          onTouchEnd={(e) => {
+            const start = touch.current;
+            touch.current = null;
+            if (!start) return;
+            const t = e.changedTouches[0];
+            const dx = t.clientX - start.x, dy = t.clientY - start.y;
+            if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+          }}
+        >
+          <ShareBar image={open.url} watch={open.watch} />
+        </div>
+        {items && items.length > 1 && (
+          <div className="coll-pager">
+            <button className="pager-btn" onClick={() => step(-1)} disabled={index === 0} aria-label="Previous picture">‹</button>
+            <span>{index + 1} / {items.length}</span>
+            <button className="pager-btn" onClick={() => step(1)} disabled={index === items.length - 1} aria-label="Next picture">›</button>
+          </div>
+        )}
         <Line item={open} />
         <BuyButton watch={open.watch} />
         <button className="ghost" onClick={() => { setPicked([open.id]); setMode("pick"); }}>Compare with another</button>
@@ -98,9 +166,23 @@ export function Collection({
   return (
     <>
       <div className="coll-head">
-        <h2>{mode === "pick" ? "Compare two watches" : "My collection"}</h2>
-        {items && items.length > 1 && mode === "grid" && (
-          <button className="chip" onClick={() => { setPicked([]); setMode("pick"); }}>Compare</button>
+        <h2>{mode === "pick" ? "Compare two watches" : mode === "select" ? (selected.length ? `${selected.length} selected` : "Select pictures") : "My collection"}</h2>
+        {items && items.length > 0 && mode === "grid" && (
+          <div className="coll-actions">
+            {items.length > 1 && <button className="chip" onClick={() => { setPicked([]); setMode("pick"); }}>Compare</button>}
+            <button className="chip" onClick={startSelect}>Select</button>
+          </div>
+        )}
+        {mode === "select" && items && (
+          <div className="coll-actions">
+            <button
+              className="chip"
+              onClick={() => { setConfirming(false); setSelected(selected.length === items.length ? [] : items.map((i) => i.id)); }}
+            >
+              {selected.length === items.length ? "None" : "All"}
+            </button>
+            <button className="chip" onClick={() => setMode("grid")}>Cancel</button>
+          </div>
         )}
         {mode === "pick" && (
           <button className="chip" onClick={() => { setPicked([]); setMode("grid"); }}>Cancel</button>
@@ -123,14 +205,15 @@ export function Collection({
           {items.map((item) => (
             <button
               key={item.id}
-              className={`wcard coll-card ${picked.includes(item.id) ? "picked" : ""}`}
+              className={`wcard coll-card ${(mode === "select" ? selected : picked).includes(item.id) ? "picked" : ""}`}
               onClick={() => tap(item)}
-              aria-pressed={mode === "pick" ? picked.includes(item.id) : undefined}
+              aria-pressed={mode === "pick" ? picked.includes(item.id) : mode === "select" ? selected.includes(item.id) : undefined}
             >
               <span className="wcard-pic">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.url} alt={`${item.watch.model} on your wrist`} />
                 {mode === "pick" && picked.includes(item.id) && <span className="pick-num">{picked.indexOf(item.id) + 1}</span>}
+                {mode === "select" && <span className={`pick-check ${selected.includes(item.id) ? "on" : ""}`}>{selected.includes(item.id) ? "✓" : ""}</span>}
               </span>
               <span className="wcard-name">{item.watch.model}</span>
               <span className="wcard-price">{item.watch.brand} · {item.watch.caseMm} mm</span>
@@ -138,7 +221,17 @@ export function Collection({
           ))}
         </div>
       )}
-      <button className="cta" onClick={onClose}>Try on a watch</button>
+      {mode === "select" ? (
+        <div className="select-bar">
+          <button className="cta danger-cta" disabled={!selected.length} onClick={removeSelected}>
+            {confirming
+              ? `Tap again to delete ${selected.length}`
+              : `Delete${selected.length ? ` ${selected.length} ${selected.length === 1 ? "picture" : "pictures"}` : ""}`}
+          </button>
+        </div>
+      ) : (
+        <button className="cta" onClick={onClose}>Try on a watch</button>
+      )}
     </>
   );
 }

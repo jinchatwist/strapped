@@ -418,3 +418,19 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .compare-name { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .compare-stat { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
 :root[data-splash="seen"] .splash { display: none; }
+.coll-actions { display: flex; gap: 8px; }
+.pick-check {
+  position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid #fff; background: rgba(0,0,0,.25); color: #fff; font-weight: 700; font-size: 14px;
+  display: grid; place-items: center; box-shadow: 0 1px 4px rgba(0,0,0,.3);
+}
+.pick-check.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.select-bar { position: sticky; bottom: max(16px, env(safe-area-inset-bottom)); }
+.cta.danger-cta { background: var(--bad); color: #fff; }
+.coll-viewer.slide-left { animation: slide-in-left .22s ease-out; }
+.coll-viewer.slide-right { animation: slide-in-right .22s ease-out; }
+@keyframes slide-in-left { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes slide-in-right { from { transform: translateX(-40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.coll-pager { display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pager-btn { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); font-size: 20px; line-height: 1; cursor: pointer; }
+.pager-btn:disabled { opacity: .35; cursor: default; }
