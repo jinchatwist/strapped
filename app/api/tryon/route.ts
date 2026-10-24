@@ -11,7 +11,7 @@ import { scaleNote, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
-type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize; quality?: "pro" };
+type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize; quality?: "pro"; refPhoto?: boolean };
 
 // The catalog photo is a flat, front-on studio shot; copied as is, the watch looks pasted on like a sticker.
 const PHOTO_LINE =
@@ -78,7 +78,8 @@ export async function POST(req: Request) {
 
   const w = body.watch;
   // Our own studio photo of the watch keeps the result looking like the picture people picked.
-  if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
+  // refPhoto: false is a test switch: the AI draws the watch from its own knowledge instead of copying our studio photo.
+  if (!body.watchPhoto?.data && body.refPhoto !== false && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
   if (wish) await track("wish_used", device);
   const prompt = [
     KEEP_PHOTO,
@@ -144,7 +145,7 @@ export async function POST(req: Request) {
     const headers = allowance.cookie ? { "Set-Cookie": allowance.cookie } : undefined;
     const aiMs = Date.now() - aiStarted;
     console.log(`Try-on ${w.id}: picture took ${aiMs} ms with ${usedModel}${photoPart ? " and photo" : ""}`);
-    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs, model: usedModel }, { headers });
+    return Response.json({ image: `data:${image.mimeType || "image/png"};base64,${image.data}`, left: allowance.left, aiMs, model: usedModel, refPhoto: Boolean(photoPart) }, { headers });
   } catch (error) {
     console.error(error);
     await Promise.all([allowance.refund(), track("tryon_fail", device)]);
