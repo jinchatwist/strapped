@@ -1,6 +1,6 @@
 import type { Part } from "@google/genai";
 import photos from "@/data/photos.json";
-import { imageClient, imageModels } from "@/lib/gemini";
+import { billedTo, imageClient, imageModels } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
 import { WISH_REJECTED, wishAllowed } from "@/lib/wish";
@@ -36,7 +36,7 @@ const REALISM = [
 export async function GET(req: Request) {
   const ai = imageClient();
   const [left, paused, models] = await Promise.all([remaining(req), aiPaused(), ai ? imageModels(ai) : []]);
-  return Response.json({ ...left, free: FREE_TRYONS, paused, model: models[0] ?? null });
+  return Response.json({ ...left, free: FREE_TRYONS, paused, model: models[0] ?? null, billedTo: billedTo() });
 }
 
 export async function POST(req: Request) {

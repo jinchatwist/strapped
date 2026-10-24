@@ -1,5 +1,12 @@
 import { GoogleGenAI } from "@google/genai";
 
+// Which account pays for pictures, by the same order imageClient picks in.
+export function billedTo(): "google-cloud" | "ai-studio" | null {
+  const env = process.env;
+  if (env.GOOGLE_CLOUD_API_KEY || (env.GOOGLE_CLOUD_PROJECT && env.GOOGLE_SERVICE_ACCOUNT_JSON)) return "google-cloud";
+  return env.GEMINI_API_KEY ? "ai-studio" : null;
+}
+
 // Picks how to reach Google's image model. Vertex AI bills the Google Cloud account (so trial credits apply);
 // the plain Gemini API key bills AI Studio. The first one that is set up wins.
 export function imageClient(): GoogleGenAI | null {
