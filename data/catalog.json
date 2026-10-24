@@ -2656,6 +2656,24 @@
 "priceUsd": 38000
 },
 {
+"id": "ap-royal-oak-skeleton-openworked-15407st-oo-1220st-01",
+"brand": "Audemars Piguet",
+"family": "Royal Oak",
+"model": "AP Royal Oak Skeleton (Openworked)",
+"reference": "15407ST.OO.1220ST.01",
+"caseMm": 41.0,
+"lugMm": 51.0,
+"thicknessMm": 10.8,
+"caseHex": "#c9cbcd",
+"dialHex": "#4a4d52",
+"strap": "steel bracelet",
+"styles": [
+"sport",
+"luxury"
+],
+"priceUsd": 80000
+},
+{
 "id": "ap-royal-oak-34-rose-gold-77350or-oo-1261or-01",
 "brand": "Audemars Piguet",
 "family": "Royal Oak",
