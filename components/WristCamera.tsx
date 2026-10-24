@@ -52,7 +52,7 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
         <button className="cam-x" onClick={onClose} aria-label="Close camera">✕</button>
         <p>
           <strong>Hold your arm like you&apos;re checking the time</strong>
-          <span>Line your arm up with the outline, bare wrist.</span>
+          <span>Fill the dotted lines with your forearm, watch spot on your wrist.</span>
         </p>
       </div>
 
@@ -74,51 +74,55 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
   );
 }
 
-// Thin brown outline of a relaxed hand, fingers gently curled, forearm running in from the bottom left.
+// A faint watch where the watch goes, with dotted lines along both edges of the forearm.
 // Drawn upright with the watch at 0,0 (hand toward -y, wrist 101 units wide), then placed and turned.
 const G = CAMERA_GUIDE;
-const ARM =
-  "M50 -26 C54 -44 62 -60 72 -76 C82 -92 88 -110 84 -124 C80 -134 70 -130 64 -120 L58 -112 C60 -136 58 -158 54 -172 C56 -196 54 -218 46 -230 Q38 -240 28 -232 Q22 -250 10 -250 Q-2 -250 -4 -234 " +
-  "Q-10 -244 -20 -242 Q-30 -240 -30 -226 Q-36 -220 -44 -216 Q-52 -212 -54 -198 C-58 -166 -60 -136 -58 -96 C-56 -62 -52 -38 -50 -26 C-51 -2 -54 54 -58 144 L-68 534 L68 534 L58 144 C54 54 51 -2 50 -26 Z";
-const FINGERS = "M28 -232 C29 -212 30 -196 30 -182 M-4 -234 C-2 -212 0 -196 0 -182 M-30 -226 C-28 -210 -27 -196 -26 -182 M58 -112 C52 -96 48 -86 46 -76";
 const CASE = 22;
+const RAILS =
+  "M-54 260 C-52 160 -50 80 -50 20 C-50 -60 -58 -120 -58 -150 M54 260 C52 160 50 80 50 20 C50 -60 60 -120 60 -150";
 
-// Jubilee bracelet running from the case to both edges of the wrist.
+// Clock ticks around the dial.
+function ticks(r1: number, r2: number, n: number) {
+  let d = "";
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    d += `M${(Math.sin(a) * r1).toFixed(2)} ${(-Math.cos(a) * r1).toFixed(2)}L${(Math.sin(a) * r2).toFixed(2)} ${(-Math.cos(a) * r2).toFixed(2)}`;
+  }
+  return d;
+}
+
+// Bracelet links from the case out to both edges of the wrist.
 function bracelet() {
   let d = "";
-  for (const side of [1, -1]) {
-    for (let x = CASE + 4; x <= 56; x += 4) d += `M${side * x} -9V9`;
-    d += `M${side * (CASE + 4)} -10H${side * 56}M${side * (CASE + 4)} 10H${side * 56}M${side * (CASE + 4)} 0H${side * 56}`;
+  for (const s of [1, -1]) {
+    d += `M${s * (CASE - 2)} -10H${s * 54}M${s * (CASE - 2)} 10H${s * 54}`;
+    for (let i = 0; i < 8; i++) d += `M${s * (CASE + 2 + i * 4)} -10V10`;
   }
   return d;
 }
 
 function WristGuide() {
-  const brown = "#96592a";
   const k = G.wristUnits / 101;
   const place = `translate(${G.x} ${G.y}) rotate(${G.angle}) scale(${k})`;
   const line = (w: number) => w / k;
   return (
     <svg className="cam-guide" viewBox={`0 0 ${G.viewW} ${G.viewH}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <defs>
-        <mask id="cam-lane" maskUnits="userSpaceOnUse" x="0" y="0" width={G.viewW} height={G.viewH}>
-          <rect width={G.viewW} height={G.viewH} fill="#fff" />
-          <path d={ARM} transform={place} fill="#000" />
-        </mask>
-        <filter id="cam-glow" x="-10%" y="-10%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="0" stdDeviation="1" floodColor="#000" floodOpacity=".55" />
+        <filter id="cam-glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="1.4" floodColor="#000" floodOpacity=".45" />
         </filter>
       </defs>
-      <rect width={G.viewW} height={G.viewH} fill="rgba(0,0,0,.5)" mask="url(#cam-lane)" />
-      <g transform={place} fill="none" stroke={brown} strokeLinecap="round" strokeLinejoin="round" filter="url(#cam-glow)">
-        <path d={ARM} stroke="#fff" strokeWidth={line(2.6)} strokeDasharray={`${line(9)} ${line(6)}`} opacity=".35" />
-        <path d={ARM} strokeWidth={line(1.5)} strokeDasharray={`${line(9)} ${line(6)}`} />
-        <path d={FINGERS} strokeWidth={line(1)} opacity=".8" />
-        <path d={bracelet()} strokeWidth={line(0.6)} opacity=".85" />
-        <ellipse cx="0" cy="0" rx={CASE} ry={CASE * 0.93} fill="rgba(0,0,0,.18)" strokeWidth={line(1.4)} />
-        <ellipse cx="0" cy="0" rx={CASE * 0.82} ry={CASE * 0.76} strokeWidth={line(0.7)} opacity=".85" />
+      <g transform={place} fill="none" stroke="#fff" strokeLinecap="round" filter="url(#cam-glow)">
+        <path d={RAILS} strokeWidth={line(2.2)} strokeDasharray={`${line(0.1)} ${line(6)}`} opacity=".9" />
+        <g opacity=".8">
+          <path d={bracelet()} strokeWidth={line(0.9)} />
+          <circle r={CASE + 1} fill="rgba(255,255,255,.12)" strokeWidth={line(1.8)} />
+          <circle r={CASE - 4} strokeWidth={line(0.9)} />
+          <path d={ticks(CASE - 7, CASE - 4, 12)} strokeWidth={line(1.2)} />
+          <path d="M0 0 L0 -12 M0 0 L8 4" strokeWidth={line(1.4)} />
+          <rect x={CASE + 1} y="-3" width="4" height="6" rx="1" fill="#fff" stroke="none" />
+        </g>
       </g>
-      <text x={G.viewW / 2} y="720" textAnchor="middle" fontSize="12" fontWeight="600" fill="#fff" opacity=".9">Watch goes in the circle</text>
     </svg>
   );
 }
