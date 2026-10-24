@@ -28,8 +28,9 @@ export function scaleNote(size: WristSize, caseMm: number, lugMm: number) {
 
 // Where the in-app camera guide puts the watch, in a 390×844 drawing: the wrist is 172 units wide
 // (44% of the screen: enough pixels for a sharp watch, with the hand and more arm in the picture so
-// people can see how it suits them), near the middle of the screen, with the forearm turned 30°.
-export const CAMERA_GUIDE = { x: 185, y: 460, angle: 30, wristUnits: 172, viewW: 390, viewH: 844 };
+// people can see how it suits them), a little left of centre, with the forearm lying across the screen
+// and rising slightly toward the hand on the right.
+export const CAMERA_GUIDE = { x: 150, y: 420, angle: 80, wristUnits: 172, viewW: 390, viewH: 844 };
 
 // Millimetres across the wrist seen from above (about a third of the circumference).
 export function wristWidthMm(size: WristSize) {
