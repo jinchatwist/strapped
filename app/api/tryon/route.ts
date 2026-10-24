@@ -1,5 +1,4 @@
 import type { Part } from "@google/genai";
-import photos from "@/data/photos.json";
 import { billedTo, imageClient, imageModels } from "@/lib/gemini";
 import { FREE_TRYONS, remaining, useTry } from "@/lib/limit";
 import { deviceOf, track } from "@/lib/store";
@@ -77,8 +76,7 @@ export async function POST(req: Request) {
   await track("generate", device);
 
   const w = body.watch;
-  // Our own studio photo of the watch keeps the result looking like the picture people picked.
-  if (!body.watchPhoto?.data && (photos as string[]).includes(w.id)) body.watchPhoto = await ownPhoto(req, w.id);
+  // Our studio photo is no longer sent: copying its flat front-on look made the watch look pasted on.
   if (wish) await track("wish_used", device);
   const prompt = [
     KEEP_PHOTO,
@@ -176,16 +174,6 @@ function reasonOf(error: unknown): "credit" | "key" | "busy" | "model" | "other"
   if (status === 404 || /not found|is not supported|unknown model/.test(text)) return "model";
   if (status === 429 || status === 503 || /overloaded|unavailable/.test(text)) return "busy";
   return "other";
-}
-
-async function ownPhoto(req: Request, id: string): Promise<Img | undefined> {
-  try {
-    const res = await fetch(new URL(`/watches/${id}.jpg`, req.url));
-    if (!res.ok || !res.headers.get("content-type")?.startsWith("image/")) return undefined;
-    return { data: Buffer.from(await res.arrayBuffer()).toString("base64"), mediaType: "image/jpeg" };
-  } catch {
-    return undefined;
-  }
 }
 
 // Width and height of a base64 JPEG, read from its frame header, so the picture comes back the same shape.
