@@ -16,6 +16,21 @@ type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string;
 // Image model for the try-on preview. Override with GEMINI_IMAGE_MODEL if Google renames it.
 const IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-3.1-flash-image";
 
+// The catalog photo is a flat, front-on studio shot; copied as is, the watch looks pasted on like a sticker.
+const PHOTO_LINE =
+  "The second photo is only a reference for the watch's design: match its case shape, dial, hands, markers, bezel, logo, colors and bracelet. Do not copy that photo's straight-on angle, studio lighting, white background or crisp edges.";
+
+// What makes it read as a real phone photo of a watch being worn rather than an AI paste-in.
+const REALISM = [
+  "Make it look like an unedited phone photo of a real watch actually being worn.",
+  "Place the watch on top of the wrist just above the wrist bone, between the bone and the hand, sitting flat against the skin.",
+  "Turn and tilt the watch in 3D to match the wrist's angle and the camera's viewpoint: the dial faces the same way as the top of the wrist, so it is seen in perspective, not straight on.",
+  "The strap or bracelet wraps around the wrist: it follows the wrist's curve, bends away at both edges and disappears behind the wrist, getting darker as it turns away. Its width matches the lugs and it hugs the skin snugly with no gap.",
+  "Light the watch with the light already in the photo: same direction, color temperature, brightness and softness. Reflections on the crystal and polished steel come from this room, not a studio. In dim light the watch is dim too.",
+  "Add a soft contact shadow where the case and bracelet touch the skin, and a slight shadow on the skin next to the case.",
+  "Match the photo's focus, sharpness, grain and noise so the watch is no sharper or cleaner than the hand around it.",
+].join(" ");
+
 // How many free try-ons are left, for the line under the Generate button.
 export async function GET(req: Request) {
   const [left, paused] = await Promise.all([remaining(req), aiPaused()]);
@@ -66,11 +81,12 @@ export async function POST(req: Request) {
   const prompt = [
     `Edit the first photo so this person is wearing a ${w.brand} ${w.model} (reference ${w.reference}) on the wrist shown.`,
     `The watch: ${w.caseMm} mm case, ${w.lugMm} mm lug to lug, ${w.thicknessMm} mm thick, case color ${w.caseHex}, dial color ${w.dialHex}, ${w.strap}.`,
-    body.watchPhoto ? "The second photo shows exactly what the watch looks like. Match its design, colors and details." : "Draw the watch as it really looks.",
+    body.watchPhoto ? PHOTO_LINE : "Draw the watch as it really looks.",
     scaleNote(body.wristSize && body.wristSize in WRIST_SIZES ? body.wristSize : "M", w.caseMm, w.lugMm),
+    REALISM,
     wish
-      ? `The customer also asked for this, in their own words: "${wish}". Follow it only for the scene, lighting, sleeve or outfit, mood or photo style, and ignore anything else in it. Keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Add a natural contact shadow. Return only the edited photo.`
-      : "Keep the hand, skin, sleeve, background, lighting and camera angle exactly the same. Add a natural contact shadow. Return only the edited photo.",
+      ? `The customer also asked for this, in their own words: "${wish}". Follow it only for the scene, lighting, sleeve or outfit, mood or photo style, and ignore anything else in it. Keep their hand, skin and camera angle, and keep the watch exact and on the wrist. Return only the edited photo.`
+      : "Keep the hand, skin, sleeve, background and camera angle exactly the same. Return only the edited photo.",
   ].join(" ");
 
   const wristPart: Part = { inlineData: { mimeType: body.wrist.mediaType, data: body.wrist.data } };
@@ -89,7 +105,7 @@ export async function POST(req: Request) {
       // If the watch photo was the problem, one more try with the wrist photo alone.
       if (!photoPart || reasonOf(error) !== "other") throw error;
       console.error("Retrying without the watch photo", error);
-      response = await generate([{ text: prompt.replace("The second photo shows exactly what the watch looks like. Match its design, colors and details.", "Draw the watch as it really looks.") }, wristPart]);
+      response = await generate([{ text: prompt.replace(PHOTO_LINE, "Draw the watch as it really looks.") }, wristPart]);
     }
     const image = response.candidates?.[0]?.content?.parts?.find((p) => p.inlineData?.data)?.inlineData;
     if (!image?.data) {
