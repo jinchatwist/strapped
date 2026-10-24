@@ -45,13 +45,11 @@ type TryOnState = {
   image?: string;
   error?: string;
   limit?: boolean;
-  timing?: { total: number; ai: number; pro: boolean; refPhoto: boolean };
+  timing?: { total: number; ai: number; pro: boolean };
 };
 
 // Older versions kept the wrist photo on the phone; it now lasts only until the app is closed.
 const OLD_SAVED_WRIST = "strapped-wrist";
-// Test switch (open /?ref=off or /?ref=on): whether the AI also gets our studio photo of the watch.
-const NO_REF_KEY = "strapped-noref";
 const WRIST_SIZE_KEY = "strapped-wrist-size";
 
 function search(query: string, brand: string | null) {
@@ -86,7 +84,6 @@ export default function Home() {
   const [paused, setPaused] = useState(false);
   // Only the latest try counts; a picture for an earlier watch is dropped.
   const attempt = useRef(0);
-  const [noRef, setNoRef] = useState(false);
   // My collection: how many try-ons are saved, the newest one's id, and whether it opens in compare mode.
   const [saved, setSaved] = useState(0);
   const [lastSaved, setLastSaved] = useState<string | undefined>();
@@ -117,12 +114,6 @@ export default function Home() {
     listCollection().then((all) => setSaved(all.length)).catch(() => {});
     // A link like /?watch=<id> opens that watch straight away (used by the mystery-box demo).
     const params = new URLSearchParams(window.location.search);
-    try {
-      if (params.get("ref") === "off") localStorage.setItem(NO_REF_KEY, "1");
-      if (params.get("ref") === "on") localStorage.removeItem(NO_REF_KEY);
-      setNoRef(localStorage.getItem(NO_REF_KEY) === "1");
-    } catch {}
-    if (params.has("ref") && !params.get("watch")) window.history.replaceState(null, "", "/");
     const linked = WATCHES.find((w) => w.id === params.get("watch"));
     if (linked) {
       pick(linked);
@@ -223,7 +214,6 @@ export default function Home() {
           wish: extra.trim() || undefined,
           wristSize,
           quality: pro ? "pro" : undefined,
-          refPhoto: noRef ? false : undefined,
         }),
       });
       const json = await res.json();
@@ -245,7 +235,7 @@ export default function Home() {
         return;
       }
       if (!res.ok) throw new Error(json.error);
-      const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000, pro: /pro/.test(json.model || ""), refPhoto: Boolean(json.refPhoto) };
+      const timing = { total: (performance.now() - started) / 1000, ai: (json.aiMs || 0) / 1000, pro: /pro/.test(json.model || "") };
       if (id === attempt.current) setTryOn({ status: "done", image: json.image, timing });
       setLastSaved(undefined);
       addToCollection(w, json.image)
@@ -449,7 +439,7 @@ export default function Home() {
               <button className="ghost" onClick={() => openCollection(true, lastSaved)}>Compare with another watch</button>
               {tryOn.timing && (
                 <p className="left-note">
-                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s · {tryOn.timing.pro ? "Pro" : "Flash"}{noRef ? " · no product photo" : tryOn.timing.refPhoto ? " · with product photo" : ""}
+                  Made in {Math.round(tryOn.timing.total)} s · picture {Math.round(tryOn.timing.ai)} s · {tryOn.timing.pro ? "Pro" : "Flash"}
                 </p>
               )}
             </>
