@@ -11,7 +11,7 @@ import { scaleNote, WRIST_SIZES, type WristSize } from "@/lib/wrist";
 export const maxDuration = 60;
 
 type Img = { data: string; mediaType: string };
-type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize };
+type TryOnRequest = { watch: Watch; wrist: Img; watchPhoto?: Img; wish?: string; wristSize?: WristSize; quality?: "pro" };
 
 // The catalog photo is a flat, front-on studio shot; copied as is, the watch looks pasted on like a sticker.
 const PHOTO_LINE =
@@ -97,7 +97,8 @@ export async function POST(req: Request) {
   const photoPart: Part | null = body.watchPhoto?.data
     ? { inlineData: { mimeType: body.watchPhoto.mediaType, data: body.watchPhoto.data } }
     : null;
-  const models = await imageModels(ai);
+  const models = await imageModels(ai, body.quality === "pro");
+  if (body.quality === "pro") await track("pro_upgrade", device);
   let usedModel = models[0];
   // Tries the best model first; if Google says it doesn't exist or is overloaded, the next one (Flash).
   const aspectRatio = closestRatio(jpegSize(body.wrist.data));

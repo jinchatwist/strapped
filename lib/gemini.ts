@@ -51,10 +51,11 @@ function proImageModel(ai: GoogleGenAI): Promise<string | null> {
 }
 
 // Image models for the try-on picture, best first; Flash stays last so there is always a fallback.
-// GEMINI_IMAGE_MODEL pins one model; TRYON_QUALITY=fast skips Pro.
-export async function imageModels(ai: GoogleGenAI): Promise<string[]> {
+// Flash makes every first picture; Pro only when someone asks for a more real one.
+// GEMINI_IMAGE_MODEL pins one model; TRYON_QUALITY=fast turns Pro off entirely.
+export async function imageModels(ai: GoogleGenAI, wantPro = false): Promise<string[]> {
   if (process.env.GEMINI_IMAGE_MODEL) return [process.env.GEMINI_IMAGE_MODEL];
-  if (process.env.TRYON_QUALITY === "fast") return [FLASH_IMAGE];
+  if (!wantPro || process.env.TRYON_QUALITY === "fast") return [FLASH_IMAGE];
   const best = await proImageModel(ai);
   return best ? [best, FLASH_IMAGE] : [FLASH_IMAGE];
 }

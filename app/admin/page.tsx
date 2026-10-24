@@ -24,6 +24,7 @@ const FUNNEL: [string, string][] = [
   ["share_facebook", "Shared: Facebook"],
   ["share_tiktok", "Shared: TikTok"],
   ["share_save", "Saved picture"],
+  ["pro_upgrade", "Asked for a more real picture (Pro)"],
   ["buy_click", "Tapped Buy this watch"],
   ["collection_open", "Opened My collection"],
   ["compare_open", "Compared two watches"],

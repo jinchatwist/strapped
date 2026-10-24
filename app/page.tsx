@@ -198,7 +198,7 @@ export default function Home() {
     }
   }
 
-  async function tryItOn(w: Watch, wristImg: ImagePayload, extra: string) {
+  async function tryItOn(w: Watch, wristImg: ImagePayload, extra: string, pro = false) {
     const id = ++attempt.current;
     setStep("result");
     setTryOn({ status: "loading" });
@@ -213,6 +213,7 @@ export default function Home() {
           wrist: { data: wristImg.data, mediaType: wristImg.mediaType },
           wish: extra.trim() || undefined,
           wristSize,
+          quality: pro ? "pro" : undefined,
         }),
       });
       const json = await res.json();
