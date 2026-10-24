@@ -145,6 +145,7 @@ Audemars Piguet|Royal Oak|AP Royal Oak 41 Blue|15510ST.OO.1320ST.03|41|51|10.4|#
 Audemars Piguet|Royal Oak|AP Royal Oak 37|15450ST.OO.1256ST.03|37|46|9.8|#c9cbcd|#1a3a6b|steel bracelet|sport,luxury|26000
 Audemars Piguet|Royal Oak|AP Royal Oak "Jumbo" Extra-Thin 39|16202ST.OO.1240ST.01|39|47|8.1|#c9cbcd|#1a3a6b|steel bracelet|sport,luxury|36000
 Audemars Piguet|Royal Oak|AP Royal Oak Chronograph 41|26240ST.OO.1320ST.02|41|51|12.4|#c9cbcd|#1a3a6b|steel bracelet|chrono,sport,luxury|38000
+Audemars Piguet|Royal Oak|AP Royal Oak Skeleton (Openworked)|15407ST.OO.1220ST.01|41|51|10.8|#c9cbcd|#4a4d52|steel bracelet|sport,luxury|80000
 Audemars Piguet|Royal Oak|AP Royal Oak 34 Rose Gold|77350OR.OO.1261OR.01|34|42|8.8|#d9a08b|#d9a08b|gold bracelet|dress,luxury|52000
 Audemars Piguet|Royal Oak Offshore|AP Royal Oak Offshore Chronograph 43|26420TI.OO.A027CA.01|43|52|14.4|#b8b8b8|#1c1c1c|rubber|chrono,sport,luxury|35000
 Audemars Piguet|Royal Oak Offshore|AP Royal Oak Offshore Diver|15720ST.OO.A027CA.01|42|51|14.1|#c9cbcd|#1c1c1c|rubber|dive,sport,luxury|28000
