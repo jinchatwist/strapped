@@ -31,6 +31,13 @@ export function rememberCode() {
   history.replaceState(null, "", location.pathname);
 }
 
+// The app on the home screen keeps its own storage, apart from Safari, so the code can also be typed in.
+export function saveCode(code: string) {
+  try {
+    localStorage.setItem(CODE, code.trim());
+  } catch {}
+}
+
 export function betaHeaders(): Record<string, string> {
   const h: Record<string, string> = { "x-strapped-device": deviceId() };
   const code = stored(CODE);

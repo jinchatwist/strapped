@@ -9,7 +9,7 @@ import { ShareBar } from "@/components/ShareBar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { WatchPic } from "@/components/WatchPic";
 import { WristCamera } from "@/components/WristCamera";
-import { betaHeaders, rememberCode, track } from "@/lib/beta";
+import { betaHeaders, rememberCode, saveCode, track } from "@/lib/beta";
 import { addToCollection, listCollection } from "@/lib/collection";
 import type { ImagePayload } from "@/lib/image";
 import type { Watch } from "@/lib/watch";
@@ -413,6 +413,7 @@ export default function Home() {
                   {left === 0 ? "You've used all your free try-ons." : `${left} free ${left === 1 ? "try-on" : "try-ons"} left`}
                 </p>
               )}
+              {!paused && left !== null && left < 100 && <CodeForm onUnlocked={setLeft} />}
               <button className="link back" onClick={startOver}>Pick a different watch</button>
             </>
           ) : (
@@ -441,6 +442,7 @@ export default function Home() {
                   <strong>{tryOn.error}</strong>
                   <p>{paused ? "Meanwhile, tell us what you think?" : "Paid packs are coming soon. Tell us what you thought while it\u2019s fresh?"}</p>
                   <button className="ghost" onClick={() => setFeedback(true)}>Give feedback</button>
+                  {!paused && <CodeForm onUnlocked={(n) => { setLeft(n); if (wrist) tryItOn(watch, wrist, wish); }} />}
                 </div>
               ) : (
                 <TryOn state={tryOn} fallback={wrist?.preview} onRetry={() => wrist && tryItOn(watch, wrist, wish)} />
@@ -520,6 +522,35 @@ function useSwipeBack(onBack: () => void) {
       document.removeEventListener("touchend", up);
     };
   }, []);
+}
+
+// Testers type the code Jin gave them. Needed on the home-screen app, which doesn't share Safari's storage.
+function CodeForm({ onUnlocked }: { onUnlocked: (left: number) => void }) {
+  const [note, setNote] = useState("");
+  async function unlock(code: string) {
+    saveCode(code);
+    try {
+      const j = await (await fetch("/api/tryon", { headers: betaHeaders() })).json();
+      if (j.unlimited) onUnlocked(j.left);
+      else setNote("That code didn't work.");
+    } catch {
+      setNote("Couldn't check the code. Try again.");
+    }
+  }
+  return (
+    <form
+      className="code-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const code = String(new FormData(e.currentTarget).get("code") || "").trim();
+        if (code) unlock(code);
+      }}
+    >
+      <input name="code" placeholder="Have a tester code?" inputMode="numeric" autoComplete="off" aria-label="Tester code" />
+      <button className="ghost" type="submit">Unlock</button>
+      {note && <span className="code-note">{note}</span>}
+    </form>
+  );
 }
 
 function formatPrice(usd: number) {

@@ -331,6 +331,10 @@ button.drop { font: inherit; color: inherit; cursor: pointer; }
 .sheet-text { font: inherit; color: inherit; background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; padding: 12px; resize: vertical; }
 .limit-box { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 6px; }
 .limit-box p { margin: 0; color: var(--muted); font-size: 14px; }
+.code-form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.code-note { flex-basis: 100%; font-size: 13px; color: var(--muted); }
+.code-form input { flex: 1; min-width: 0; padding: 10px 14px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--bg); font-size: 16px; color: inherit; }
+.code-form .ghost { width: auto; padding: 10px 16px; }
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .stat { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
 .stat b { font-size: 28px; }
