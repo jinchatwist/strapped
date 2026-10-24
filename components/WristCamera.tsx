@@ -51,8 +51,8 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
       <div className="cam-top">
         <button className="cam-x" onClick={onClose} aria-label="Close camera">✕</button>
         <p>
-          <strong>Hold your arm like you&apos;re checking the time</strong>
-          <span>Fill the dotted lines with your forearm, watch spot on your wrist.</span>
+          <strong>Lay your arm across the screen</strong>
+          <span>Watch spot on your wrist, arm between the lines.</span>
         </p>
       </div>
 
@@ -74,10 +74,11 @@ export function WristCamera({ onDone, onClose }: { onDone: (photo: ImagePayload)
   );
 }
 
-// A faint watch where the watch goes, with dotted lines along both edges of the forearm.
+// A faint watch where the watch goes, dotted lines along both edges of the forearm and [ ] marks at the wrist.
 // Drawn upright with the watch at 0,0 (hand toward -y, wrist 101 units wide), then placed and turned.
 const G = CAMERA_GUIDE;
 const CASE = 22;
+const HOOKS = [-34, 34].map((y) => { const s = -Math.sign(y); return `M-64 ${y + s * 10}Q-64 ${y} -54 ${y}M64 ${y + s * 10}Q64 ${y} 54 ${y}`; }).join("");
 const RAILS =
   "M-54 260 C-52 160 -50 80 -50 20 C-50 -60 -58 -120 -58 -150 M54 260 C52 160 50 80 50 20 C50 -60 60 -120 60 -150";
 
@@ -114,12 +115,13 @@ function WristGuide() {
       </defs>
       <g transform={place} fill="none" stroke="#fff" strokeLinecap="round" filter="url(#cam-glow)">
         <path d={RAILS} strokeWidth={line(2.2)} strokeDasharray={`${line(0.1)} ${line(6)}`} opacity=".9" />
+        <path d={HOOKS} strokeWidth={line(2)} />
         <g opacity=".8">
           <path d={bracelet()} strokeWidth={line(0.9)} />
           <circle r={CASE + 1} fill="rgba(255,255,255,.12)" strokeWidth={line(1.8)} />
           <circle r={CASE - 4} strokeWidth={line(0.9)} />
           <path d={ticks(CASE - 7, CASE - 4, 12)} strokeWidth={line(1.2)} />
-          <path d="M0 0 L0 -12 M0 0 L8 4" strokeWidth={line(1.4)} />
+          <path d="M0 0 L0 -12 M0 0 L8 4" strokeWidth={line(1.4)} transform={`rotate(${-G.angle})`} />
           <rect x={CASE + 1} y="-3" width="4" height="6" rx="1" fill="#fff" stroke="none" />
         </g>
       </g>
